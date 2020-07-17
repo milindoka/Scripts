@@ -1,0 +1,1168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Overpass API 0.7.56.1004 6cd3eaec">
+<note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
+<meta osm_base="2020-07-17T06:10:02Z"/>
+
+  <node id="4250309699" lat="10.6276622" lon="76.1467555">
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="coconut tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309700" lat="10.6263306" lon="76.1460277">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309702" lat="10.6277024" lon="76.1465754">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309704" lat="10.6271159" lon="76.1462818">
+    <tag k="addr:housenumber" v="tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309707" lat="10.6272671" lon="76.1462270">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309710" lat="10.6274384" lon="76.1461748">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309712" lat="10.6273840" lon="76.1461901">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309714" lat="10.6275076" lon="76.1462179">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309716" lat="10.6275597" lon="76.1461969">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309717" lat="10.6276006" lon="76.1463316">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309718" lat="10.6276615" lon="76.1465248">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309719" lat="10.6276699" lon="76.1465312">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309720" lat="10.6276756" lon="76.1465252">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309722" lat="10.6276916" lon="76.1465227">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309723" lat="10.6277118" lon="76.1466824">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309724" lat="10.6277192" lon="76.1467582">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250309725" lat="10.6276877" lon="76.1468360">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250311328" lat="10.6263960" lon="76.1454801">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250386001" lat="10.6265243" lon="76.1452181">
+    <tag k="name" v="Ambazham"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250425705" lat="10.6266029" lon="76.1454034">
+    <tag k="name" v="Vayankatha"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250426425" lat="10.6265719" lon="76.1453146">
+    <tag k="name" v="Koovalam"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250426426" lat="10.6265305" lon="76.1453754">
+    <tag k="name" v="aattuvanchi"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250426428" lat="10.6264728" lon="76.1454039">
+    <tag k="name" v="Maavu"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250426429" lat="10.6265354" lon="76.1453134">
+    <tag k="name" v="Plavu"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250450497" lat="10.6267413" lon="76.1444249">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250450931" lat="10.6267078" lon="76.1456115">
+    <tag k="name" v="Bamboo"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450936" lat="10.6278101" lon="76.1442970">
+    <tag k="name" v="Bael"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450938" lat="10.6267343" lon="76.1456087">
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="bamboo"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450940" lat="10.6271545" lon="76.1451434">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450941" lat="10.6258670" lon="76.1453276">
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="coconut tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450946" lat="10.6281491" lon="76.1454339">
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450948" lat="10.6267632" lon="76.1443535">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450950" lat="10.6256530" lon="76.1448912">
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="mango tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450953" lat="10.6270844" lon="76.1449614">
+    <tag k="addr:housenumber" v="mango tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450956" lat="10.6263840" lon="76.1454468">
+    <tag k="addr:housenumber" v="nelli"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450958" lat="10.6259102" lon="76.1446597">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450962" lat="10.6261688" lon="76.1462315">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450963" lat="10.6271017" lon="76.1451424">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450965" lat="10.6274594" lon="76.1441215">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450967" lat="10.6277868" lon="76.1442111">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450968" lat="10.6278627" lon="76.1444677">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450969" lat="10.6278784" lon="76.1445270">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450970" lat="10.6279819" lon="76.1448827">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250450971" lat="10.6282564" lon="76.1457735">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="name" v="Mango tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250475310" lat="10.6270801" lon="76.1447488">
+    <tag k="addr:housenumber" v="tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476718" lat="10.6259095" lon="76.1451768">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476719" lat="10.6259197" lon="76.1452104">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476721" lat="10.6259278" lon="76.1452462">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476723" lat="10.6259382" lon="76.1452788">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476724" lat="10.6259478" lon="76.1453111">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476725" lat="10.6259598" lon="76.1453468">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476726" lat="10.6259731" lon="76.1453823">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476728" lat="10.6259837" lon="76.1454152">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="aral"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476729" lat="10.6260032" lon="76.1454863">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476730" lat="10.6260179" lon="76.1455182">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476735" lat="10.6260390" lon="76.1455825">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476736" lat="10.6260499" lon="76.1456063">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476737" lat="10.6260603" lon="76.1456357">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476738" lat="10.6261130" lon="76.1456751">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="badam tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476745" lat="10.6262759" lon="76.1451497">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476746" lat="10.6262906" lon="76.1451829">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476747" lat="10.6262924" lon="76.1455678">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="guava tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476748" lat="10.6263035" lon="76.1452208">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="guava tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476750" lat="10.6263156" lon="76.1452626">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476752" lat="10.6263317" lon="76.1453025">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250476753" lat="10.6263603" lon="76.1453856">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250488195" lat="10.6267379" lon="76.1453018">
+    <tag k="name" v="Athi"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488196" lat="10.6265254" lon="76.1455445">
+    <tag k="name" v="Elappa"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488197" lat="10.6266729" lon="76.1454983">
+    <tag k="name" v="Illanji"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488198" lat="10.6266607" lon="76.1452455">
+    <tag k="name" v="Ithi"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488199" lat="10.6264594" lon="76.1452871">
+    <tag k="name" v="Kadambu"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488200" lat="10.6267685" lon="76.1455181">
+    <tag k="name" v="Karimaram"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488201" lat="10.6264823" lon="76.1454708">
+    <tag k="name" v="Karimpana"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488202" lat="10.6267750" lon="76.1454279">
+    <tag k="name" v="Karingali"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488203" lat="10.6265807" lon="76.1453340">
+    <tag k="name" v="Maruth"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488204" lat="10.6267924" lon="76.1455159">
+    <tag k="name" v="Bamboo"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488205" lat="10.6267136" lon="76.1454475">
+    <tag k="name" v="Nagam"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488207" lat="10.6267145" lon="76.1452529">
+    <tag k="name" v="Nelli"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488208" lat="10.6267659" lon="76.1453621">
+    <tag k="name" v="Njaval"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488209" lat="10.6264657" lon="76.1452815">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488210" lat="10.6267670" lon="76.1454669">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488211" lat="10.6266927" lon="76.1453444">
+    <tag k="name" v="Peral"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488212" lat="10.6265624" lon="76.1454863">
+    <tag k="name" v="Pine"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488213" lat="10.6266706" lon="76.1452817">
+    <tag k="name" v="Plaasu"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488214" lat="10.6264237" lon="76.1452488">
+    <tag k="name" v="Vahni"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250488215" lat="10.6266064" lon="76.1455735">
+    <tag k="name" v="Vetti"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4250514689" lat="10.6264902" lon="76.1445054">
+    <tag k="addr:housenumber" v="Tre22"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514693" lat="10.6258571" lon="76.1452113">
+    <tag k="name" v="tree1"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514694" lat="10.6259466" lon="76.1453369">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514696" lat="10.6271525" lon="76.1453652">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514697" lat="10.6275199" lon="76.1451517">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514698" lat="10.6278778" lon="76.1449057">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514699" lat="10.6276006" lon="76.1447860">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514700" lat="10.6275563" lon="76.1447232">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514701" lat="10.6275205" lon="76.1446322">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514702" lat="10.6274828" lon="76.1445389">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514703" lat="10.6270862" lon="76.1441313">
+    <tag k="name" v="Mahogony"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514704" lat="10.6270232" lon="76.1441656">
+    <tag k="name" v="Kanikonna"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514705" lat="10.6264155" lon="76.1443468">
+    <tag k="name" v="Kanikonna"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514706" lat="10.6260515" lon="76.1447497">
+    <tag k="name" v="Tree1"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514707" lat="10.6258619" lon="76.1452361">
+    <tag k="addr:housenumber" v="Tree3"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514708" lat="10.6258722" lon="76.1452793">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514711" lat="10.6259908" lon="76.1454484">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="araly"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4250514712" lat="10.6259787" lon="76.1456168">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18;2016-06-19"/>
+  </node>
+  <node id="4251946222" lat="10.6289380" lon="76.1484120">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251947269" lat="10.6283207" lon="76.1486178">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251949959" lat="10.6281019" lon="76.1460516">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251949970" lat="10.6279793" lon="76.1460824">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251950055" lat="10.6278949" lon="76.1459858">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251950364" lat="10.6292282" lon="76.1483120">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251951460" lat="10.6281524" lon="76.1484388">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4251953325" lat="10.6280099" lon="76.1482046">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252005935" lat="10.6262657" lon="76.1451171">
+    <tag k="name" v="guava tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4252065626" lat="10.6271444" lon="76.1449105">
+    <tag k="addr:housenumber" v="Mangotree"/>
+    <tag k="name" v="Mango tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252065627" lat="10.6272200" lon="76.1451009">
+    <tag k="name" v="Mango Tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252065629" lat="10.6273526" lon="76.1445623">
+    <tag k="name" v="Mahagani"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252065630" lat="10.6274614" lon="76.1447196">
+    <tag k="addr:housenumber" v="Pinetree"/>
+    <tag k="name" v="Pinetree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252065631" lat="10.6275316" lon="76.1449126">
+    <tag k="addr:housenumber" v="Pinetree2"/>
+    <tag k="name" v="Pinetree2"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087670" lat="10.6271239" lon="76.1444273">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087671" lat="10.6271653" lon="76.1445031">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087672" lat="10.6272568" lon="76.1444285">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087674" lat="10.6272438" lon="76.1444875">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087678" lat="10.6261495" lon="76.1448529">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087679" lat="10.6262164" lon="76.1447849">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087682" lat="10.6264665" lon="76.1447996">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087683" lat="10.6263584" lon="76.1446359">
+    <tag k="name" v="Whitetree1"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087684" lat="10.6264262" lon="76.1445827">
+    <tag k="name" v="Whitetree2"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087685" lat="10.6265221" lon="76.1447077">
+    <tag k="name" v="Whitetree3"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252087687" lat="10.6267491" lon="76.1445236">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252088194" lat="10.6271529" lon="76.1443858">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252108756" lat="10.6259520" lon="76.1448086">
+    <tag k="name" v="Tree 1"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252108757" lat="10.6259999" lon="76.1447781">
+    <tag k="name" v="Tree 1"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252108766" lat="10.6261012" lon="76.1447254">
+    <tag k="name" v="Tree 1"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4252108800" lat="10.6261466" lon="76.1447033">
+    <tag k="name" v="Tree 1"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4252111898" lat="10.6259076" lon="76.1448480">
+    <tag k="name" v="Tree 1"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252111899" lat="10.6258816" lon="76.1448886">
+    <tag k="name" v="Tree 1"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252115696" lat="10.6276152" lon="76.1461858">
+    <tag k="denotation" v="natural_monument"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Lemon tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118354" lat="10.6285317" lon="76.1464694">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118355" lat="10.6286082" lon="76.1464667">
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Guava"/>
+  </node>
+  <node id="4252118356" lat="10.6291776" lon="76.1463943">
+    <tag k="name" v="Guava"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118357" lat="10.6292198" lon="76.1463406">
+    <tag k="name" v="Guava"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118358" lat="10.6292409" lon="76.1462655">
+    <tag k="name" v="Guava"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118359" lat="10.6292271" lon="76.1461820">
+    <tag k="name" v="Papaya"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118361" lat="10.6292198" lon="76.1460319">
+    <tag k="name" v="Custard Apple"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118362" lat="10.6292312" lon="76.1459306">
+    <tag k="name" v="Mango"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118363" lat="10.6290096" lon="76.1458668">
+    <tag k="name" v="Custard Apple"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118366" lat="10.6289298" lon="76.1458508">
+    <tag k="name" v="Njaval"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118367" lat="10.6289111" lon="76.1459748">
+    <tag k="name" v="Mango Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118368" lat="10.6289002" lon="76.1460319">
+    <tag k="name" v="Mango Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118369" lat="10.6288965" lon="76.1460788">
+    <tag k="name" v="Mango Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118370" lat="10.6288916" lon="76.1461408">
+    <tag k="name" v="Guava"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118371" lat="10.6288821" lon="76.1462036">
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Cherry"/>
+  </node>
+  <node id="4252118372" lat="10.6287983" lon="76.1461663">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118373" lat="10.6287400" lon="76.1462178">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118374" lat="10.6286764" lon="76.1461769">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118375" lat="10.6286819" lon="76.1462791">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118376" lat="10.6284606" lon="76.1463917">
+    <tag k="name" v="Koovalam"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118377" lat="10.6285471" lon="76.1463751">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118378" lat="10.6286548" lon="76.1460015">
+    <tag k="name" v="Jack Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118379" lat="10.6285341" lon="76.1460596">
+    <tag k="name" v="Nelli"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118380" lat="10.6284166" lon="76.1460480">
+    <tag k="name" v="Seemakonna"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118381" lat="10.6285569" lon="76.1459949">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118382" lat="10.6286010" lon="76.1462506">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252118383" lat="10.6266218" lon="76.1442761">
+    <tag k="denotation" v="decoration"/>
+    <tag k="leaf_cycle" v="semi_evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Golden Shower Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120190" lat="10.6263550" lon="76.1458373">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120632" lat="10.6263512" lon="76.1459330">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120633" lat="10.6263272" lon="76.1458638">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120634" lat="10.6263952" lon="76.1458703">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120635" lat="10.6267150" lon="76.1442676">
+    <tag k="name" v="Golden Shower Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120636" lat="10.6267879" lon="76.1442317">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120637" lat="10.6268829" lon="76.1442012">
+    <tag k="name" v="Golden Showering Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252120638" lat="10.6269502" lon="76.1441800">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252121637" lat="10.6263840" lon="76.1459558">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252126550" lat="10.6278354" lon="76.1443807">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252126551" lat="10.6278946" lon="76.1445811">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252132727" lat="10.6279052" lon="76.1449937">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252132728" lat="10.6278332" lon="76.1447560">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252141473" lat="10.6271454" lon="76.1441116">
+    <tag k="name" v="Mahogony"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252141474" lat="10.6272024" lon="76.1440931">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252141475" lat="10.6272673" lon="76.1440733">
+    <tag k="name" v="Acacia"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252141476" lat="10.6273255" lon="76.1440554">
+    <tag k="name" v="Acacia"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252141477" lat="10.6273813" lon="76.1440369">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252141478" lat="10.6274317" lon="76.1440215">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252146865" lat="10.6278380" lon="76.1450108">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252146866" lat="10.6278747" lon="76.1450013">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252146867" lat="10.6278995" lon="76.1449997">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252150434" lat="10.6278631" lon="76.1448941">
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155370" lat="10.6263341" lon="76.1448663">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155371" lat="10.6263597" lon="76.1448521">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155372" lat="10.6263923" lon="76.1448426">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155373" lat="10.6264086" lon="76.1448331">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155374" lat="10.6264272" lon="76.1448237">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155375" lat="10.6264528" lon="76.1448095">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155376" lat="10.6264552" lon="76.1450629">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155377" lat="10.6264761" lon="76.1450487">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155380" lat="10.6264971" lon="76.1450392">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155381" lat="10.6265273" lon="76.1450321">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155382" lat="10.6265530" lon="76.1450179">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155383" lat="10.6265786" lon="76.1450108">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155384" lat="10.6266018" lon="76.1449990">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155385" lat="10.6266601" lon="76.1450795">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155387" lat="10.6268347" lon="76.1449970">
+    <tag k="name" v="neem tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155388" lat="10.6268160" lon="76.1446650">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155389" lat="10.6268393" lon="76.1446555">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155390" lat="10.6268673" lon="76.1446057">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155391" lat="10.6268673" lon="76.1446436">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155392" lat="10.6268882" lon="76.1448924">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155393" lat="10.6268999" lon="76.1446271">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155394" lat="10.6269185" lon="76.1448876">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155395" lat="10.6269208" lon="76.1445892">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155396" lat="10.6269441" lon="76.1448782">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252155397" lat="10.6269720" lon="76.1445844">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252158068" lat="10.6292304" lon="76.1459036">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Banana Plant"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252158069" lat="10.6292314" lon="76.1458742">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Banana Plant"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252158070" lat="10.6292315" lon="76.1458804">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Banana Plant"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252158071" lat="10.6292315" lon="76.1458804">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Banana"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252158072" lat="10.6292379" lon="76.1458919">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Banana Plant"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252178495" lat="10.6280109" lon="76.1449739">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252178496" lat="10.6280315" lon="76.1450395">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252179551" lat="10.6279064" lon="76.1446295">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252181331" lat="10.6275596" lon="76.1459939">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252184665" lat="10.6275606" lon="76.1458980">
+    <tag k="denotation" v="single"/>
+    <tag k="leaf_cycle" v="semi_evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Jackfruit Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252187621" lat="10.6276688" lon="76.1463710">
+    <tag k="denotation" v="single"/>
+    <tag k="leaf_cycle" v="semi_evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Guava Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252187622" lat="10.6277038" lon="76.1465074">
+    <tag k="denotation" v="single"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Mango Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188491" lat="10.6254986" lon="76.1446769">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Tamarind"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188492" lat="10.6255920" lon="76.1446445">
+    <tag k="name" v="Guava"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188493" lat="10.6256918" lon="76.1446100">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Jack Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188494" lat="10.6257710" lon="76.1445819">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Mango Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188495" lat="10.6258637" lon="76.1445416">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Jack Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188496" lat="10.6259430" lon="76.1445157">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188497" lat="10.6260448" lon="76.1444775">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Elengi"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188498" lat="10.6261241" lon="76.1444473">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Mantharam"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188499" lat="10.6261948" lon="76.1444186">
+    <tag k="name" v="Mahogony"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188500" lat="10.6262713" lon="76.1443933">
+    <tag k="name" v="Tamarind"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188501" lat="10.6264361" lon="76.1443321">
+    <tag k="name" v="Jack Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252188775" lat="10.6264968" lon="76.1442927">
+    <tag k="denotation" v="urban"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Mahagony"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252190322" lat="10.6289700" lon="76.1458594">
+    <tag k="name" v="Chamba"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252190381" lat="10.6273732" lon="76.1441456">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-18"/>
+  </node>
+  <node id="4252251685" lat="10.6279956" lon="76.1458459">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252251921" lat="10.6269760" lon="76.1448657">
+    <tag k="name" v="arali"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252252229" lat="10.6268621" lon="76.1449043">
+    <tag k="name" v="arali"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252253391" lat="10.6280536" lon="76.1458258">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252253409" lat="10.6275299" lon="76.1460041">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252253436" lat="10.6291273" lon="76.1483344">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252257565" lat="10.6271177" lon="76.1449310">
+    <tag k="name" v="mango tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252260064" lat="10.6275287" lon="76.1460119">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252260074" lat="10.6274448" lon="76.1460370">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252261589" lat="10.6267838" lon="76.1462469">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252261974" lat="10.6274931" lon="76.1460159">
+    <tag k="name" v="pipe"/>
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-06-19"/>
+  </node>
+  <node id="4252266789" lat="10.6264696" lon="76.1446507">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252267789" lat="10.6264346" lon="76.1446675">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252267805" lat="10.6287650" lon="76.1458709">
+    <tag k="name" v="Nelli"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252267806" lat="10.6284883" lon="76.1458903">
+    <tag k="name" v="Seemakkonna"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252267807" lat="10.6286594" lon="76.1458602">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252267808" lat="10.6287544" lon="76.1460793">
+    <tag k="name" v="Teak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252268259" lat="10.6263802" lon="76.1446695">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252268421" lat="10.6263423" lon="76.1446497">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252271700" lat="10.6263414" lon="76.1445677">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252272289" lat="10.6263141" lon="76.1446102">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252274452" lat="10.6263977" lon="76.1445390">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252277482" lat="10.6264472" lon="76.1445133">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252295997" lat="10.6265697" lon="76.1444678">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252304648" lat="10.6266124" lon="76.1444589">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252305455" lat="10.6266542" lon="76.1444520">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252305462" lat="10.6266950" lon="76.1444431">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252306969" lat="10.6267669" lon="76.1444550">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252307545" lat="10.6267611" lon="76.1444905">
+    <tag k="name" v="palm tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4252308579" lat="10.6267261" lon="76.1445489">
+    <tag k="name" v="plam tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4304239516" lat="10.6250998" lon="76.1447358">
+    <tag k="natural" v="tree"/>
+    <tag k="survey:date" v="2016-07-15"/>
+  </node>
+  <node id="4317145130" lat="10.6302127" lon="76.1470803">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4317145463" lat="10.6304087" lon="76.1471735">
+    <tag k="name" v="bamboo tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4321273586" lat="10.6273600" lon="76.1443335">
+    <tag k="natural" v="tree"/>
+  </node>
+
+</osm>
+

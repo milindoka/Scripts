@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>TreePass Script</h2>
+
+<p>This Script Processes OSM tree data exported from  https://overpass-turbo.eu/ </p>
+<p>Paste data in the folowwing Box and Press the Process Button</p>
+<p id="demo"></p>
+
+<div>
+    <textarea id="textareabox" name="textarea1" placeholder="Start here..."></textarea>
+    <input type="button" value="Process" onclick="getText()" />
+ </div>
+
+
+<script>
+
+function getText() {
+    var text = document.getElementById("textareabox").value;
+    alert(text);
+}
+
+
+</script>
+
+</body>
+</html>
+
