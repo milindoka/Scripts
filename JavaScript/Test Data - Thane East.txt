@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Overpass API 0.7.56.1004 6cd3eaec">
+<note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
+<meta osm_base="2020-06-24T17:52:02Z"/>
+
+  <node id="7618267427" lat="19.1790883" lon="72.9694177">
+    <tag k="name:mr" v="करंज"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Millettia pinnata"/>
+  </node>
+  <node id="7618267428" lat="19.1790784" lon="72.9693349">
+    <tag k="name:mr" v="करंज"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Millettia pinnata"/>
+  </node>
+  <node id="7618309316" lat="19.1744756" lon="72.9712610">
+    <tag k="name:mr" v="असाणा, काटे आसाना"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Bridelia retusa"/>
+  </node>
+  <node id="7619068570" lat="19.1791163" lon="72.9694540">
+    <tag k="name" v="T3"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7619115924" lat="19.1791658" lon="72.9694564">
+    <tag k="name" v="T2"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7619117303" lat="19.1795731" lon="72.9720549">
+    <tag k="alt_name:en" v="Pongame Oiltree"/>
+    <tag k="name" v="Indian Beech"/>
+    <tag k="name:mr" v="करंज"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Millettia pinnata"/>
+  </node>
+  <node id="7619125646" lat="19.1790625" lon="72.9688268">
+    <tag k="alt_name:en" v="Devil's tree"/>
+    <tag k="alt_name:mr" v="भुताचे झाड"/>
+    <tag k="name" v="Blackboard Tree"/>
+    <tag k="name:mr" v="सप्तपर्णी"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Alstonia scholaris"/>
+  </node>
+  <node id="7619766350" lat="19.1761860" lon="72.9715648">
+    <tag k="alt_name:mr" v="सावरी;सावर;लाल;शाल्मली"/>
+    <tag k="name" v="Cotton Tree"/>
+    <tag k="name:mr" v="काटेसावर"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Bombax ceiba"/>
+  </node>
+  <node id="7619786930" lat="19.1757652" lon="72.9715514">
+    <tag k="name" v="Tamarind"/>
+    <tag k="name:mr" v="चिंच"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Tamarindus indica"/>
+  </node>
+  <node id="7621725065" lat="19.1773011" lon="72.9722054">
+    <tag k="name" v="Banyan"/>
+    <tag k="name:mr" v="वड"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Ficus benghalensis"/>
+  </node>
+  <node id="7621759338" lat="19.1772749" lon="72.9723159">
+    <tag k="alt_name:en" v="Wax Apple"/>
+    <tag k="alt_name:mr" v="जांब"/>
+    <tag k="name" v="Java Apple"/>
+    <tag k="name:mr" v="जाम"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Syzygium samarangense"/>
+  </node>
+  <node id="7624694828" lat="19.1770180" lon="72.9716361">
+    <tag k="alt_name:en" v="Nimtree;Indian Lilac"/>
+    <tag k="alt_name:mr" v="लिंब, बाळंतलिंब"/>
+    <tag k="name" v="Neem"/>
+    <tag k="name:mr" v="कडुलिंब"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Azadirachta indica"/>
+  </node>
+  <node id="7624719237" lat="19.1770881" lon="72.9715879">
+    <tag k="alt_name:en" v="Giant Crepe-Myrtle;Queen's Crepe-Myrtle"/>
+    <tag k="alt_name:mr" v="तामण;जारूळ;बोंद्रा;बुंद्रा;मोठा बोंडारा"/>
+    <tag k="name" v="Pride Of India"/>
+    <tag k="name:mr" v="ताम्हण"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7624725911" lat="19.1773290" lon="72.9715447">
+    <tag k="alt_name:en" v="Country Almond;Malabar Almond;Sea Almond;Tropical Almond;Beach Almond;False Kamani"/>
+    <tag k="name" v="Indian Almond"/>
+    <tag k="name:mr" v="देशी बदाम"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Terminalia catappa"/>
+  </node>
+  <node id="7624763687" lat="19.1772591" lon="72.9721646">
+    <tag k="alt_name:en" v="Flamboyant;Flame of the Forest;Flame tree"/>
+    <tag k="name" v="Royal poinciana"/>
+    <tag k="name:mr" v="गुलमोहर"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Delonix regia"/>
+  </node>
+  <node id="7626681386" lat="19.1800552" lon="72.9705186">
+    <tag k="alt_name:en" v="Pongame Oiltree"/>
+    <tag k="name" v="Indian Beech"/>
+    <tag k="name:mr" v="करंज"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Millettia pinnata"/>
+  </node>
+  <node id="7626681387" lat="19.1779934" lon="72.9716204">
+    <tag k="alt_name:en" v="Pongame Oiltree"/>
+    <tag k="name" v="Indian Beech"/>
+    <tag k="name:mr" v="करंज"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Millettia pinnata"/>
+  </node>
+  <node id="7629765918" lat="19.1774327" lon="72.9718777">
+    <tag k="alt_name:en" v="Country Almond;Malabar Almond;Sea Almond;Tropical Almond;Beach Almond;False Kamani"/>
+    <tag k="name" v="Indian Almond"/>
+    <tag k="name:mr" v="देशी बदाम"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Terminalia catappa"/>
+  </node>
+  <node id="7629810132" lat="19.1795225" lon="72.9719978">
+    <tag k="alt_name:en" v="Laran;Leichhardt pine"/>
+    <tag k="name" v="Burflower"/>
+    <tag k="name:mr" v="कदंब"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Neolamarckia cadamba"/>
+  </node>
+  <node id="7629810133" lat="19.1749953" lon="72.9704994">
+    <tag k="alt_name:en" v="Laran;Leichhardt pine"/>
+    <tag k="name" v="Burflower Tree"/>
+    <tag k="name:mr" v="कदंब"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Neolamarckia cadamba"/>
+  </node>
+  <node id="7629810134" lat="19.1748829" lon="72.9704871">
+    <tag k="alt_name:en" v="Laran;Leichhardt pine"/>
+    <tag k="name" v="Burflower Tree"/>
+    <tag k="name:mr" v="कदंब"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Neolamarckia cadamba"/>
+  </node>
+  <node id="7631022324" lat="19.1735094" lon="72.9707204">
+    <tag k="name" v="Tamhan"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7632592395" lat="19.1786486" lon="72.9717911">
+    <tag k="name" v="Indian Beech"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7635625680" lat="19.1786446" lon="72.9717800">
+    <tag k="name" v="False Ashoka"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7635658865" lat="19.1781969" lon="72.9716785">
+    <tag k="name" v="Indian Pride"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7637958553" lat="19.1803968" lon="72.9728872">
+    <tag k="name" v="Indian Almond"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7637958835" lat="19.1803712" lon="72.9729211">
+    <tag k="name" v="Indian Almond"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7637984017" lat="19.1808673" lon="72.9731777">
+    <tag k="name" v="Peeple"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7638027693" lat="19.1805466" lon="72.9678910">
+    <tag k="name" v="Indian Beech"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7638035720" lat="19.1800295" lon="72.9696787">
+    <tag k="alt_name:en" v="Saman"/>
+    <tag k="name" v="Rain Tree"/>
+    <tag k="name:mr" v="पर्जन्य वृक्ष"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7638052996" lat="19.1793522" lon="72.9715168">
+    <tag k="name" v="Tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7638065548" lat="19.1792854" lon="72.9698424">
+    <tag k="name" v="Tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7639018137" lat="19.1802012" lon="72.9690639">
+    <tag k="alt_name:en" v="Saman"/>
+    <tag k="name" v="Rain Tree"/>
+    <tag k="name:mr" v="पर्जन्य वृक्ष"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7639018138" lat="19.1797059" lon="72.9720261">
+    <tag k="alt_name:en" v="Saman"/>
+    <tag k="name" v="Rain Tree"/>
+    <tag k="name:mr" v="पर्जन्य वृक्ष"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7639018139" lat="19.1795750" lon="72.9718078">
+    <tag k="alt_name:en" v="Saman"/>
+    <tag k="name" v="Rain Tree"/>
+    <tag k="name:mr" v="पर्जन्य वृक्ष"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7639726532" lat="19.1769986" lon="72.9722278">
+    <tag k="name" v="Coconut"/>
+    <tag k="name:mr" v="माड"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Cocos Nucifera"/>
+  </node>
+  <node id="7639731987" lat="19.1769967" lon="72.9721856">
+    <tag k="name" v="Jack Fruit"/>
+    <tag k="name:mr" v="फणस"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Artocarpus heterophyllus"/>
+  </node>
+  <node id="7639732593" lat="19.1769802" lon="72.9722084">
+    <tag k="alt_name:en" v="Flamboyant;Flame of the Forest;Flame tree"/>
+    <tag k="name" v="Royal Poinciana"/>
+    <tag k="name:mr" v="गुलमोहोर"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7640040500" lat="19.1761158" lon="72.9732853">
+    <tag k="alt_name:en" v="Spanish Cherry;medler"/>
+    <tag k="name" v="Bullet wood"/>
+    <tag k="name:mr" v="बकुळ"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Mimusops elengi"/>
+  </node>
+  <node id="7640136748" lat="19.1748817" lon="72.9733272">
+    <tag k="name" v="Tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7640161193" lat="19.1749443" lon="72.9733395">
+    <tag k="name" v="Tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7643912627" lat="19.1775815" lon="72.9720822">
+    <tag k="name" v="Coconut"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7645001587" lat="19.1816088" lon="72.9707021">
+    <tag k="name" v="tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7645036251" lat="19.1800024" lon="72.9696059">
+    <tag k="name" v="Tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7645055686" lat="19.1801546" lon="72.9701425">
+    <tag k="name" v="Rain Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7645077806" lat="19.1792904" lon="72.9697472">
+    <tag k="name" v="Black Plum"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="7648140737" lat="19.1805724" lon="72.9705539">
+    <tag k="name" v="Tree??"/>
+    <tag k="natural" v="tree"/>
+  </node>
+
+</osm>
