@@ -60,6 +60,9 @@ function textToArray()
     { var res = myArray[i].replace("<", " ");
       var res1 =res.replace(">", " ");   
       var res2 =res1.replace("\\", " ");   
+
+var n = res2.includes("species");
+if (!n) { continue; }
      result += res2+"<br>";
     }
 
