@@ -49,6 +49,8 @@ function textToArray()
     //assign value of textarea to mytext
     var myText = document.getElementById("textArea").value;
 
+    var Count=0;
+
     //split mytext by nextline = "\n" 
     var myArray = myText.split("\n");
 
@@ -61,16 +63,22 @@ function textToArray()
       var res2 =res1.replace("\\", " ");   
 
   if(res2.includes("species")) { Record.species = ExtractTag(res2,"species"); continue; }
-  if(res2.includes("name:mr")) { Record.namemr = ExtractTag(res2,"name:mr"); continue; }
+if(res2.includes("alt_name:mr")) { Record.altnamemr = ExtractTag(res2,"alt_name:mr"); continue; }
+  
   if(res2.includes("alt_name:en")) { Record.altnameen = ExtractTag(res2,"alt_name:en"); continue; }
-  if(res2.includes("alt_name:mr")) { Record.altnamemr = ExtractTag(res2,"alt_name:mr"); continue; }
+if(res2.includes("name:mr")) { Record.namemr = ExtractTag(res2,"name:mr"); continue; }
   if(res2.includes("name")) { Record.name = ExtractTag(res2,"name"); continue; }
-  if(res2.includes("/node")) {Add(Record.species,Record.namemr,Record.altnameen,Record.altnamemr,Record.name);  }
+  if(res2.includes("/node")) 
+{Add(Record.species,Record.name,Record.namemr,Record.altnameen,Record.altnamemr); 
+
+Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="";
+Count++;
+ }
 
     }
 
-    var count=myArray.length;
-result+=count.toString()+"<br>";
+  //  var count=myArray.length;
+result+=Count.toString()+"  Trees" + "<br>";
     document.getElementById("result").innerHTML = result;
 }
 
