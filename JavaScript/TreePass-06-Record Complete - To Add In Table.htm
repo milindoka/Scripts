@@ -54,6 +54,7 @@ function textToArray()
     //split mytext by nextline = "\n" 
     var myArray = myText.split("\n");
 
+    
     //to check the result
     var result = '';
     for(i=0;i<myArray.length;i++)
@@ -61,22 +62,34 @@ function textToArray()
       var res1 =res.replace(">", " ");   
       var res2 =res1.replace("\\", " ");   
 
-var n = res2.includes("species");
-if (!n) { continue; }
 
-var s1="species\" v=\""; 
-var s2="\"/"
+  if(res2.includes("species")) { result += ExtractTag(res2,"species") +"<br>"; continue; }
+  if(res2.includes("name:mr")) { result += ExtractTag(res2,"name:mr") +"<br>"; continue; }
+  if(res2.includes("alt_name:en")) { result += ExtractTag(res2,"alt_name:en") +"<br>"; continue; }
+  if(res2.includes("alt_name:mr")) { result += ExtractTag(res2,"alt_name:mr") +"<br>"; continue; }
+  if(res2.includes("name")) { result += ExtractTag(res2,"name") +"<br>"; continue; }
+  if(res2.includes("/node")) { result += "<br>"; continue; }
 
-var s3=res2.match(new RegExp(s1 + "(.*)" + s2));
-
-
-     result += s3[1]+"<br>";
     }
 
     var count=myArray.length;
 result+=count.toString()+"<br>";
     document.getElementById("result").innerHTML = result;
 }
+
+function ExtractTag(mother,child)
+{
+
+var s1=child+"\""+" v=\""; 
+var s2="\"/";
+
+var s3=mother.match(new RegExp(s1 + "(.*)" + s2));
+
+return s3[1];
+     
+
+}
+
 
 
 </script>
