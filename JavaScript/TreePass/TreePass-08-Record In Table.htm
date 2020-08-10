@@ -43,13 +43,16 @@ table, th, td {
 
 <script>
 
-    
+var db=[];
+
+//for (var x = 0; x < 10; x++) { db[x] = new Object(); }
+
 function textToArray() 
 {
     //assign value of textarea to mytext
     var myText = document.getElementById("textArea").value;
 
-    var Count=0;
+    var x=0;
 
     //split mytext by nextline = "\n" 
     var myArray = myText.split("\n");
@@ -58,27 +61,29 @@ function textToArray()
     //to check the result
     var result = '';
     for(i=0;i<myArray.length;i++)
-    { var res = myArray[i].replace("<", " ");
-      var res1 =res.replace(">", " ");   
-      var res2 =res1.replace("\\", " ");   
+    {
 
-  if(res2.includes("species")) { Record.species = ExtractTag(res2,"species"); continue; }
-if(res2.includes("alt_name:mr")) { Record.altnamemr = ExtractTag(res2,"alt_name:mr"); continue; }
+        var res = myArray[i].replace("<", " ");
+        var res1 =res.replace(">", " ");   
+        var res2 =res1.replace("\\", " ");   
+
+        if(res2.includes("species")) { Record.species = ExtractTag(res2,"species"); continue; }
+        if(res2.includes("alt_name:mr")) { Record.altnamemr = ExtractTag(res2,"alt_name:mr"); continue; }
   
-  if(res2.includes("alt_name:en")) { Record.altnameen = ExtractTag(res2,"alt_name:en"); continue; }
-if(res2.includes("name:mr")) { Record.namemr = ExtractTag(res2,"name:mr"); continue; }
-  if(res2.includes("name")) { Record.name = ExtractTag(res2,"name"); continue; }
-  if(res2.includes("/node")) 
-{Add(Record.species,Record.name,Record.namemr,Record.altnameen,Record.altnamemr); 
+        if(res2.includes("alt_name:en")) { Record.altnameen = ExtractTag(res2,"alt_name:en"); continue; }
+        if(res2.includes("name:mr")) { Record.namemr = ExtractTag(res2,"name:mr"); continue; }
+        if(res2.includes("name")) { Record.name = ExtractTag(res2,"name"); continue; }
+        if(res2.includes("/node")) 
+        { Add(Record.species,Record.name,Record.namemr,Record.altnameen,Record.altnamemr); 
 
-Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="";
-Count++;
- }
+         Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="";
+         x++;
+        }
 
     }
 
-  //  var count=myArray.length;
-result+=Count.toString()+"  Trees" + "<br>";
+  //  var x=myArray.length;
+result+=x.toString()+"  Trees" + "<br>";
     document.getElementById("result").innerHTML = result;
 }
 

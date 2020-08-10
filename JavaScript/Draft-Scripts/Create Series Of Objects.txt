@@ -1,0 +1,28 @@
+function car(brand, color, year, price) {
+    this.brand = brand;
+    this.color = color;
+    this.year = year;
+    this.price = price;
+}
+
+var my = new Array();
+my.push(new car("Ford", "Black", 2017, 15000));
+my.push(new car("Hyundai", "Red", 2017, 17000));
+
+document.getElementById('ford').value = my[0].price;
+document.getElementById('hyundai').value = my[1].price;
+
+Ford price: <input type="text" id='ford'/><br><br>
+Hyndai price: <input type="text" id='hyundai'/>
+
+///////////////////////////////////////////////////////////
+
+
+var employees = [];
+
+for (var i = 0; i < 10; i++) {
+    employees.push({
+        Column1: 'column 1 of emp' + i,
+        Column2: 'column 1 of emp' + i
+    });
+}
