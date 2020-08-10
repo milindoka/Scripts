@@ -45,6 +45,14 @@ table, th, td {
 
 var db=[];
 
+         db[0] = new Object();
+         db[0].species="";
+         db[0].name="";
+         db[0].namemr=""; 
+         db[0].altnameen="";
+         db[0].altnamemr="";
+         db[0].counter=1;
+
 //for (var x = 0; x < 10; x++) { db[x] = new Object(); }
 
 function textToArray() 
@@ -52,14 +60,14 @@ function textToArray()
     //assign value of textarea to mytext
     var myText = document.getElementById("textArea").value;
 
-    var x=0;
+      var x=1;
 
     //split mytext by nextline = "\n" 
-    var myArray = myText.split("\n");
+      var myArray = myText.split("\n");
 
-   var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:"",counter:1 }; 
+     var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:"",counter:1 }; 
     //to check the result
-    var result = '';
+      var result = '';
     for(i=0;i<myArray.length;i++)
     {
 
@@ -75,33 +83,42 @@ function textToArray()
         if(res2.includes("name")) { Record.name = ExtractTag(res2,"name"); continue; }
         if(res2.includes("/node")) 
         {  
+      
+            var found=false;
+            var arrlen = db.length;
+             for (var j = 0; j < arrlen; j++)
+               {   //var result = string1.localeCompare(string2);
+                   if(Record.species===db[j].species)
+                    {  db[j].counter++; found=true; break; }
+          
+                 }
 
-         db[x] = new Object();
-         db[x].species=Record.species;
-         db[x].name=Record.name;
-         db[x].namemr=Record.namemr; 
-         db[x].altnameen=Record.altnameen;
-         db[x].altnamemr=Record.altnamemr;
-         db[x].counter=Record.counter;
-
-         Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="",Record.counter=1;
-         x++;
+              if(!found)
+             {
+                db[x] = new Object();
+               db[x].species=Record.species;
+               db[x].name=Record.name;
+               db[x].namemr=Record.namemr; 
+               db[x].altnameen=Record.altnameen;
+               db[x].altnamemr=Record.altnamemr;
+               db[x].counter=Record.counter;
+                Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="",Record.counter=1;
+                x++;
+                }
         }
-
-    }
-
-var arrayLength = db.length;
-for (var i = 0; i < arrayLength; i++) {
-    Add(db[i].species,db[i].name,db[i].namemr,db[i].altnameen,db[i].altnamemr,db[i].counter);
+     } //// end of xml array loop
+   var arrayLength = db.length;
+   for (var i = 0; i < arrayLength; i++) 
+        {  alert(arrayLength);
+            Add(db[i].species,db[i].name,db[i].namemr,db[i].altnameen,db[i].altnamemr,db[i].counter);
     //Do something
-}
-
+         }
 
 
   //  var x=myArray.length;
-result+=x.toString()+"  Trees" + "<br>";
+    result+=x.toString()+"  Trees" + "<br>";
     document.getElementById("result").innerHTML = result;
-}
+} ///end of main function
 
 function ExtractTag(mother,child)
 {
@@ -112,7 +129,7 @@ var s2="\"/";
 var s3=mother.match(new RegExp(s1 + "(.*)" + s2));
 
 return s3[1];
-     
+      
 
 }
 
@@ -125,7 +142,7 @@ function Add(c1,c2,c3,c4,c5,c6) {
   var cell3 = row.insertCell(2);
   var cell4 = row.insertCell(3);
   var cell5 = row.insertCell(4);
-  var cell6 = row.insertCell(5);
+  var cell6 = row.insertCell(5); 
   
   cell1.innerHTML = c1;
   cell2.innerHTML = c2;
