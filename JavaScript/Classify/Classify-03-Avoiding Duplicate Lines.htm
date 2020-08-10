@@ -43,7 +43,8 @@ table, th, td {
 
 <script>
 
-    
+var db={};   
+
 function textToArray() 
 {
     //assign value of textarea to mytext
@@ -54,19 +55,29 @@ function textToArray()
     //split mytext by nextline = "\n" 
     var myArray = myText.split("\n");
 
-   var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:""}; 
+ //  var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:""}; 
     //to check the result
     var result = '';
     for(i=0;i<myArray.length;i++)
     { var res = myArray[i];
 
+if(db[res]){ db[res].counter++; } else {res.counter=1;db[res]=res; }
+
  // Add(Record.species,Record.name,Record.namemr,Record.altnameen,Record.altnamemr); 
-Add(res,"a","a","a","a"); 
-Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="";
+//Add(res,"a","a","a","a"); 
+
+
+
+
 Count++;
- 
 
     }
+
+const keys = Object.keys(db)
+for (const key of keys) {
+  Add(key,key.counter,"a","a","a"); 
+}
+
 
   //  var count=myArray.length;
 result+=Count.toString()+"  Trees" + "<br>";
