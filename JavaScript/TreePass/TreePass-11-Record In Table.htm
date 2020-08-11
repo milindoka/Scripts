@@ -86,39 +86,35 @@ function textToArray()
       
             var found=false;
             var arrlen = db.length;
-             for (var j = 0; j < arrlen; j++)
+             for (var j =0; j < arrlen; j++)
                {   //var result = string1.localeCompare(string2);
                    if(Record.species===db[j].species)
                     {  db[j].counter++; found=true; break; }
           
                  }
 
-              if(!found)
-             {
+            if(found) { Record.species="";  Record.name=""; Record.namemr=""; Record.altnameen="";      	Record.altnamemr="";  	       Record.counter=1; continue;}
+         ///else new add new tree
                db[x] = new Object();
                db[x].species=Record.species;
                db[x].name=Record.name;
                db[x].namemr=Record.namemr; 
                db[x].altnameen=Record.altnameen;
                db[x].altnamemr=Record.altnamemr;
-               db[x].counter=Record.counter;
-                Record.species="";Record.name="";Record.namemr="";Record.altnameen="";Record.altnamemr="",Record.counter=1;
-                x++;
-                }
+               db[x].counter=1;
+               Record.species="";  Record.name=""; Record.namemr=""; Record.altnameen=""; Record.altnamemr="";  	       Record.counter=1;
+               x++;
         }  /// end of if(res2.includes("/node")) 
      
-
      } //// end of xml array loop
+   
+   /// classification complete, display table fromdata
    var arrayLength = db.length;
    for (var i = 0; i < arrayLength; i++) 
         { // alert(arrayLength);
             Add(db[i].species,db[i].name,db[i].namemr,db[i].altnameen,db[i].altnamemr,db[i].counter);
-    //Do something
          }
-
-
-  //  var x=myArray.length;
-    result+=x.toString()+"  Trees" + "<br>";
+    result+=x.toString()+" Type of Trees" + "<br>";
     document.getElementById("result").innerHTML = result;
 } ///end of texttoarray function
 
