@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+
+<body>
+
+<h4>TreePass Script</h4>
+
+<p>This Script processes OSM tree data exported from  https://overpass-turbo.eu/ </p>
+<p>Paste data in the following box and press the Process button.</p>
+<p id="demo"></p>
+
+<div>
+    <textarea id="textArea" name="textarea1" placeholder="Start here..."  rows="4" cols="50"></textarea>
+    <input type="button" value="Process" onclick="textToArray()" />
+ </div>
+
+
+<h4>Processed Trees Output</h4>
+
+<table id="myTable" style="width:100%">
+  <tr>
+    <th>Species</th>
+    <th>Name</th> 
+    <th>Name:Mr</th>
+    <th>Alt Name:En</th>
+    <th>Alt Name:Mr</th>
+    <th>Count</th>
+  </tr>
+</table>
+
+<!--show array result-->
+<p id="result"></p>
+
+<script>
+
+var db=[];
+
+         db[0] = new Object();
+         db[0].species="";
+         db[0].name="";
+         db[0].namemr=""; 
+         db[0].altnameen="";
+         db[0].altnamemr="";
+         db[0].counter=1;
+
+//for (var x = 0; x < 10; x++) { db[x] = new Object(); }
+
+function textToArray() 
+{
+    //assign value of textarea to mytext
+    var myText = document.getElementById("textArea").value;
+
+      var x=1;
+      var Totaltrees=0;
+
+    //split mytext by nextline = "\n" 
+      var myArray = myText.split("\n");
+
+     var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:"",counter:1 }; 
+    //to check the result
+      var result = '';
+    for(i=0;i<myArray.length;i++)
+    {
+
+        var res = myArray[i].replace("<", " ");
+        var res1 =res.replace(">", " ");   
+        var res2 =res1.replace("\\", " ");   
+
+        if(res2.includes("species")) { Record.species = ExtractTag(res2,"species"); continue; }
+        if(res2.includes("alt_name:mr")) { Record.altnamemr = ExtractTag(res2,"alt_name:mr"); continue; }
+  
+        if(res2.includes("alt_name:en")) { Record.altnameen = ExtractTag(res2,"alt_name:en"); continue; }
+        if(res2.includes("name:mr")) { Record.namemr = ExtractTag(res2,"name:mr"); continue; }
+        if(res2.includes("name")) { Record.name = ExtractTag(res2,"name"); continue; }
+        if(res2.includes("/node")) 
+        {  
+      
+            var found=false;
+            var arrlen = db.length;
+             for (var j =0; j < arrlen; j++)
+               {   //var result = string1.localeCompare(string2);
+                   if(Record.species===db[j].species)
+                    {  db[j].counter++; found=true; break; }
+          
+                 }
+
+            if(found) { Record.species="";  Record.name=""; Record.namemr=""; Record.altnameen="";      			Record.altnamemr="";  Totaltrees++;  Record.counter=1; continue;}
+         ///else new add new tree
+               db[x] = new Object();
+               db[x].species=Record.species;
+               db[x].name=Record.name;
+               db[x].namemr=Record.namemr; 
+               db[x].altnameen=Record.altnameen;
+               db[x].altnamemr=Record.altnamemr;
+               db[x].counter=1;
+               Record.species="";  Record.name=""; Record.namemr=""; Record.altnameen=""; Record.altnamemr="";  	       Record.counter=1;
+               x++; Totaltrees++; 
+        }  /// end of if(res2.includes("/node")) 
+     
+     } //// end of xml array loop
+   
+   /// classification complete, display table fromdata
+   var arrayLength = db.length;
+   for (var i = 0; i < arrayLength; i++) 
+        { // alert(arrayLength);
+            Add(db[i].species,db[i].name,db[i].namemr,db[i].altnameen,db[i].altnamemr,db[i].counter);
+         }
+    result+=x.toString()+" Type of Trees" + "<br>" + "Total Trees : "+ Totaltrees.toString();
+    document.getElementById("result").innerHTML = result;
+} ///end of texttoarray function
+
+//// help functions
+function ExtractTag(mother,child)
+{
+
+var s1=child+"\""+" v=\""; 
+var s2="\"/";
+
+var s3=mother.match(new RegExp(s1 + "(.*)" + s2));
+
+return s3[1];
+      
+
+}
+
+
+function Add(c1,c2,c3,c4,c5,c6) {
+  var table = document.getElementById("myTable");
+  var row = table.insertRow(1);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  var cell6 = row.insertCell(5); 
+  
+  cell1.innerHTML = c1;
+  cell2.innerHTML = c2;
+  cell3.innerHTML = c3;
+  cell4.innerHTML = c4;
+  cell5.innerHTML = c5;
+  cell6.innerHTML = c6;
+}
+
+
+</script>
+
+</body>
+</html>
+
