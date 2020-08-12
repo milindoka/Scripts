@@ -48,7 +48,7 @@ var db=[];
 
          db[0] = new Object();
          db[0].species="";
-         db[0].name="";
+         db[0].name="Unknown";
          db[0].namemr=""; 
          db[0].altnameen="";
          db[0].altnamemr="";
@@ -85,7 +85,7 @@ function textToArray()
         if(res2.includes("name")) { Record.name = ExtractTag(res2,"name"); continue; }
         if(res2.includes("/node")) 
         {  
-      
+            
             var found=false;
             var arrlen = db.length;
              for (var j =0; j < arrlen; j++)
@@ -96,7 +96,7 @@ function textToArray()
                  }
 
             if(found) { Record.species="";  Record.name=""; Record.namemr=""; Record.altnameen="";      			Record.altnamemr="";  Totaltrees++;  Record.counter=1; continue;}
-         ///else new add new tree
+         ///else new, add new tree
                db[x] = new Object();
                db[x].species=Record.species;
                db[x].name=Record.name;
