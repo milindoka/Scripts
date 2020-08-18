@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Overpass API 0.7.56.6 474850e8">
+<note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
+<meta osm_base="2020-08-18T05:18:03Z"/>
+
+  <node id="3652796548" lat="13.0004082" lon="77.6237427">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796549" lat="13.0005650" lon="77.6237936">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796550" lat="13.0004925" lon="77.6237662">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796551" lat="13.0003932" lon="77.6237735">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796552" lat="13.0003736" lon="77.6238258">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796553" lat="13.0003867" lon="77.6238855">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796554" lat="13.0004213" lon="77.6238808">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796555" lat="13.0004527" lon="77.6238936">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796556" lat="13.0004821" lon="77.6239043">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652796557" lat="13.0005108" lon="77.6239157">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652805839" lat="13.0003886" lon="77.6240914">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652805840" lat="13.0003383" lon="77.6240780">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652805841" lat="13.0003200" lon="77.6240659">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826807" lat="13.0003030" lon="77.6240371">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826808" lat="13.0003292" lon="77.6239620">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826809" lat="13.0003325" lon="77.6239485">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826810" lat="13.0004389" lon="77.6237963">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826811" lat="13.0005664" lon="77.6238473">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826813" lat="13.0005598" lon="77.6238386">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826815" lat="13.0005481" lon="77.6238869">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826816" lat="13.0005311" lon="77.6239794">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826817" lat="13.0004239" lon="77.6240853">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826818" lat="13.0004481" lon="77.6240920">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826819" lat="13.0004246" lon="77.6240800">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826820" lat="13.0005069" lon="77.6240505">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826821" lat="13.0003775" lon="77.6240069">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826822" lat="13.0004174" lon="77.6239941">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826823" lat="13.0004409" lon="77.6240230">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652826824" lat="13.0004376" lon="77.6240149">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652850219" lat="13.0003697" lon="77.6243294">
+    <tag k="name" v="Coconut"/>
+    <tag k="name:kn" v="ತೆಂಗಿನ ಮರ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652850378" lat="13.0004207" lon="77.6243951">
+    <tag k="name" v="Coconut"/>
+    <tag k="name:kn" v="ತೆಂಗಿನ ಮರ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652854073" lat="13.0005108" lon="77.6241725">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652854074" lat="13.0005356" lon="77.6241296">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652854075" lat="13.0005370" lon="77.6241511">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652854076" lat="13.0006781" lon="77.6238922">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652854077" lat="13.0007748" lon="77.6234456">
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="name" v="Delonix regia"/>
+    <tag k="name:hi" v="Gulmohoar"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652856328" lat="13.0007761" lon="77.6234617">
+    <tag k="name" v="Coconut"/>
+    <tag k="name:kn" v="ತೆಂಗಿನ ಮರ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652860090" lat="13.0006075" lon="77.6239512">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652860091" lat="13.0005892" lon="77.6239995">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652860092" lat="13.0006363" lon="77.6237809">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652860093" lat="13.0006702" lon="77.6235194">
+    <tag k="name" v="Coconut"/>
+    <tag k="name:kn" v="ತೆಂಗಿನ ಮರ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652863924" lat="13.0005481" lon="77.6235553">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652866625" lat="13.0007199" lon="77.6235864">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652866626" lat="13.0006232" lon="77.6241913">
+    <tag k="name" v="Bamboo"/>
+    <tag k="name:kn" v="ಬಿದಿರು"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872499" lat="13.0012465" lon="77.6240062">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872500" lat="13.0011399" lon="77.6240048">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Madhuca"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872501" lat="13.0010835" lon="77.6239882">
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Chiristmas Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872502" lat="13.0011252" lon="77.6239440">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872503" lat="13.0010074" lon="77.6238993">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="African Tulip Tree"/>
+    <tag k="name:kn" v="ನೀರುಕಾಯಿ ಮರ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872504" lat="13.0007578" lon="77.6238131">
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872505" lat="13.0009562" lon="77.6238926">
+    <tag k="name" v="Silver Oak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872513" lat="13.0008636" lon="77.6238976">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Philipine Tung Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652872514" lat="13.0008819" lon="77.6239164">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Philipine Tung Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652876853" lat="13.0007924" lon="77.6239130">
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Indian Beech"/>
+    <tag k="name:hi" v="करंज"/>
+    <tag k="name:kn" v="ಹೊಂಗೆ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652876855" lat="13.0009264" lon="77.6240102">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="needleleaved"/>
+    <tag k="name" v="Christmas Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="3652876868" lat="13.0011993" lon="77.6241738">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Jacaranda"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817858256" lat="13.0011559" lon="77.6241577">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Spathodea campanulata"/>
+    <tag k="species:en" v="African Tulip Tree"/>
+  </node>
+  <node id="4817858257" lat="13.0011775" lon="77.6242429">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Filicium decipiens"/>
+    <tag k="species:en" v="Fern Tree"/>
+  </node>
+  <node id="4817858258" lat="13.0011664" lon="77.6242771">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Filicium decipiens"/>
+    <tag k="species:en" v="Fern Tree"/>
+  </node>
+  <node id="4817965463" lat="13.0011304" lon="77.6242311">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Rain Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965464" lat="13.0010978" lon="77.6241453">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Rain Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965465" lat="13.0009301" lon="77.6242043">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Spathodea campanulata"/>
+    <tag k="species:en" v="African Tulip Tree"/>
+  </node>
+  <node id="4817965466" lat="13.0009087" lon="77.6241880">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Java Plum"/>
+    <tag k="name:kn" v="ನೇರಳೆ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965467" lat="13.0008785" lon="77.6241864">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Manogany"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965468" lat="13.0008530" lon="77.6241798">
+    <tag k="denotation" v="park"/>
+    <tag k="name" v="Bauhinia"/>
+    <tag k="name:kn" v="ಬಸವನಪಾದ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965469" lat="13.0007911" lon="77.6241668">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Filicium decipiens"/>
+    <tag k="species:en" v="Fern Tree"/>
+  </node>
+  <node id="4817965470" lat="13.0008245" lon="77.6241741">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="deciduous"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Indian Almond"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965471" lat="13.0007244" lon="77.6241399">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_cycle" v="evergreen"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="natural" v="tree"/>
+    <tag k="species" v="Filicium decipiens"/>
+    <tag k="species:en" v="Fern Tree"/>
+  </node>
+  <node id="4817965472" lat="13.0007720" lon="77.6241505">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Copper Pod"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965473" lat="13.0007013" lon="77.6241228">
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Jacaranda"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965474" lat="13.0007355" lon="77.6240323">
+    <tag k="name" v="Champaka"/>
+    <tag k="name:kn" v="ಸಂಪಿಗೆ"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965475" lat="13.0010135" lon="77.6240429">
+    <tag k="name" v="Silver Oak"/>
+    <tag k="natural" v="tree"/>
+  </node>
+  <node id="4817965476" lat="13.0007283" lon="77.6238855">
+    <tag k="denotation" v="park"/>
+    <tag k="leaf_type" v="broadleaved"/>
+    <tag k="name" v="Nile Tulip Tree"/>
+    <tag k="natural" v="tree"/>
+  </node>
+
+</osm>
+
