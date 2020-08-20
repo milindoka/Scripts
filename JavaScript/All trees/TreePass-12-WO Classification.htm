@@ -50,6 +50,7 @@ table, th, td {
 
 var ki=["natural","species"];
 
+
 function begin() 
 {
     //assign value of textarea to mytext
@@ -91,6 +92,21 @@ Count=ki.length;
   //  var count=myArray.length;
 result+=Count.toString()+"  Trees" + "<br>";
 document.getElementById("result").innerHTML = result;
+}
+/// ceate matrix table with ki.length columns
+
+function CreateArray()
+{
+  var x = new Array(3);
+  for (var i = 0; i <3; i++) 
+  {
+    x[i] = new Array(ki.length);
+  }
+
+  for(var j= 0;j<ki.length;j++
+      { x[0][j]=ki[j]; //column titles 
+      }
+
 }
 
 
