@@ -2,6 +2,10 @@
 <html>
 
 <head>
+
+<script src="Between.js" type="text/javascript"></script> 
+
+
 <style>
 table, th, td {
   border: 1px solid black;
@@ -21,7 +25,7 @@ table, th, td {
 
 <div>
     <textarea id="textArea" name="textarea1" placeholder="Start here..."  rows="4" cols="50"></textarea>
-    <input type="button" value="Process" onclick="Split()" />
+    <input type="button" value="Process" onclick="Start()" />
  </div>
 
 
@@ -44,29 +48,14 @@ table, th, td {
 
 <script>
 
-function Split()
+
+function Start()
 {
-  var m1=' k="denotation" v="park" '
-  var m2=' k="leaf_type" v="broadleaved" '
-  var m3='   k="name" v="Madhuca" '
-  var m4=' k="natural" v="tree"   '
- 
-//var firstvariable='k="'; 
-//var secondvariable='" v='
-
-
-var firstvariable='v="'; 
-var secondvariable='"'
-
-
-var testRE= m1.match(new RegExp(firstvariable + "(.*)" + secondvariable));
-
-if (testRE && testRE.length > 1) //RegEx has found something and has more than one entry.
-{  
-    alert(testRE[1]); //is the matched group if found
+var str=key();
+alert(str);
+str=value();
+alert(str);
 }
-
-}    
 
 
 function textToArray() 
