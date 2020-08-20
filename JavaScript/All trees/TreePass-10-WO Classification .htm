@@ -48,6 +48,8 @@ table, th, td {
 
 <script>
 
+var ki=["natural","species"];
+//    ki[0]="XYZ";
 
 function start(m)
 {
@@ -65,29 +67,31 @@ function begin()
     //assign value of textarea to mytext
     var myText = document.getElementById("textArea").value;
 
-    var Count=0;
+    var keycount=2;
 
     //split mytext by nextline = "\n" 
     var myArray = myText.split("\n");
 
-   var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:""}; 
+   // var Record={name:"",species:"",namemr:"",altnameen:"",altnamemr:""}; 
     //to check the result
-    var result = '';
+     var result = '';
     for(i=0;i<myArray.length;i++)
     { var res = myArray[i].replace("<", " ");
       var res1 =res.replace(">", " ");   
       var res2 =res1.replace("\\", " ");   
       
-     start(res2);
-        
-     Count++;
+      var str=key(res2);
+      if(str==="") continue;
+      ki[keycount]=str;
+      keycount++;
+ //     alert(str);  
      }
 
-  
-
+Count=ki.length;
+//  alert(ki.length.toString);
   //  var count=myArray.length;
-//result+=Count.toString()+"  Trees" + "<br>";
-//    document.getElementById("result").innerHTML = result;
+result+=Count.toString()+"  Trees" + "<br>";
+document.getElementById("result").innerHTML = result;
 }
 
 
