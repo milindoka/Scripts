@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<script src="09.js" type="text/javascript"></script> 
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+
+<body>
+
+<h4>TreePass Script</h4>
+
+<p>This Script processes OSM tree data exported from  https://overpass-turbo.eu/ </p>
+<p>Paste data in the following box and press the Process button.</p>
+<p id="demo"></p>
+
+<div>
+    <textarea id="textArea" name="textarea1" placeholder="Start here..."  rows="4" cols="50"></textarea>
+    <input type="button" value="Process" onclick="begin()" />
+ </div>
+
+
+<h4>Processed Trees Output</h4>
+
+<table id="myTable" style="width:100%;font-size:10px">
+  
+</table>
+
+<!--show array result-->
+<p id="result"></p>
+
+<script>
+
+var ki=["natural","species"];
+var x = new Array(3);
+
+function begin() 
+{
+    //assign value of textarea to mytext
+    var myText = document.getElementById("textArea").value;
+
+    FillkeyArray(ki,myText);
+
+
+var result = '';
+Count=ki.length;
+//  alert(ki.length.toString);
+  //  var count=myArray.length;
+result+="Total " + Count.toString()+"  Keys" + "<br>";
+document.getElementById("result").innerHTML = result;
+CreateArray(ki.length);
+CreateTable(3,ki.length);
+}
+/// ceate matrix table with ki.length columns
+
+function CreateArray(col) ///
+{
+  
+  
+ // for (var i = 0; i <col; i++) 
+ // {
+ //   x[i] = new Array(ki.length);
+ // }
+   x[0]=new Array(col);
+  for(var j= 0;j<col;j++)
+      { x[0][j]=ki[j]; //column titles 
+      }
+
+  for(var i=1;i<3;i++)
+     { x[i]=new Array(col);
+       for(var j=0;j<col;j++)
+         { 
+           x[i][j]="A"; //cell contents 
+        //  alert(x[i][j]);           
+         }
+     }
+
+
+}
+
+
+function CreateTable(rn,cn)
+{
+  
+ for(var r=0;r<rn;r++)
+  {
+   var xx=document.getElementById('myTable').insertRow(r);
+   for(var c=0;c<cn;c++)  
+    {
+     var y=  xx.insertCell(c);
+     //y.innerHTML="Row-"+r+" Column-"+c; 
+    y.innerHTML=x[r][c];
+     }
+   }
+}
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
