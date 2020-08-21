@@ -60,29 +60,6 @@ TreeCount=x.length-1;
  "<br>Total "+TreeCount.toString()+" Trees";
 document.getElementById("result").innerHTML = result;
 }
-/// ceate matrix table with ki.length columns
-
-
-function DisplayMatrixInTable(rn,cn,ar)
-{
-  
- for(var r=0;r<rn;r++)
-  {
-   var xx=document.getElementById('myTable').insertRow(r);
-
-  var z=  xx.insertCell(0);
-     //y.innerHTML="Row-"+r+" Column-"+c; 
-    if(r===0) z.innerHTML="Sr"; else z.innerHTML=r.toString();   
-   for(var c=0;c<cn;c++)  
-    {
-     var y=  xx.insertCell(c+1);
-     //y.innerHTML="Row-"+r+" Column-"+c; 
-     y.innerHTML=ar[r][c];
-     }
-   }
-   
-}
-
 
 </script>
 
