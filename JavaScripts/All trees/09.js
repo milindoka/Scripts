@@ -101,7 +101,7 @@ function Fillmatrix(keyarray,raw_xml_data,main)///main is 2d array with title ke
      // var found=false;                   /// search appropriate column 
       
       for (var j =0; j < totalkeys; j++)
-               {   //var result = string1.localeCompare(string2);
+               {   //var result = string1.localeCinueompare(string2);
                    if(str===keyarray[j])  // found key
                     {  main[currentrecord][j]=vtr;
                         
