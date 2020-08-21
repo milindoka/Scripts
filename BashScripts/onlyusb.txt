@@ -1,0 +1,5 @@
+#!/bin/sh
+echo milind | sudo -S  modprobe -r psmouse
+
+
+

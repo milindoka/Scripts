@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=onlyusbmouse        
+Comment=script
+Exec=gnome-terminal -e "bash -c 'echo milind | sudo -S  modprobe -r psmouse;exit;$SHELL'"     
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=Application;
