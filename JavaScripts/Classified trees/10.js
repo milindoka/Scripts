@@ -67,7 +67,7 @@ function Fillmatrix(keyarray,raw_xml_data,main)///main is 2d array with title ke
        { main[0][j]=keyarray[j];    // assign titles 
        }
 
-    var currentrecord=1;                       ///set record index next to tile
+    var currentrecord=1;                       ///set record index next to title row
     
     main[currentrecord]=new Array(totalkeys);  ///create first empty record,  columns=totalkeys 
 
@@ -113,8 +113,31 @@ function Fillmatrix(keyarray,raw_xml_data,main)///main is 2d array with title ke
 }
 
 
-/// ceate table with ki.length columns
-/// and copy matrix values
+function FillClasseifiedMatrix(source,target)  //// classify from source and fill target
+{  var totalkeys=source[0].length;     ///total keys=columns
+   alert(totalkeys);
+     target[0]=new Array(totalkeys+1); /// Add first row as title row+last column : count
+     for(var j= 0;j<totalkeys;j++)
+       { target[0][j]=source[0][j];       /// assign titles 
+       }
+    target[0][totalkeys]="Count";      /// last title
+
+  for(var i=1;i<source.length;i++)
+     { target[i]=new Array(totalkeys+1);
+       for(var j= 0;j<totalkeys;j++)
+        { 
+         target[i][j]=source[i][j];       /// assign titles 
+        }
+       target[i][totalkeys]="1";       //last column entry
+     }
+  
+
+}
+
+
+
+
+/// Display table from matrix
 function DisplayMatrixInTable(rn,cn,ar)
 {
   

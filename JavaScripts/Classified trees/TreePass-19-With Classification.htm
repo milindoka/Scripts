@@ -40,7 +40,11 @@ table, th, td {
 <script>
 
 var ki=["name","species"];
-var x = new Array(1);
+
+var x = new Array(1);  ///2D matrix to store tree table before display
+
+var z = new Array(1);  ///2D matrix to store classified tree table
+                       ///created from x  
 
 function begin() 
 {    var result = '';
@@ -49,10 +53,15 @@ function begin()
 
     FillkeyArray(ki,myText); // collect distinct keys
     
-document.getElementById("result").innerHTML = result;
-//CreateArray(ki.length);
-Fillmatrix(ki,myText,x);
-DisplayMatrixInTable(x.length-1,ki.length,x);
+
+ Fillmatrix(ki,myText,x); /// Fill the table in matrix in x
+                         /// x  is 2D array
+
+FillClasseifiedMatrix(x,z);//// classify from x and fill z
+
+///DisplayMatrixInTable(x.length-1,ki.length,x);
+
+DisplayMatrixInTable(z.length-1,ki.length+1,z);
 
 KeyCount=ki.length;
 TreeCount=x.length-2;
