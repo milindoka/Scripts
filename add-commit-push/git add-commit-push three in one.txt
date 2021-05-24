@@ -1,0 +1,23 @@
+create a text file and name it "makefile"
+
+add the content as 4 lines exactly as below
+note that there is tab in last three lines, 
+(space will not work, it will give error missing speparator) 
+==============
+git:
+	git add .
+	git commit -m "$m"
+	git push -u origin master
+====================
+
+put the file in git project folder top directory.
+now from the terminal you can give only one command
+
+make git m="message"	
+
+Note you can install make package if not already installed :
+
+sudo apt-get install make
+
+
+
