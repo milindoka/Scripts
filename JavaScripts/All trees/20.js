@@ -1,6 +1,15 @@
 ////// return key
 function key(m)
 {
+
+var fv='id="';
+var sv='" lon="';
+///find mid string of two strings
+var testRE= m.match(new RegExp(fv + "(.*)" + sv));
+///if nonempty then this is location key
+if (testRE && testRE.length > 1)  return "Location";     //RegEx has found location coordinates
+
+
 //var m=' k="denotation" v="park" '
 var firstvariable='k="'; 
 var secondvariable='" v='
@@ -9,6 +18,11 @@ var testRE= m.match(new RegExp(firstvariable + "(.*)" + secondvariable));
 
 if (testRE && testRE.length > 1)  return testRE[1];     //RegEx has found key so return it one entry
 
+////
+///check if it is location
+///id="7618267427" lat="19.1790883" lon="72.9694177"
+
+
 return("");   //else return empty key
     
 }
@@ -16,6 +30,16 @@ return("");   //else return empty key
 
 function value(m)
 {
+///check if it is location
+///id="7618267427" lat="19.1790883" lon="72.9694177"
+
+var fv='" lat="';
+var sv='" lon="';
+///find mid string of two strings
+var testRE= m.match(new RegExp(fv + "(.*)" + sv));
+///if nonempty then this is location key
+if (testRE && testRE.length > 1)   return testRE[1];     //RegEx has found location coordinates
+
 //var m=' k="denotation" v="park" '
 var firstvariable='v="'; 
 var secondvariable='"'
@@ -23,7 +47,9 @@ var secondvariable='"'
 var testRE= m.match(new RegExp(firstvariable + "(.*)" + secondvariable));
 
 if (testRE && testRE.length > 1)  return testRE[1];     //RegEx has found key so return it one entry
- return("");   //else return empty key    
+
+                        
+    return("");   //else return empty key    
 }
 
 
