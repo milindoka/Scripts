@@ -39,11 +39,11 @@ var sv='" lon="';
 var lat= m.match(new RegExp(fv + "(.*)" + sv));
 
 ///if nonempty then this is location key
-  fv='" lon="';   
-  sv='"';
-  var lon=m.match(new RegExp(fv + "(.*)" + sv));     
+//     fv='" lon="';
+//     sv='"';
+//var lon=m.match(new RegExp(fv + "(.*)" + sv));     
 
-if (lat && lat.length > 1 && lon && lon.length>1)   return   "https://osmand.net/go?"+ "lat="+lat[1] +'\&' +"lon="+lon[1]+'\&z=22';   //{"lat="+lat[1]+"&"+"lon="+lon[1]};  
+if (lat && lat.length > 1)   return    lat[1];   //{"lat="+lat[1]+"&"+"lon="+lon[1]};  //RegEx has found location coordinates
 
 //var m=' k="denotation" v="park" '
 var firstvariable='v="'; 
