@@ -41,11 +41,9 @@ var lat= m.match(new RegExp(fv + "(.*)" + sv));
 ///if nonempty then this is location key
   fv='" lon="';   
   sv='"';
-  var lon=m.match(new RegExp(fv + "(.*)" + sv));
-  
- //// clickable location      
-//////<a href="https://www.w3schools.com/">Visit W3Schools.com!</a>
-if (lat && lat.length > 1 && lon && lon.length>1)   return  '\<a href=\"'+"https://osmand.net/go?"+ "lat="+lat[1] +'\&' +"lon="+lon[1]+'\&z=22'+'\"'+'\>'+"Location"+"\<\/a\>";  
+  var lon=m.match(new RegExp(fv + "(.*)" + sv));     
+
+if (lat && lat.length > 1 && lon && lon.length>1)   return   "https://osmand.net/go?"+ "lat="+lat[1] +'\&' +"lon="+lon[1]+'\&z=22';   //{"lat="+lat[1]+"&"+"lon="+lon[1]};  
 
 //var m=' k="denotation" v="park" '
 var firstvariable='v="'; 
