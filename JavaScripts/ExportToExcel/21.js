@@ -44,9 +44,8 @@ var lat= m.match(new RegExp(fv + "(.*)" + sv));
   var lon=m.match(new RegExp(fv + "(.*)" + sv));
   
  //// clickable location      
- ////// <a href="https://www.w3schools.com" target="_blank">Visit W3Schools</a> 
 //////<a href="https://www.w3schools.com/">Visit W3Schools.com!</a>
-if (lat && lat.length > 1 && lon && lon.length>1)   return  '\<a href=\"'+"https://osmand.net/go?"+ "lat="+lat[1] +'\&' +"lon="+lon[1]+'\&z=22 \"'+'target=\"\_blank\"'+ '\"'+'\>'+"Location"+"\<\/a\>";  
+if (lat && lat.length > 1 && lon && lon.length>1)   return  '\<a href=\"'+"https://osmand.net/go?"+ "lat="+lat[1] +'\&' +"lon="+lon[1]+'\&z=22'+'\"'+'\>'+"Location"+"\<\/a\>";  
 
 //var m=' k="denotation" v="park" '
 var firstvariable='v="'; 
@@ -169,5 +168,35 @@ function DisplayMatrixInTable(rn,cn,ar)
 }
 
 
-
+function exportToExcel(tableID, filename = '')
+{
+    var downloadurl;
+    var dataFileType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'export_excel_data.xls';
+    
+    // Create download link element
+    downloadurl = document.createElement("a");
+    
+    document.body.appendChild(downloadurl);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTMLData], {
+            type: dataFileType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+    
+        // Setting the file name
+        downloadurl.download = filename;
+        
+        //triggering the function
+        downloadurl.click();
+    }
+}
 
