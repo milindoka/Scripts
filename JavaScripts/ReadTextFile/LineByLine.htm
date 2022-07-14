@@ -2,26 +2,42 @@
 <html>
   
 <head>
-    <title>Read Line By Line</title>
+    <title>Display Each Line With Bullets</title>
 </head>
   
 <body>
+<p id="demo"></p>
+
   <input type="file" name="file" id="file" />
     <br>
       
+      
  <script type="text/javascript">
-    document.getElementById('file').onchange = function(){
+     let text = "start--";
+     let txt="qqq"
+    document.getElementById('file').onchange = function()
+    {
+ 
   var file = this.files[0];
   var reader = new FileReader();
   reader.onload = function(progressEvent){    
     var lines = this.result.split(/\r\n|\n/);
    for(var line = 0; line < lines.length-1; line++){
-      console.log(line + " --> "+ lines[line]);
+      text +=  "--!--" +lines[line] + "--!--";
+      window.alert(text);
     }
+     text += "--end";
+     
+     
   };
   reader.readAsText(file);
+  //window.alert(txt);
+  document.getElementById("demo").innerHTML = text;
+  
 };
+
     </script>
+   
 </body>
   
 </html>
