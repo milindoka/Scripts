@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <title>Read Line By Line</title>
+</head>
+  
+<body>
+  <input type="file" name="file" id="file" />
+    <br>
+   
+    <pre id="output"></pre>
+      
+    <script type="text/javascript">
+    document.getElementById('file').onchange = function(){
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function(progressEvent){    
+    var lines = this.result.split(/\r\n|\n/);
+   for(var line = 0; line < lines.length-1; line++){
+      console.log(line + " --> "+ lines[line]);
+    }
+  };
+  reader.readAsText(file);
+};
+    </script>
+</body>
+  
+</html>
