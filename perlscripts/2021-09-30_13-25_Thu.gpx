@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<gpx version="1.1" creator="OsmAnd~ 3.9.10" xmlns="http://www.topografix.com/GPX/1/1" xmlns:osmand="https://osmand.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>2021-09-30_13-25_Thu</name>
+  </metadata>
+  <trk>
+    <trkseg>
+      <trkpt lat="16.7238534" lon="73.6039269">
+        <ele>59.6</ele>
+        <time>2021-09-30T07:55:10Z</time>
+        <hdop>9.6</hdop>
+        <extensions>
+          <osmand:speed>0.3</osmand:speed>
+        </extensions>
+      </trkpt>
+      <trkpt lat="16.7238513" lon="73.6039138">
+        <ele>60.4</ele>
+        <time>2021-09-30T07:55:15Z</time>
+        <hdop>9.6</hdop>
+      </trkpt>
+      <trkpt lat="16.7238422" lon="73.6039188">
+        <ele>60.4</ele>
+        <time>2021-09-30T07:55:21Z</time>
+        <hdop>9.6</hdop>
+        <extensions>
+          <osmand:speed>1.2</osmand:speed>
+        </extensions>
+      </trkpt>
+      <trkpt lat="16.7238492" lon="73.6039679">
+        <ele>62.2</ele>
+        <time>2021-09-30T07:55:26Z</time>
+        <hdop>9.6</hdop>
+        <extensions>
+          <osmand:speed>0.4</osmand:speed>
+        </extensions>
+      </trkpt>
+      <trkpt lat="16.723833" lon="73.6039465">
+        <ele>62.3</ele>
+        <time>2021-09-30T07:55:32Z</time>
+        <hdop>9.6</hdop>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

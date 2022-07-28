@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<gpx version="1.1" creator="OsmAnd~ 3.9.10" xmlns="http://www.topografix.com/GPX/1/1" xmlns:osmand="https://osmand.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>2021-10-03_13-23_Sun</name>
+  </metadata>
+  <trk>
+    <trkseg>
+      <trkpt lat="16.9897602" lon="73.3157394">
+        <ele>3.2</ele>
+        <time>2021-10-03T07:53:55Z</time>
+        <hdop>9.6</hdop>
+        <extensions>
+          <osmand:speed>6.8</osmand:speed>
+        </extensions>
+      </trkpt>
+      <trkpt lat="16.9900488" lon="73.3157986">
+        <ele>7.7</ele>
+        <time>2021-10-03T07:54:00Z</time>
+        <hdop>9.6</hdop>
+        <extensions>
+          <osmand:speed>5.3</osmand:speed>
+        </extensions>
+      </trkpt>
+      <trkpt lat="16.9901846" lon="73.3158408">
+        <ele>11</ele>
+        <time>2021-10-03T07:54:06Z</time>
+        <hdop>9.6</hdop>
+        <extensions>
+          <osmand:speed>0.7</osmand:speed>
+        </extensions>
+      </trkpt>
+      <trkpt lat="16.9901925" lon="73.3158367">
+        <ele>13.7</ele>
+        <time>2021-10-03T07:54:11Z</time>
+        <hdop>9.6</hdop>
+      </trkpt>
+      <trkpt lat="16.9901689" lon="73.3158276">
+        <ele>19.1</ele>
+        <time>2021-10-03T07:54:17Z</time>
+        <hdop>9.6</hdop>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

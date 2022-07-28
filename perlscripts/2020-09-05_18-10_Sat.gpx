@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<gpx version="1.1" creator="OsmAnd~ 3.3.8" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>2020-09-05_18-10_Sat</name>
+  </metadata>
+  <trk>
+    <trkseg>
+      <trkpt lat="19.1750398" lon="72.9733394">
+        <ele>-65</ele>
+        <time>2020-09-05T12:40:50Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+      <trkpt lat="19.1750402" lon="72.9733385">
+        <ele>-65</ele>
+        <time>2020-09-05T12:40:53Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+      <trkpt lat="19.1750402" lon="72.9733382">
+        <ele>-65</ele>
+        <time>2020-09-05T12:40:56Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+      <trkpt lat="19.1750403" lon="72.9733379">
+        <ele>-65</ele>
+        <time>2020-09-05T12:40:58Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="19.1750404" lon="72.9733377">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:00Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+      <trkpt lat="19.1750403" lon="72.9733377">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:02Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+      <trkpt lat="19.1750403" lon="72.9733375">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:04Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="19.1750402" lon="72.9733376">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:05Z</time>
+        <hdop>3</hdop>
+      </trkpt>
+      <trkpt lat="19.1750403" lon="72.9733375">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:08Z</time>
+        <hdop>4</hdop>
+      </trkpt>
+      <trkpt lat="19.1750405" lon="72.9733374">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:10Z</time>
+        <hdop>4</hdop>
+      </trkpt>
+      <trkpt lat="19.1750311" lon="72.9733335">
+        <ele>-65</ele>
+        <time>2020-09-05T12:41:13Z</time>
+        <hdop>5</hdop>
+        <extensions>
+          <speed>0.301</speed>
+        </extensions>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
