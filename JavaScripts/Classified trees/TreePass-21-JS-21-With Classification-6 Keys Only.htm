@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<script src="21.js" type="text/javascript"></script> 
+
+<style>
+
+body { font-size: 22px; }
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+
+<body>
+
+<h3>TreePass Script</h3>
+
+<p>This Script processes OSM tree data exported from  <a href="https://overpass-turbo.eu/">https://overpass-turbo.eu/</a> </p>
+<p>Paste data in the following box and press the Process button.</p>
+<p id="demo"></p>
+
+<div>
+    <textarea id="textArea" name="textarea1" placeholder="Start here..."  rows="4" cols="50"></textarea>
+    <input type="button" value="Process" onclick="begin()" />
+ </div>
+
+
+<h3>Classified Tree Data</h3>
+
+<table id="myTable" style="width:100%">
+  
+</table>
+
+<!--show array result-->
+<p id="result"></p>
+
+<script>
+
+var ki=["name","species"];
+
+var x = new Array(1);  ///2D matrix to store tree table before display
+
+var z = new Array(1);  ///2D matrix to store classified tree table
+                       ///created from x  
+
+function begin() 
+{    var result ='';
+    //assign value of textarea to mytext
+    var myText = document.getElementById("textArea").value;
+
+    FillkeyArray(ki,myText); // collect distinct keys
+    
+
+ Fillmatrix(ki,myText,x); /// Fill the table in matrix in x
+                         /// x  is 2D array
+
+FillClasseifiedMatrix(x,z);//// classify from x and fill z
+
+///DisplayMatrixInTable(x.length-1,ki.length,x);
+
+DisplayMatrixInTable(z.length-1,ki.length+1,z);
+
+KeyCount=ki.length+1;
+TreeCount=x.length-2;
+ result+="Total " + KeyCount.toString()+"  Keys" + 
+ "<br>Total "+TreeCount.toString()+" Trees";
+document.getElementById("result").innerHTML = result;
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
