@@ -7,7 +7,22 @@
 
 <style>
 
-body { font-size: 22px; }
+body {
+font-size: 22px;
+   position: relative;
+  animation: mymove 60s;
+  animation-timing-function: linear;
+animation-delay: 8s;
+animation-fill-mode: forwards;
+}
+
+@keyframes mymove {
+  from {bottom: 0px;}
+  to {bottom: 18900px;}
+}
+
+
+body {  }
 
 table, th, td {
   border: 1px solid black;
@@ -45,7 +60,7 @@ table, th, td {
 
 <div id="right_col">
     <textarea id="textArea" name="textarea1" placeholder="Start here..."  rows="10" cols="50"></textarea>
-    <input type="button" value="Process" onclick="begin()" >
+    <input type="button" style="height:30px;width:80px" value="Process" onclick="begin()" >
  </div> 
  </div>
 
