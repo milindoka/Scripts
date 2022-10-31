@@ -1,0 +1,73 @@
+
+
+/* This is an example Overpass query for nodes having only tree tag by particular user (gte21 here) 
+ 
+
+node  (user:"gte21")
+  [natural=tree]
+  ({{bbox}});
+out;
+
+
+/* This is an example Overpass query for nodes having only tree tag by particular user and having start_date field. This ensures that the tree has been planted by a group and it is under observtion.  
+
+node  (user:"gte21")
+  [natural=tree][start_date]
+  ({{bbox}});
+out;
+
+
+
+/*
+This is an example Overpass query for nodes having only tree tag but missing name tag.
+We should generally tag trees which are identified. If identification is not known and you want to tag it.
+Give a name like Anolkhi so that one can later search and replace it with correct name. 
+
+*/
+node
+  [natural=tree] ["name"!~"."]
+  ({{bbox}});
+out;
+
+
+======== Standard query to list all trees in the view========
+
+node
+  [natural=tree] 
+  ({{bbox}});
+out;
+
+==============
+/*
+This is an example Overpass query for nodes having only tree tag but missing species tag. 
+*/
+node
+  [natural=tree] ["species"!~"."]
+  ({{bbox}});
+out;
+
+==============
+/*
+This is an example Overpass query for nodes having name=Copperpod but missing species tag. 
+*/
+node
+  [name="Copperpod"] ["species"!~"."]
+  ({{bbox}});
+out;
+
+
+/////////////////////////?????
+
+[out:json][timeout:25];
+(
+  node(user:"gte21")({{bbox}});
+  way(user:"gte21")({{bbox}});
+  relation(user:"gte21")({{bbox}});
+);
+out body;
+>;
+out skel qt;
+
+
+
+

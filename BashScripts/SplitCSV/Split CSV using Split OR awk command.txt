@@ -1,0 +1,239 @@
+Link
+
+https://www.baeldung.com/linux/split-file-with-header
+
+Text
+=========
+
+Split a File With the Header Line
+
+Last modified: August 27, 2021
+by Kai Yuan
+
+( If you have a few years of experience in the Linux ecosystem, and you’re interested in sharing that experience with the community, have a look at our Contribution Guidelines)
+
+1. Overview
+
+As we know, the split command can help us to split a big file into a number of small files by a given number of lines.
+
+However, if the input file contains a header line, we sometimes want the header line to be copied to each split file. By default, the split command is not able to do that.
+
+In this tutorial, we’ll discuss how to solve this problem.
+2. Introduction to the Problem
+
+A concrete example can help us to understand the problem quickly.
+
+First, let’s take a look at our input example. The tokyo_medal.tsv file holds the data of the top 10 from the Tokyo Olympics medal table:
+freestar
+
+$ cat tokyo_medal.tsv
+Rank	Country	Gold	Silver	Bronze	Total
+1	United States	39	41	33	113
+2	China	38	32	18	88
+3	Japan	27	14	17	58
+4	Great Britain	22	21	22	65
+5	ROC	20	28	23	71
+6	Australia	17	7	22	46
+7	Netherlands	10	12	14	36
+8	France	10	12	11	33
+9	Germany	10	11	16	37
+10	Italy	10	10	20	40
+
+As we can see in the output above, the file is a TSV file. Further, the file contains a header line to tell the meanings of the values in each column. It’s pretty common that a TSV or CSV file contains a header line.
+
+Now, our goal is to split the tokyo_medal.tsv file into pieces. Let’s say we want each piece to have three records. Moreover, each piece must have a header line as well.
+
+In this tutorial, we’ll address three different ways to solve the problem:
+
+    Using the split command with the version >= 8.13
+    Writing a simple shell script
+    Using the awk command
+
+Next, let’s see them in action.
+3. Using the Newer split Command
+
+The split command is a member of the GNU Coreutils package.
+
+Since version 8.13, the split utility has introduced a new –filter=COMMAND option.
+
+We’ll solve the problem using this option. First, we’ll have a look at the command that does the job. Then, we’ll understand why it works.
+3.1. The Solution
+
+The –filter=COMMAND option allows us to write the split result to a shell command. In other words, we can post-process the split pieces using the filter command.
+
+Next, let’s see how this option helps us to solve our problem:
+
+$ tail -n +2 tokyo_medal.tsv | split -d -l 3 - --filter='sh -c "{ head -n1 tokyo_medal.tsv; cat; } > $FILE"' part_
+$ ls -1 part*
+part_00
+part_01
+part_02
+part_03
+
+As we’ve seen in the output above, four files have been created after we execute the command. Now, let’s check the content of the files:
+freestar
+
+$ head part*
+==> part_00 <==
+Rank	Country	Gold	Silver	Bronze	Total
+1	United States	39	41	33	113
+2	China	38	32	18	88
+3	Japan	27	14	17	58
+
+==> part_01 <==
+Rank	Country	Gold	Silver	Bronze	Total
+4	Great Britain	22	21	22	65
+5	ROC	20	28	23	71
+6	Australia	17	7	22	46
+
+==> part_02 <==
+Rank	Country	Gold	Silver	Bronze	Total
+7	Netherlands	10	12	14	36
+8	France	10	12	11	33
+9	Germany	10	11	16	37
+
+==> part_03 <==
+Rank	Country	Gold	Silver	Bronze	Total
+10	Italy	10	10	20	40
+
+So, we’ve got the expected result. Thus, we’ve solved the problem.
+3.2. How the Command Works
+
+Now, let’s walk through each part of the command and understand how it works:
+
+tail -n +2 tokyo_medal.tsv | split -d -l 3 - --filter='sh -c "{ head -n1 tokyo_medal.tsv; cat; } > $FILE"' part_
+
+    tail -n +2 tokyo_medal.tsv – The tail command cuts the header line from the input file, and then we pipe all data records to the next command
+    … | split -d -l 3 –  –filter=’…’ part_ – Let’s skip the –filter=’…’ part first. The split command reads the data records from stdin (–) and splits them by every three lines (-l 3). The -d option tells split to use numeric suffixes in generated filenames
+    –filter=’sh -c “{ head -n1 tokyo_medal.tsv; cat; } > $FILE”‘ – The command in the –filter option does post-processing on the split data. We declared a command group with head and cat commands. It reads the header line from the input file and then joins the split records. Finally, we redirect the records with the header line to $FILE, which is the part_x file
+
+However, if the version of the Coreutils package on our system is older than 8.13, we need to solve the problem in different ways. So, we’ll now turn our attention to some other approaches.
+
+4. Writing a Simple Shell Script
+
+Even though the older split command cannot solve the problem on its own, we can wrap it with a shell script to handle the header line.
+
+4.1. Solving the Problem
+
+Simply put, we can solve the problem in two steps:
+
+    Step 1: Splitting the input file without the header line
+    Step 2: Adding the header line to each split file
+
+Following this idea, we can build a script:
+
+#!/bin/bash
+INPUT=tokyo_medal.tsv
+
+# Step 1: split the input file without the header line
+tail -n +2 "$INPUT" | split -d -l 3 - sh_part_
+
+# Step 2: add the header line to each split file
+for file in sh_part_*
+do
+    head -n 1 "$INPUT" > with_header_tmp
+    cat "$file" >> with_header_tmp
+    mv -f with_header_tmp "$file"
+done
+
+As the script shows, when we implement step 2, we created a temp file with_header_tmp to hold the header line and then appended the split result.
+
+Note that the argument handling is skipped in this example script. For example, the input file and split options are hardcoded in the script.
+
+That’s because this tutorial is focusing on the file splitting implementation. However, we should add argument processing in the real world if we want to make our script reusable.
+
+4.2. Test the Script
+
+Now, let’s name our script split_with_header.sh and test if it works as we expected:
+
+$ ./split_with_header.sh
+
+$ head sh_part_*
+
+==> sh_part_00 <==
+Rank	Country	Gold	Silver	Bronze	Total
+1	United States	39	41	33	113
+2	China	38	32	18	88
+3	Japan	27	14	17	58
+
+==> sh_part_01 <==
+Rank	Country	Gold	Silver	Bronze	Total
+4	Great Britain	22	21	22	65
+5	ROC	20	28	23	71
+6	Australia	17	7	22	46
+
+==> sh_part_02 <==
+Rank	Country	Gold	Silver	Bronze	Total
+7	Netherlands	10	12	14	36
+8	France	10	12	11	33
+9	Germany	10	11	16	37
+
+==> sh_part_03 <==
+Rank	Country	Gold	Silver	Bronze	Total
+10	Italy	10	10	20	40
+
+Great! Our script works.
+
+Usually, when we’re facing file splitting problems, the split command will come up first. But, actually, other Linux commands can do this kind of file splitting task as well.
+
+Next, let’s solve the problem using the awk command.
+5. Using the awk Command
+
+awk is a powerful weapon for text processing. Further, awk has defined its own C-like script language. It can solve this problem without using any external command.
+5.1. The awk Solution
+
+First, let’s look at how awk solves the problem:
+
+$ awk -v lines="3" -v pre="awk_part_" '
+        NR==1 { header=$0; next}
+        (NR-1) % lines ==1 { fname=pre c++; print header > fname}
+        {print > fname}' tokyo_medal.tsv
+
+$ head awk_part_*
+==> awk_part_0 <==
+Rank	Country	Gold	Silver	Bronze	Total
+1	United States	39	41	33	113
+2	China	38	32	18	88
+3	Japan	27	14	17	58
+
+==> awk_part_1 <==
+Rank	Country	Gold	Silver	Bronze	Total
+4	Great Britain	22	21	22	65
+5	ROC	20	28	23	71
+6	Australia	17	7	22	46
+
+==> awk_part_2 <==
+Rank	Country	Gold	Silver	Bronze	Total
+7	Netherlands	10	12	14	36
+8	France	10	12	11	33
+9	Germany	10	11	16	37
+
+==> awk_part_3 <==
+Rank	Country	Gold	Silver	Bronze	Total
+10	Italy	10	10	20	40
+
+As the output above shows, the input file has been split with the header line as we expected.
+5.2. How the awk Command Works
+
+Now, let’s pass through the awk command and understand how it works:
+
+    awk -v lines=”3″ -v pre=”awk_part_” – First, we’ve declared two awk variables to define how many records are in each split file and the prefix of the filenames
+    NR==1 { header=$0; next} – When awk reads the first line, it stores the line in a header variable and stops further processing
+    (NR-1) % lines ==1 { fname=pre c++; print header > fname} – When the current line is the first record of a trunk, we need to update the filename (fname) by incrementing a counter (c). Also, since this would be a new file, we add the value of the header variable to the file as the first line
+    {print > fname}’ tokyo_medal.tsv – Then, we can just redirect each record line to the current fname file
+
+In this way, awk reads through the input file only once and solves the problem.
+
+6. Conclusion
+
+In this article, we’ve learned how to split an input file with the header line.
+
+If our system’s Coreutils version is 8.13 or later, we can use the split command’s new –filter=COMMAND option to achieve our goal.
+
+Otherwise, we can still write a simple bash script to solve the problem in two steps: splitting the file without the header line and adding the header line to each split file.
+
+Also, we’ve seen an example of how we can use the powerful awk command to do the job.
+
+If you have a few years of experience in the Linux ecosystem, and you’re interested in sharing that experience with the community, have a look at our Contribution Guidelines.
+
+
