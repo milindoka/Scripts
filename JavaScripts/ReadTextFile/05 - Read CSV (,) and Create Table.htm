@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  
+  <! -- Create Empty Table Structure -->
+  
+  
+<head>
+
+<title>Line To Table</title>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+
+    
+    
+</head>
+  
+  <table id="myTable" style="width:100%">
+  <tr>
+    <th>Species</th>
+    <th>Name</th> 
+    <th>Name:Mr</th>
+    <th>Alt Name:En</th>
+    <th>Alt Name:Mr</th>
+  </tr> 
+</table>
+ 
+ <!--paragraph with id to show result, -->
+
+<p id="result"></p>
+
+<body>
+  <input type="file" name="file" id="file" />
+    <br>
+      
+ <script type="text/javascript">
+ var Record={name:"", species:"", namemr:"",altnameen:"", altnamemr:""}; 
+    document.getElementById('file').onchange = function(){
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function(progressEvent){    
+    var lines = this.result.split(/\r\n|\n/);
+   for(var line = 0; line < lines.length-1; line++){
+      console.log(line + " --> "+ lines[line]);
+      var arr = lines[line].split(',');
+      Record.species=arr[0];
+      Record.name=arr[1];
+      Record.namemr=arr[2];
+      Record.altnameen=arr[3];
+      Record.altnamemr=arr[4];
+      
+      Add(Record.species,Record.name,Record.namemr,Record.altnameen,Record.altnamemr); 
+    }
+  };
+  reader.readAsText(file);
+};
+
+
+function Add(c1,c2,c3,c4,c5) {
+  var table = document.getElementById("myTable");
+  var row = table.insertRow(1);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  
+  cell1.innerHTML = c1;
+  cell2.innerHTML = c2;
+  cell3.innerHTML = c3;
+  cell4.innerHTML = c4;
+  cell5.innerHTML = c5;
+}
+    </script>
+
+</body>
+  
+</html>
