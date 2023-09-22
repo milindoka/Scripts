@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Scrolling Numbers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #container {
+            width: 200px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 120px; /* Height to display 3 numbers at a time */
+        }
+
+        #numbers {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .number {
+            font-size: 20px;
+            margin: 10px 0;
+            background-color: #f0f0f0;
+            padding: 5px;
+        }
+
+        #button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="numbers">
+            <div class="number">1</div>
+            <div class="number">2</div>
+            <div class="number">3</div>
+            <div class="number">4</div>
+            <div class="number">5</div>
+            <div class="number">6</div>
+            <div class="number">7</div>
+            <div class="number">8</div>
+            <div class="number">9</div>
+            <div class="number">10</div>
+        </div>
+    </div>
+    <button id="button">Next</button>
+
+    <script>
+        const numbersContainer = document.getElementById('numbers');
+        const button = document.getElementById('button');
+        const step = 1;
+        let currentPosition = 0;
+
+        button.addEventListener('click', () => {
+            currentPosition += step;
+            if (currentPosition >= numbersContainer.children.length - 2) {
+                currentPosition = 0;
+            }
+            updateNumbersDisplay();
+        });
+
+        function updateNumbersDisplay() {
+            const translateY = -currentPosition * 40; // Height of each number + margin
+            numbersContainer.style.transform = `translateY(${translateY}px)`;
+        }
+
+        updateNumbersDisplay(); // Show the initial set of numbers
+    </script>
+</body>
+</html>
+
