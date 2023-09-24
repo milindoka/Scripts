@@ -23,7 +23,10 @@ $(document).ready(function(){
 });  
 
 
-function newval() { topindex++;   
+function newval() {          document.getElementById("child2").style.visibility = "hidden";
+					    document.getElementById("child3").style.visibility = "hidden";
+					     document.getElementById("child4").style.visibility = "hidden";
+                                          topindex++;   
                                           document.getElementById("child1").innerHTML = arr[topindex]; 
                                           document.getElementById("child2").innerHTML = arr[topindex+1]; 
                                           document.getElementById("child3").innerHTML = arr[topindex+2]; 
@@ -36,7 +39,7 @@ function newval() { topindex++;
                                           document.getElementById("child14").innerHTML = arr[topindex+3]; 
                                           document.getElementById("child15").innerHTML = arr[topindex+4];                      
                  
-
+                                           
                                    resetAnim();
                                 }
 
@@ -48,8 +51,15 @@ function resetAnim()
  $("#child3").animate({top: '200px'});  
  $("#child4").animate({top: '250px'});  
  $("#child5").animate({top: '300px'});  
+ $(child5).promise().done(setVisible);
 }
 
+function setVisible()
+{
+      document.getElementById("child2").style.visibility = "visible";
+      document.getElementById("child3").style.visibility = "visible";				     
+      document.getElementById("child4").style.visibility = "visible";
+}
 
 </script>
 <style>
@@ -60,6 +70,7 @@ function resetAnim()
   top:100px;
   left:200px;
   border: 2px solid red;  
+  visibility:hidden;
 }
 
 .c2 {
@@ -95,6 +106,7 @@ function resetAnim()
   top:300px;
   left:200px;
   border: 2px solid red;  
+  visibility: hidden;
 }
    </style>
 </head>  
