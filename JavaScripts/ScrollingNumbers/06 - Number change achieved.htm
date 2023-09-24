@@ -3,7 +3,7 @@
 <head>  
 <script src="jquery-3-7-1.js"></script>  
 <script>   
- 
+ var topindex=0;
  var arr = [];
     for (var i = 10; i <= 40; i++) 
     {  arr.push('Number ' + i.toString());  }
@@ -23,7 +23,33 @@ $(document).ready(function(){
 });  
 
 
-function newval() { document.getElementById("child5").innerHTML = arr[7]; }
+function newval() { topindex++;   
+                                          document.getElementById("child1").innerHTML = arr[topindex]; 
+                                          document.getElementById("child2").innerHTML = arr[topindex+1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex+2]; 
+                                          document.getElementById("child4").innerHTML = arr[topindex+3]; 
+                                          document.getElementById("child5").innerHTML = arr[topindex+4];    
+                                          
+                                          document.getElementById("child11").innerHTML = arr[topindex]; 
+                                          document.getElementById("child12").innerHTML = arr[topindex+1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex+2]; 
+                                          document.getElementById("child14").innerHTML = arr[topindex+3]; 
+                                          document.getElementById("child15").innerHTML = arr[topindex+4];                      
+                 
+
+                                   resetAnim();
+                                }
+
+
+function resetAnim()
+{
+//$("#child1").animate({top: '50px'});  
+ $("#child2").animate({top: '150px'});  
+ $("#child3").animate({top: '200px'});  
+ $("#child4").animate({top: '250px'});  
+ $("#child5").animate({top: '300px'});  
+}
+
 
 </script>
 <style>
