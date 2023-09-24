@@ -5,8 +5,8 @@
 <script>   
  
  var arr = [];
-    for (var i = 1; i <= 20; i++) 
-    {arr.push(i);}
+    for (var i = 10; i <= 40; i++) 
+    {  arr.push('Number ' + i.toString());  }
         
       //  $(child5).promise().done(newval);
     // will be called when all the animations on the queue finish
@@ -21,8 +21,6 @@ $(document).ready(function(){
         $(child5).promise().done(newval);
     });  
 });  
-
-
 
 
 function newval() { document.getElementById("child5").innerHTML = arr[7]; }
