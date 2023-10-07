@@ -4,19 +4,18 @@
 <script src="jquery-3-7-1.js"></script>  
 <script>   
  var topindex=0;
-let animrunning=0;
+
+let animrunning=5;
  var arr = [];
     for (var i = 10; i <= 30; i++) 
     {  arr.push('Number ' + i.toString());  }
 var len=arr.length;        
       //  $(child5).promise().done(newval);
     // will be called when all the animations on the queue finish
-
-
+ prev1=len-1; prev2=len-2;
 $(document).ready(function(){  
- 
-  
-    $("button").click(function(){ 
+   
+$("#button1").click(function(){ 
  
   if(animrunning==1) return;   
   animrunning=1;
@@ -39,18 +38,23 @@ function newval() {         document.getElementById("child2").style.visibility =
 					   document.getElementById("child4").style.visibility = "hidden";
  					   document.getElementById("child5").style.visibility = "hidden";
 					     
-                                          topindex++;  
-                                          document.getElementById("child1").innerHTML = arr[topindex%len]; 
-                                          document.getElementById("child2").innerHTML = arr[(topindex+1)%len]; 
-                                          document.getElementById("child3").innerHTML = arr[(topindex+2)%len]; 
-                                          document.getElementById("child4").innerHTML = arr[(topindex+3)%len]; 
-                                          document.getElementById("child5").innerHTML = arr[(topindex+4)%len];    
+                                          topindex=(topindex+1)%len;  
+                                          prev1=topindex-1; prev2=topindex-2;
+                                          if(topindex==0) {prev1=len-1; prev2=len-2;}
+                                          if(topindex==1) {prev2=len-2;}
+                          
                                           
-                                          document.getElementById("child11").innerHTML = arr[(topindex)%len]; 
-                                          document.getElementById("child12").innerHTML = arr[(topindex+1)%len]; 
-                                          document.getElementById("child13").innerHTML = arr[(topindex+2)%len]; 
-                                          document.getElementById("child14").innerHTML = arr[(topindex+3)%len]; 
-                                          document.getElementById("child15").innerHTML = arr[(topindex+4)%len];                      
+                                          document.getElementById("child1").innerHTML = arr[prev2]; 
+                                          document.getElementById("child2").innerHTML = arr[prev1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
+                                          
+                                          document.getElementById("child11").innerHTML = arr[prev2]; 
+                                          document.getElementById("child12").innerHTML = arr[prev1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex]; 
+                                          document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child15").innerHTML = arr[(topindex+2)%len];                      
                  
                                            
                                    resetAnim();
@@ -87,6 +91,13 @@ function setVisible()
      document.getElementById("child14").style.visibility = "hidden";
      animrunning=0;
 }
+
+function onbtn(kee)
+{ arr[topindex]=kee;
+    document.getElementById("child3").innerHTML = kee; 
+    const button1 = document.getElementById('button1').click();
+}
+
 
 </script>
 <style>
@@ -194,7 +205,7 @@ visibility:hidden;
    </style>
 </head>  
 <body>  
-<button>Start Animation</button>  
+<button id="button1">Start Animation</button>  
 <div class=c1 id="child1">Number 10</div>
 <div class=c2  id="child2">Number 11</div>
  <div class=c3 id="child3">Number 12</div>
@@ -208,15 +219,15 @@ visibility:hidden;
 <div class=c5  id="child15">Number 14</div>
 
 <div class="grid-container">
-  <div class="grid-item">1</div>
-  <div class="grid-item">2</div>
-  <div class="grid-item">3</div>  
-  <div class="grid-item">4</div>
-  <div class="grid-item">5</div>
-  <div class="grid-item">6</div>  
-  <div class="grid-item">7</div>
-  <div class="grid-item">8</div>
-  <div class="grid-item">9</div>  
+  <div class="grid-item"  id="btn1" onclick="onbtn('1')">1</div>
+  <div class="grid-item"  id="btn2" onclick="onbtn('2')">2</div>
+  <div class="grid-item"  id="btn3" onclick="onbtn('3')">3</div>  
+  <div class="grid-item"  id="btn4" onclick="onbtn('4')">4</div>
+  <div class="grid-item"  id="btn5" onclick="onbtn('5')">5</div>
+  <div class="grid-item"  id="btn6" onclick="onbtn('6')">6</div>  
+  <div class="grid-item"  id="btn7" onclick="onbtn('7')">7</div>
+  <div class="grid-item"  id="btn8" onclick="onbtn('8')">8</div>
+  <div class="grid-item"  id="btn9" onclick="onbtn('9')">9</div>  
 </div>
 
 </body>  
