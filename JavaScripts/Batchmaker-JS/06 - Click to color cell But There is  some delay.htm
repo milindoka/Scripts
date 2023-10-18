@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset=utf-8 /> 
+<title>Create a table</title> 
+<style type="text/css"> 
+body {margin: 30px;} 
+
+table,
+th,
+td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                min-width : 90px;
+               }
+               
+               tr {
+                line-height: 40px;
+            
+               }
+
+</style>  
+</head><body  onload="createTable()"> 
+<table id="myTable" border="1" > 
+</table>
+<script>
+  
+    function tableText(tableCell) {
+     //  alert(tableCell.innerHTML);
+        tableCell.style.backgroundColor = "yellow";  
+        
+    }
+
+
+function createTable()
+{
+ for(var r=0;r<10;r++)
+  {
+   var x=document.getElementById('myTable').insertRow(r);
+   
+   for(var c=0;c<5;c++)  
+    {
+     var y=  x.insertCell(c);
+     y.innerHTML='R'+r+'C'+c; 
+    }
+   }
+
+  var table = document.getElementById("myTable");
+    if (table != null) {
+        for (var i = 0; i < table.rows.length; i++) {
+            for (var j = 0; j < table.rows[i].cells.length; j++)
+            table.rows[i].cells[j].onclick = function () {
+                tableText(this);
+            };
+        }
+    }
+}
+
+</script>
+
+
+</body>
+</html>
+

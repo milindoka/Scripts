@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* Basic column frame for Roll numbers*/
+:root { --topx:100px; --leftx:200px; --widthx:80px; --heightx:200px; --gapx=}
+.col {
+   position:absolute;
+  top:calc(30px + var(--topx));
+  left:calc(30px + var(--leftx));
+  background-color: lightgrey;
+  width: 300px;
+  border: 15px solid green;
+  padding: 50px;
+  margin: 20px;
+}
+</style>
+</head>
+<body>
+
+
+<div class="col">Change ths topx and leftx CSS variables several times and see the position of the box changing accordingly, change also the calc content to offset values added in calc function to see the effect. This is useful in designing css layout to position multiple  multiple elements</div>
+
+</body>
+</html>
+
+
+
