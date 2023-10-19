@@ -1,0 +1,109 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<style>
+
+@media print {
+            @page {
+                size: a4;  /* Set to auto for automatic mode */
+                margin-top: 0;   /* Set margins to 0 */
+                margin-bottom:0;
+                margin-right:1cm;
+            }
+            /* Specify the styles to hide headers and footers */
+            body {
+                margin: 0;
+            }
+            header,
+            footer {
+                display: none;
+            }
+        }
+
+
+html,body{
+        height:297mm;
+        width:210mm;
+       margin:0.5cm;
+       margin-right : 0.5cm;
+        font-size: 15px;
+        font-family:"Times New Roman";
+
+    }
+    
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  vertical-align: middle;
+  text-align:center;
+}
+
+tr {
+ height : 25px;
+ }
+
+}    
+</style>
+</head>
+<body> 
+
+
+<center id="collegeindex">College Index Number </center>
+
+
+<table id="myTable" style="width:100%">
+  <tr >
+      <td width="60px">Sr No</td>
+      <td width="120px">Seat No</td>
+      <td width="370px">Name of the Candidate</td>
+      <td width="190px">Student's Signature</td>
+  </tr>
+</table>
+
+
+<script>
+
+window.addEventListener('load', createTable);
+
+function createTable()
+{
+collegeindex=sessionStorage.getItem("collegeindex");
+board=sessionStorage.getItem("board");
+oralpract=sessionStorage.getItem("oralpract");
+
+// alert(collegeindex);
+document.getElementById("collegeindex").innerHTML="College Index Number  " +collegeindex;
+sessionString=sessionStorage.getItem("batchArray");
+var arr = JSON.parse(sessionString);
+//window.alert(arr[0]);
+rn = arr.length;
+//cn = 8;
+index=0;
+
+ for(var r=0;r<rn;r++)
+  {
+   var x=document.getElementById('myTable').insertRow(r+1);
+
+      //    window.alert(entry[0]);
+              var y=  x.insertCell(0);
+              y.innerHTML= ' '+(r+1);  ///Sr number
+              
+              y=  x.insertCell(1);
+              y.innerHTML=arr[r];  ///Seat Number
+;
+              y=  x.insertCell(2);
+              y.innerHTML= ' ';  ///blank row Name of candidate
+             
+              y=  x.insertCell(3);
+              y.innerHTML=' ';  /// blank row Signature of candidate
+              
+ }
+}
+</script>
+
+
+
+</body>
+</html>
+
+
