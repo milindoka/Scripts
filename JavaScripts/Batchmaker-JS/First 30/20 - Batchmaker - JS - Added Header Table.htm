@@ -5,25 +5,46 @@
 <title>Create a table</title> 
 <style type="text/css"> 
 body {margin: 30px;} 
-table,
-th,
-td {
-                border: 2px solid black;
+
+table.roll { border: 2px solid black;
                 border-collapse: collapse;
                 min-width : 180px;
-                font-size : 24px
-               }
-               
-               tr {
-                line-height: 50px;
+}
+table.roll td { border: 2px solid black;
+                border-collapse: collapse;
+                min-width : 180px;}
+table.roll tr { line-height: 50px;
                 text-align : center;
                 }
+
                 
 #myTable{
               background-color : lightgray;
               margin-left : auto;
               margin-right : auto;
+              font-size : 24px
+
 }
+
+
+
+table.head td{min-width : 180px;
+
+}
+
+table.head {
+border : none;
+}
+
+
+#headerTable{
+              font-size : 20px;
+              margin-left : auto;
+              margin-right : auto;
+                
+}
+
+
 
 input,
 center
@@ -68,7 +89,15 @@ center
 <center>ORAL EXAM/PROJECT</center>
 <center>Form No. 3A</center>
 <br>
-<table id="myTable" border="1"  style="user-select: none"> 
+<table id="headerTable" class="head"  style="user-select: none"> 
+<tr>  <td>Test</td><td>Test</td> <td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+<tr>  <td>Test</td><td>Test</td> <td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+<tr>  <td>Test</td><td>Test</td> <td>Test</td><td>Test</td><td>Test</td><td>Test</td></tr>
+</table>
+
+<br>
+
+<table id="myTable" class="roll" border="1"  style="user-select: none"> 
 </table>
 <p>Footer</p>
 <script>
@@ -166,7 +195,6 @@ for(r=0;r<rowcount;r++)
                                   }
 
 sessionStorage.setItem("batchArray", JSON.stringify(crr));
-
 collegeindex=document.getElementById("collegeindex").value;
 board=document.getElementById("board").value;
 oralpract=document.getElementById("oralpract").value;

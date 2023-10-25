@@ -93,7 +93,7 @@ border : none;
     <td id="tyme">Time :</td>
   </tr>
   <tr>
-    <td  id="extra">Extra Seat Nos</td>
+    <td  id="extraseatno">Extra Seat Nos</td>
     <td style="width: 45%;"></td>
     <td></td>
   </tr>
@@ -125,21 +125,13 @@ medium=sessionStorage.getItem("medium");
 seatno=sessionStorage.getItem("seatno");
 det=sessionStorage.getItem("det");
 tyme=sessionStorage.getItem("tyme");
-extra=sessionStorage.getItem("extra");
 
 // alert(collegeindex);
 document.getElementById("collegeindex").innerHTML="College Index Number  :" +collegeindex;
 document.getElementById("board").innerHTML=board;
 document.getElementById("oralpract").innerHTML=oralpract;
 document.getElementById("school").innerHTML="School/College/Center : " + school;
-document.getElementById("batchno").innerHTML="Btch No :" + batchno;
-document.getElementById("subject").innerHTML="Subject : " + subject;
-document.getElementById("subjectno").innerHTML="Subject No : " + subjectno;
-document.getElementById("medium").innerHTML="Medium : " + medium;
-document.getElementById("seatno").innerHTML="Seat No : " + seatno;
-document.getElementById("det").innerHTML="Date : " + det;
-document.getElementById("tyme").innerHTML="Time : " + tyme;
-document.getElementById("extra").innerHTML="Extra Seat Nos : " + extra;
+
 
 sessionString=sessionStorage.getItem("batchArray");
 var arr = JSON.parse(sessionString);
