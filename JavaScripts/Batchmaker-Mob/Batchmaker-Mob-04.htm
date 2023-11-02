@@ -12,6 +12,7 @@ table.roll { border: 2px solid black;
                 max-width : 480px;
                 margin-left: auto;
                 margin-right: auto;
+                margin-bottom:3px;
 }
 
 table.roll tr { max-height: 40px;
@@ -25,7 +26,7 @@ table.roll td
 th {
   text-align:left;
   position: sticky;
-  top: 0
+  top: 0;
   }
 
 </style>
@@ -33,19 +34,27 @@ th {
 </head>
 <body onload="createTable()">
 
+
+<table  class="roll" border="1"  style="user-select: none"> 
+<tr id="seatno"><td contenteditable >MO3157010</td><td onclick="OnRefresh()">🔁</td></tr>
+</table>
+
+
+
 <table id="myTable"  class="roll" border="1"  style="user-select: none"> 
 <thead>
     <tr >
-      <th>Total</th>
+      <th id="fixed">Total : 00</th>
     </tr>
   </thead>
 </table>
 <script>
+const fixedposcounter = document.getElementById("fixed");
 roll=[]; counter=0;
   var start='M03157010';  
-//let animrunning=0;
+
 tempstart=start;
-////  fill roll array
+
 for(jj=0;jj<200;jj++)  {roll.push(tempstart); tempstart=IncrementAlphanumeric(tempstart); }
 
 var len=roll.length;        
@@ -115,11 +124,36 @@ function setBackgroundColor() {
                //this.style.fontSize="25px"; 
                counter++; 
                }
-   //fixedposcounter.innerText = "Total : " + ('0' + counter).slice(-2);
-
+   fixedposcounter.innerText = "Total : " + ('0' + counter).slice(-2);
 }
 
+function  OnRefresh()
+{ 
 
+var Row = document.getElementById("seatno"); 
+var Cells = Row.getElementsByTagName("td"); 
+alert(Cells[0].innerText); 
+
+
+//var start=document.getElementById("seatno").value;
+
+//window.alert(start);
+
+/*
+roll=[]; ///initialize
+counter=0;  
+tempstart=start;
+////  fill roll array
+for(jj=0;jj<200;jj++)  {roll.push(tempstart); tempstart=IncrementAlphanumeric(tempstart); }
+
+ fixedposcounter.innerText = "Total : " + ('0' + counter).slice(-2); // Reset counter display to 00 
+
+var len=roll.length;       
+document.getElementById("myTable").innerHTML = ""; 
+
+createTable();
+*/
+}
  </script>
  
 
