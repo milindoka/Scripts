@@ -1,6 +1,7 @@
 <!DOCTYPE html>  
 <html>  
 <head>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="jquery-3-7-1.js"></script>  
 <script>   
  var topindex=0;
@@ -19,10 +20,10 @@ $(document).ready(function(){
     document.getElementById("child13").style.visibility = "hidden";
     document.getElementById("child14").style.visibility = "hidden";
      
-        $("#child2").animate({top: '100px',opacity:0.0});  
-        $("#child3").animate({top: '150px'});  
-        $("#child4").animate({top: '200px'});  
-        $("#child5").animate({top: '250px',opacity:'1.0'});  
+        $("#child2").animate({top: '10vw',opacity:0.0});  
+        $("#child3").animate({top: '20vw',opacity:0.3});  
+        $("#child4").animate({top: '30vw',opacity:1.0});  
+        $("#child5").animate({top: '40vw',opacity:0.3});  
         $(child5).promise().done(newval);
     });  
 });  
@@ -57,10 +58,10 @@ function resetAnim()
   document.getElementById("child13").style.visibility = "visible"
   document.getElementById("child14").style.visibility = "visible";
 
- $("#child2").animate({top: '150px',opacity:100});  
- $("#child3").animate({top: '200px'});  
- $("#child4").animate({top: '250px'});  
- $("#child5").animate({top: '300px',opacity:0});  
+ $("#child2").animate({top: '20vw',opacity:0.3});  
+ $("#child3").animate({top: '30vw',opacity:1.0});  
+ $("#child4").animate({top: '40vw',opacity:0.3});  
+ $("#child5").animate({top: '50vw',opacity:0});  
  $(child5).promise().done(setVisible);
 }
 
@@ -72,57 +73,62 @@ function setVisible()
       document.getElementById("child5").style.visibility = "visible";
 /// 
 }
-
+///// 100vw ->10vw
+///// 150vw->15vw
 </script>
 <style>
+
+:root
+{ font-size:7vw;
+}
+
 .c1 {
  position: absolute;
-  height: 25px;
-  width: 200px;
-  top:100px;
-  left:200px;
-  
+  height: 25vw;
+  width: 60vw;
+  top:10vw;
+  left:20vw;
   visibility:hidden;
 }
 
 .c2 {
  position: absolute;
-  height: 25px;
-  width: 200px;
-  top:150px;
-  left:200px;
-  
+  height: 25vw;
+  width: 60vw;
+  top:20vw;
+  left:20vw;
+  opacity:0.3;
 }
 .c3{
  position: absolute;
-  height: 25px;
-  width: 200px;
-  top:200px;
-  left:200px;
-  
+  height: 25vw;
+  width: 60vw;
+  top:30vw;
+  left:20vw;
+ opacity:1.0;  
 }
 
 .c4{
  position: absolute;
-  height: 25px;
-  width: 200px;
-  top:250px;
-  left:200px;
-  
+  height: 25vw;
+  width: 60vw;
+  top:40vw;
+  left:20vw;
+  opacity:0.3;  
 }
 
 .c5{
  position: absolute;
-  height: 25px;
-  width: 200px;
-  top:300px;
-  left:200px;
+  height: 25vw;
+  width: 60vw;
+  top:50vw;
+  left:20vw;
   opacity:0.0;
 }
    </style>
 </head>  
 <body>  
-<button>Start Animation</button>  
+<button style="font-size:5vw;">Start Animation</button>  
 <div class=c1 id="child1">Number 10</div>
 <div class=c2  id="child2">Number 11</div>
  <div class=c3 id="child3">Number 12</div>
