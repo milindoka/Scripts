@@ -22,7 +22,7 @@ var len=arr.length;
      // window.alert(arr[i]);
     }
     
-// window.addEventListener('load', InitRoll);
+window.addEventListener('load', InitRoll);
 //InitRoll();
   
       //  $(child5).promise().done(newval);
@@ -31,6 +31,9 @@ var len=arr.length;
 $(document).ready(function(){  
     $("button").click(function(){ 
 
+      if(animrunning==1) return;   
+          animrunning=1;
+          
     document.getElementById("child11").style.visibility = "hidden";    
     document.getElementById("child12").style.visibility = "hidden";
     document.getElementById("child13").style.visibility = "hidden";
@@ -38,47 +41,51 @@ $(document).ready(function(){
     document.getElementById("child15").style.visibility = "hidden";
     document.getElementById("child16").style.visibility = "hidden";
  
- 
- 
         $("#child1").animate({top: '0vw',opacity:0.0}); 
         $("#child2").animate({top: '10vw',opacity:0.1});  
         $("#child3").animate({top: '20vw',opacity:0.3});  
         $("#child4").animate({top: '30vw',opacity:1.0});  
         $("#child5").animate({top: '40vw',opacity:0.3});  
-         $("#child6").animate({top: '50vw',opacity:0.1});                
+         $("#child6").animate({top: '50vw',opacity:0.1});      
+           topindex=(topindex+1)%len;            
         $(child6).promise().done(newval);
     });  
 });  
 
 
-function newval() {          document.getElementById("child0").style.visibility = "hidden";
+function newval()
+{        
+                                            document.getElementById("child0").style.visibility = "hidden";
                                             document.getElementById("child1").style.visibility = "hidden";
                                              document.getElementById("child2").style.visibility = "hidden";
 					     document.getElementById("child3").style.visibility = "hidden";
 					     document.getElementById("child4").style.visibility = "hidden";
 					      document.getElementById("child5").style.visibility = "hidden";
 					      document.getElementById("child6").style.visibility = "hidden";
-					     
-                                          topindex++;   
-                                          document.getElementById("child0").innerHTML = arr[topindex]; 
-                                          document.getElementById("child1").innerHTML = arr[topindex+1]; 
-                                          document.getElementById("child2").innerHTML = arr[topindex+2]; 
-                                          document.getElementById("child3").innerHTML = arr[topindex+3]; 
-                                          document.getElementById("child4").innerHTML = arr[topindex+4]; 
-                                          document.getElementById("child5").innerHTML = arr[topindex+5];    
-                                         document.getElementById("child6").innerHTML = arr[topindex+6];  
+	
+	                                    prev1=topindex-1; prev2=topindex-2;   prev3=topindex-3;                               
+                                          if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
+                                          if(topindex==1) {prev2=len-2; prev3=len-3;}
+       				          if(topindex==2)   { prev3=len-3;}
+                 //                                   topindex++;   
+                                          document.getElementById("child0").innerHTML = arr[prev3]; 
+                                          document.getElementById("child1").innerHTML = arr[prev2]; 
+                                          document.getElementById("child2").innerHTML = arr[prev1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child6").innerHTML =  arr[(topindex+3)%len];   
                                           
-                                          document.getElementById("child10").innerHTML = arr[topindex]; 
-                                          document.getElementById("child11").innerHTML = arr[topindex+1]; 
-                                          document.getElementById("child12").innerHTML = arr[topindex+2]; 
-                                          document.getElementById("child13").innerHTML = arr[topindex+3]; 
-                                          document.getElementById("child14").innerHTML = arr[topindex+4]; 
-                                          document.getElementById("child15").innerHTML = arr[topindex+5];    
-                                         document.getElementById("child16").innerHTML = arr[topindex+6];  
-                                                          
-                                          
+                                          document.getElementById("child10").innerHTML = arr[prev3]; 
+                                          document.getElementById("child11").innerHTML = arr[prev2]; 
+                                          document.getElementById("child12").innerHTML = arr[prev1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex]; 
+                                          document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child15").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];   
+                                                                                             
                                    resetAnim();
-                                }
+   }
 
 
 function resetAnim()
@@ -120,6 +127,7 @@ function setVisible()
   document.getElementById("child14").style.visibility = "hidden";
   document.getElementById("child15").style.visibility = "hidden";
 //document.getElementById("child16").style.visibility = "hidden";
+  animrunning=0;
 
 /// 
 }
@@ -153,6 +161,46 @@ function IncrementAlphanumeric(roll)
 
             return an.join("");
         }
+}
+
+/// this micro 1px left-right animation is required to flush first digit from browser buffer
+///without this animation first digit display is delayed sometimes till second digit is entered.
+/// animation forces browser to display first digit it immediately.
+function flash()
+{
+ $(document).ready(function() {
+                                       $('#child3').animate({
+                       			left : "19vw"
+  					}, 1)
+				$('#child3').animate({
+                       			left: "20vw"
+  					}, 1)
+						
+					});
+}
+
+function InitRoll()
+{
+
+
+                                          ///initialise roll number display
+  //                        window.alert('s');                
+                                          len=arr.length;
+                                          document.getElementById("child1").innerHTML = arr[len-2]; 
+                                          document.getElementById("child2").innerHTML = arr[len-1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[topindex+1]; 
+                                          document.getElementById("child5").innerHTML = arr[topindex+2];    
+//window.alert('e');
+                                        
+                                          document.getElementById("child11").innerHTML = arr[len-2]; 
+                                          document.getElementById("child12").innerHTML = arr[len-1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex]; 
+                                          document.getElementById("child14").innerHTML = arr[topindex+1]; 
+                                          document.getElementById("child15").innerHTML = arr[topindex+2];                      
+
+
+flash();
 }
 
 
