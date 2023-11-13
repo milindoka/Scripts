@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="jquery-3-7-1.js"></script>  
+<script>   
+var topindex=0;   ///centre line index
+var start='M03001';
+var end='M03020';
+</script>
+
+
+<style>
+body {margin: 30px;} 
+.container {
+width:100%;
+max-width:480px;
+height:800px;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:auto;
+border: 4px solid lightgreen;
+}
+
+#up {
+  position: relative;
+   top: 80px;
+   left:15px;
+   width: 35px;
+   height:35px;
+   transform: rotate(-90deg);
+}
+
+#dn {
+  position: relative;
+   top: 245px;
+   left:-25px;
+   width: 35px;
+   height:35px;
+   transform: rotate(90deg);
+}
+
+.c0 {
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:0px;
+  left:80px;
+  opacity:0.0;
+}
+
+.c1 {
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:5px;
+  left:80px;
+  opacity:0.1;
+}
+
+.c2 {
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:10px;
+  left:80px;
+  opacity:0.3;
+}
+
+.c3 {
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:15px;
+  left:80px;
+  opacity:1.0;
+}
+
+.c4{
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:20px;
+  left:80px;
+  opacity:0.3;
+}
+
+.c5 {
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:25px;
+  left:80px;
+  opacity:0.1;
+}
+
+.c6 {
+ position: relative;
+  height: 38px;
+  width: 200px;
+  font-size:26px;
+  top:10px;
+  left:30px;
+  opacity:0.0;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+<button id="up" style="font-size:24px;">&#10147 </button> 
+<button id="dn" style="font-size:24px;">&#10147 </button> 
+
+<div class=c0 id="child0">M03018 :</div>
+<div class=c1 id="child1">M03019 :</div>
+<div class=c2 id="child2">M03020 :</div>
+<div class=c3 id="child3">M03001 : </div>
+<div class=c4 id="child4">M03002 :</div>
+<div class=c5 id="child5">M03003 :</div>
+<div class=c6 id="child6">M03004 :</div>
+</div>
+
+</body>
+</html>
+
