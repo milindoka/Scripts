@@ -214,6 +214,10 @@ function onbtn(kee)
 {  if(animrunning) return;
    result = arr[topindex].indexOf(":");
        left = arr[topindex].substring(result);
+       if(kee=="X") {arr[topindex]=arr[topindex].substring(0,result)+": "; 
+                                 document.getElementById("child3").innerHTML = arr[topindex];         
+                                       flash();return;
+                               }
        if(kee=='AB' || kee=='100') {   arr[topindex]=arr[topindex].substring(0,result+2)+kee;     
                                      document.getElementById("child3").innerHTML = arr[topindex];                                                            
                                    const button1 = document.getElementById('up').click();
@@ -585,7 +589,7 @@ font-size:24px;
   <div  style="user-select: none" id="btn1" onclick="onbtn('1')">1</div>
   <div style="user-select: none" id="btn2" onclick="onbtn('2')" >2</div>
   <div style="user-select: none" id="btn3" onclick="onbtn('3')" >3</div>
-  <div style="user-select: none" id="btnback" onclick="onbtn('1')" >Back</div>
+  <div style="user-select: none" id="btnback" onclick="onbtn('X')" >X</div>
   <div style="user-select: none" id="btn4" onclick="onbtn('4')" >4</div>
   <div style="user-select: none" id="btn5" onclick="onbtn('5')" >5</div>
   <div style="user-select: none" id="btn6" onclick="onbtn('6')" >6</div>
