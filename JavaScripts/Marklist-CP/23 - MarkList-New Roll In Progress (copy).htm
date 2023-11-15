@@ -73,85 +73,6 @@ $(document).ready(function(){
     
 });  ////end of doc ready function
 
-function  OnRefresh()
-{ 
-window.alert(Cells[0].innerText); 
-
-var Row = document.getElementById("seatno"); 
-var Cells = Row.getElementsByTagName("td"); 
-alert(Cells[0].innerText); 
-
-var tempstart=Cells[0].innerText; 
-var tempend=Cells[2].innerText; 
-window.alert(tempstart+" " +tempend);
-
-
-start=tempstart.trim();
-end=tempend.trim();
-window.alert(start+" " +end);
-/*
-topindex=0;
- arr=[];  /// intialize basic roll array
-tempstart=start;
-////  fill roll array
-for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
-
-
-len=arr.length;        
-
- for (var i = 0; i < len; i++) 
-  {  arr[i]=arr[i]+' : ';
-     // window.alert(arr[i]);
-    }
-InitRoll();  ///refresh browser with modified roll array
-// const button1 = document.getElementById('button1').click();
-*/
-}
-
-
-
-//tempstart=start.trim();
-//tempend=end.trim();
-//window.alert(tempstart +" " +tempend);
-/*
-roll=[]; ///initialize
-
-counter=0;  
-
-//window.alert(tempstart);
-//tempstart=IncrementAlphanumeric(tempstart); 
-
-////  fill roll array
-for(jj=0;jj<100;jj++)  {roll.push(tempstart); tempstart=IncrementAlphanumeric(tempstart);  }
-*/
-
-
-function  OnNewRoll()
-{
-start=document.getElementById("firstRoll").value;
-end=document.getElementById("lastRoll").value;
-
-//window.alert("new");
-topindex=0;
- arr=[];  /// intialize basic roll array
-tempstart=start;
-////  fill roll array
-for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
-
-len=arr.length;        
-
- for (var i = 0; i < len; i++) 
-  {  arr[i]=arr[i]+' : ';
-     // window.alert(arr[i]);
-    }
-InitRoll();  ///refresh browser with modified roll array
-// const button1 = document.getElementById('button1').click();
-
-}
-
-
-
-
 function newval()
 {        
                                              document.getElementById("child0").style.visibility = "hidden";
@@ -285,7 +206,7 @@ function InitRoll()
                                           document.getElementById("child15").innerHTML = arr[topindex+2];                      
 
 
-//flash();
+flash();
 }
 
 function onbtn(kee)
@@ -337,7 +258,41 @@ function flash()
 					});
 }
 
+function  OnNewRoll()
+{
 
+var Row = document.getElementById("seatno"); 
+var Cells = Row.getElementsByTagName("td"); 
+//alert(Cells[0].innerText); 
+
+var tempstart=Cells[0].innerText; 
+var tempend=Cells[2].innerText; 
+
+//window.alert(tempstart+" " +tempend);
+ start=tempstart.trim();
+ end=tempend.trim();;
+//alert(start+' '+end);
+//window.alert("new");
+topindex=0;
+ arr=[];  /// intialize basic roll array
+tempstart=start;
+////  fill roll array
+for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
+
+len=arr.length;        
+
+
+ for (var i = 0; i < len; i++) 
+  {  arr[i]=arr[i]+' : ';
+     // window.alert(arr[i]);
+    }
+//alert(arr[len-2]);
+
+
+InitRoll();  ///refresh browser with modified roll array
+// const button1 = document.getElementById('button1').click();
+
+}
 
 </script>
 
@@ -600,7 +555,7 @@ table.roll tr { max-height: 40px;
 <div class=c6 id="child16">M03004 :</div>
 
 <table  class="roll" border="1"  style="user-select: none"> 
-<tr  id="seatno"><td contenteditable>M03157001</td><td onclick="OnRefresh()"><img src = "refresh.svg" alt="Refresh"/></td><td contenteditable>M03157020</td></tr>
+<tr  id="seatno"><td contenteditable>M03157001</td><td onclick="OnNewRoll()"><img src = "refresh.svg" alt="Refresh"/></td><td contenteditable>M03157020</td></tr>
 </table>
 
 <!--
