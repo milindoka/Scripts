@@ -328,6 +328,7 @@ table.roll tr { max-height: 40px;
                 text-align : center;
                 background-color: #F2FAFA
  }
+ 
 
 .numgrid {
    
@@ -531,6 +532,12 @@ table.roll tr { max-height: 40px;
   opacity:0.0;
 }
 
+.input {
+height:100%;
+border:none;
+font-size:24px;
+}
+
 </style>
 </head>
 <body>
@@ -555,7 +562,10 @@ table.roll tr { max-height: 40px;
 <div class=c6 id="child16">M03004 :</div>
 
 <table  class="roll" border="1"  style="user-select: none"> 
-<tr  id="seatno"><td contenteditable>M03001</td><td onclick="OnNewRoll()"><img src = "refresh.svg" alt="Refresh"/></td><td contenteditable>M03020</td></tr>
+<tr  id="seatno">
+<td style="width:45%;padding-right:8px"><input style="height: 25px;width:100%;font-size:24px;text-transform: uppercase;" type="text" id="username"  maxlength="10"></td>
+<td style="width:30px;" onclick="OnNewRoll()"><img src = "refresh.svg" alt="Refresh"/>
+</td><td style="width:45%;padding-right:8px" ><input style="height: 25px;width:100%;font-size:24px;" type="text" id="username"  maxlength="10"></td></tr>
 </table>
 
 <!--
