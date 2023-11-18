@@ -72,7 +72,20 @@ $(document).ready(function(){
            $(child5).promise().done(newval);
     });  
     
-     
+     $(document).keypress(function(event)
+      {
+    var n = event.keyCode - 48;
+   // alert(n);
+    if (n >=0 && n <= 9) {
+    var chr = String.fromCharCode(n+48);
+		onbtn(chr); /// convert digit d to char  'd'
+		
+      }
+    
+    if(n==49 || n==17) onbtn('AB');
+     if(n==56 || n==24) onbtn('100');
+    
+});
  
 
 });  ////end of doc ready function
@@ -585,27 +598,41 @@ function mouseUp()
                                          document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];                                 
 //newval();                                                                                        
  }
+ 
+ 
+ /*
+ function saveAs(content, fileName) {
+  const a = document.createElement("a");
+  const isBlob = content.toString().indexOf("Blob") > -1;
+  let url = content;
+  if (isBlob) {
+    url = window.URL.createObjectURL(content);
+  }
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  if (isBlob) {
+    window.URL.revokeObjectURL(url);
+  }
+}
+*/
+
+function SaveFile()
+{const stringifiedarr =JSON.stringify(arr);
+localStorage.setItem("list01", stringifiedarr);
+ }
+
+function OpenFile();
+{
+const temproll = localStorage.getItem('list01');
+arr = JSON.parse(temproll);
+len=arr.length;
+slider.max=len-1;
+topindex=0;
+InitRoll();
+}
+
  </script>
-<!--
-<div class="grid-container"  style="user-select: none">     
-  <div class="grid-item"  id="btn1" onclick="onbtn('1')">1</div>
-  <div class="grid-item"  id="btn2" onclick="onbtn('2')">2</div>
-  <div class="grid-item"  id="btn3" onclick="onbtn('3')">3</div>  
-    <div class="grid-item"  id="btn4" onclick="onbtn('4')">Back</div>
-    <div class="grid-item"  id="btn4" onclick="onbtn('4')">4</div>
-<div class="grid-item"  id="btn5" onclick="onbtn('5')">5</div>
-  <div class="grid-item"  id="btn6" onclick="onbtn('6')">6</div>  
-  <div class="grid-item"  id="btn4" onclick="onbtn('4')">New</div>
-  <div class="grid-item"  id="btn7" onclick="onbtn('7')">7</div>
-    <div class="grid-item"  id="btn8" onclick="onbtn('8')">8</div>
-  <div class="grid-item"  id="btn9" onclick="onbtn('9')">9</div>  
-    <div class="grid-item"  id="btn4" onclick="onbtn('4')">Open</div>
-    <div class="grid-item"  id="btn0" onclick="onbtn('0')">0</div>  
-     <div class="grid-item"  id="btnAB" onclick="onbtn('AB')">AB</div>  
-  <div class="grid-item"  id="btn100" onclick="onbtn('100')">100</div>  
-<div class="grid-item"  id="btn4" onclick="onbtn('4')">Save</div>
-</div>
--->
 
 <div class="slidecontainer">
   <input type="range" min="0" max="19" value="50" class="slider" id="myRange"  onmouseup="mouseUp()">
@@ -623,11 +650,11 @@ function mouseUp()
   <div style="user-select: none" id="btn7" onclick="onbtn('7')" >7</div>
   <div style="user-select: none" id="btn8" onclick="onbtn('8')" >8</div>
   <div style="user-select: none" id="btn9" onclick="onbtn('9')" >9</div>
-  <div style="user-select: none" id="btnopen" onclick="onbtn('1')" >Open</div>
+  <div style="user-select: none" id="btnopen" onclick="OpenFile()" >Open</div>
   <div style="user-select: none" id="btn0" onclick="onbtn('0')" >0</div>
   <div style="user-select: none" id="btnAB" onclick="onbtn('AB')" >AB</div>
   <div style="user-select: none" id="btn100" onclick="onbtn('100')" >100</div>
-  <div style="user-select: none" id="btnsave" onclick="onbtn('1')" >Save</div>
+  <div style="user-select: none" id="btnsave" onclick="SaveFile()" >Save</div>
 </div>
 
 
