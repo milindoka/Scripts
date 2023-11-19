@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+
+#download {
+   border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+</style>
+
+
+<title>Customize Upload Button</title>
+
+
+
+
+
+
+</head>
+<body>
+
+<h1>Customize Upload Button</h1>
+<div class="upload-btn-wrapper">
+  <button class="btn">Upload a file</button>
+  <input type="file" name="myfile" />
+</div>
+
+
+<a href="#" id="download">Save</a>
+
+
+<script>
+var fileName = "myfile.txt";
+var fileContent = "Page content...";
+var myFile = new Blob([fileContent], {type: 'text/plain'});
+
+window.URL = window.URL || window.webkitURL;
+var dlBtn = document.getElementById("download");
+
+dlBtn.setAttribute("href", window.URL.createObjectURL(myFile));
+dlBtn.setAttribute("download", fileName);
+</script>
+
+
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,13 @@
+<a href="#" id="download">Download</a>
+
+<script>
+var fileName = "myfile.txt";
+var fileContent = "Page content...";
+var myFile = new Blob([fileContent], {type: 'text/plain'});
+
+window.URL = window.URL || window.webkitURL;
+var dlBtn = document.getElementById("download");
+
+dlBtn.setAttribute("href", window.URL.createObjectURL(myFile));
+dlBtn.setAttribute("download", fileName);
+</script>

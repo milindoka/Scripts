@@ -72,6 +72,8 @@ $(document).ready(function(){
            $(child5).promise().done(newval);
     });  
     
+    
+  /*  
      $(document).keypress(function(event)
       {
     var n = event.keyCode - 48;
@@ -87,6 +89,9 @@ $(document).ready(function(){
     
 });
  
+*/
+
+
 
 });  ////end of doc ready function
 
@@ -618,8 +623,11 @@ function mouseUp()
 */
 
 function SaveFile()
-{const stringifiedarr =JSON.stringify(arr);
+{
+alert("save");
+const stringifiedarr =JSON.stringify(arr);
 localStorage.setItem("list01", stringifiedarr);
+
  }
 
 function OpenFile();
@@ -630,6 +638,7 @@ len=arr.length;
 slider.max=len-1;
 topindex=0;
 InitRoll();
+alert("load");
 }
 
  </script>
@@ -668,6 +677,16 @@ topindex= Number(this.value);
 //document.getElementById("child13").innerHTML = arr[topindex];    
 newval();
  }
+function OpenFile()
+{ alert("load");
+const temproll = localStorage.getItem('list01');
+arr = JSON.parse(temproll);
+len=arr.length;
+slider.max=len-1;
+topindex=0;
+InitRoll();
+
+}
 
 function mouseUp()
  {   
@@ -676,6 +695,29 @@ function mouseUp()
  //const dn = document.getElementById('dn').click();
                                       
  }
+function SaveFile()
+{
+download("hello.txt","This is the content of my file :)");
+
+ }
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+// Start file download.
+
+
+
+
 </script>
 </body>
 </html>
