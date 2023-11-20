@@ -8,8 +8,9 @@ var topindex=0;   ///centre line index
 var start='M03001';
 var end='M03020';
 
+///&#x27F3 refresh
 let animrunning=0;
-var arr = [];
+ var arr = [];
  
 tempstart=start;
 ////  fill roll array
@@ -17,7 +18,10 @@ for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempst
 
 var len=arr.length;        
 
- for (var i = 0; i < len; i++)  {  arr[i]=arr[i]+' : '; }
+ for (var i = 0; i < len; i++) 
+  {  arr[i]=arr[i]+' : ';
+     // window.alert(arr[i]);
+    }
     
 window.addEventListener('load', InitRoll);
 ////////////////////////////////////////////
@@ -68,49 +72,33 @@ $(document).ready(function(){
            $(child5).promise().done(newval);
     });  
     
-    
-  /*  
-     $(document).keypress(function(event)
-      {
-    var n = event.keyCode - 48;
-   // alert(n);
-    if (n >=0 && n <= 9) {
-    var chr = String.fromCharCode(n+48);
-		onbtn(chr); /// convert digit d to char  'd'
-		
-      }
-    
-    if(n==49 || n==17) onbtn('AB');
-     if(n==56 || n==24) onbtn('100');
-    
-});
+     
  
-*/
 
 });  ////end of doc ready function
 
 function newval()
 {        
                                              document.getElementById("child0").style.visibility = "hidden";
-                                             document.getElementById("child1").style.visibility = "hidden";
+                                            document.getElementById("child1").style.visibility = "hidden";
                                              document.getElementById("child2").style.visibility = "hidden";
 					     document.getElementById("child3").style.visibility = "hidden";
 					     document.getElementById("child4").style.visibility = "hidden";
-					     document.getElementById("child5").style.visibility = "hidden";
-					     document.getElementById("child6").style.visibility = "hidden";
+					      document.getElementById("child5").style.visibility = "hidden";
+					      document.getElementById("child6").style.visibility = "hidden";
 	
 	                                    prev1=topindex-1; prev2=topindex-2;   prev3=topindex-3;                               
-                                            if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
-                                            if(topindex==1) {prev2=len-1; prev3=len-2;}
-       				            if(topindex==2)   { prev3=len-1;}
+                                          if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
+                                          if(topindex==1) {prev2=len-1; prev3=len-2;}
+       				          if(topindex==2)   { prev3=len-1;}
                  
-                                            document.getElementById("child0").innerHTML = arr[prev3]; 
-                                            document.getElementById("child1").innerHTML = arr[prev2]; 
-                                            document.getElementById("child2").innerHTML = arr[prev1]; 
-                                            document.getElementById("child3").innerHTML = arr[topindex]; 
-                                            document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
-                                            document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
-                                            document.getElementById("child6").innerHTML =  arr[(topindex+3)%len];   
+                                          document.getElementById("child0").innerHTML = arr[prev3]; 
+                                          document.getElementById("child1").innerHTML = arr[prev2]; 
+                                          document.getElementById("child2").innerHTML = arr[prev1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child6").innerHTML =  arr[(topindex+3)%len];   
                                           
                                           document.getElementById("child10").innerHTML = arr[prev3]; 
                                           document.getElementById("child11").innerHTML = arr[prev2]; 
@@ -118,10 +106,11 @@ function newval()
                                           document.getElementById("child13").innerHTML = arr[topindex]; 
                                           document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
                                           document.getElementById("child15").innerHTML = arr[(topindex+2)%len];    
-                                         document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];                                  
-                                         
-                                        resetAnim();
+                                         document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];   
+                                                                                             
+                               resetAnim();
    }
+
 
 function resetAnim()
 {
@@ -221,9 +210,8 @@ function InitRoll()
                                           document.getElementById("child14").innerHTML = arr[topindex+1]; 
                                           document.getElementById("child15").innerHTML = arr[topindex+2];                      
 
-
-flash();
 slider.value=topindex;
+flash();
 }
 
 function onbtn(kee)
@@ -532,7 +520,29 @@ height:100%;
 border:none;
 font-size:24px;
 }
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
 
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
 </style>
 </head>
 <body>
@@ -594,30 +604,29 @@ function mouseUp()
                                           document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
                                           document.getElementById("child15").innerHTML = arr[(topindex+2)%len];    
                                          document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];                                 
-//newval();                                                                                        
+newval();                                                                                        
  }
- 
-
-function SaveFile()
-{
-alert("save");
-const stringifiedarr =JSON.stringify(arr);
-localStorage.setItem("list01", stringifiedarr);
-
- }
-
-function OpenFile();
-{
-const temproll = localStorage.getItem('list01');
-arr = JSON.parse(temproll);
-len=arr.length;
-slider.max=len-1;
-topindex=0;
-InitRoll();
-alert("load");
-}
-
  </script>
+<!--
+<div class="grid-container"  style="user-select: none">     
+  <div class="grid-item"  id="btn1" onclick="onbtn('1')">1</div>
+  <div class="grid-item"  id="btn2" onclick="onbtn('2')">2</div>
+  <div class="grid-item"  id="btn3" onclick="onbtn('3')">3</div>  
+    <div class="grid-item"  id="btn4" onclick="onbtn('4')">Back</div>
+    <div class="grid-item"  id="btn4" onclick="onbtn('4')">4</div>
+<div class="grid-item"  id="btn5" onclick="onbtn('5')">5</div>
+  <div class="grid-item"  id="btn6" onclick="onbtn('6')">6</div>  
+  <div class="grid-item"  id="btn4" onclick="onbtn('4')">New</div>
+  <div class="grid-item"  id="btn7" onclick="onbtn('7')">7</div>
+    <div class="grid-item"  id="btn8" onclick="onbtn('8')">8</div>
+  <div class="grid-item"  id="btn9" onclick="onbtn('9')">9</div>  
+    <div class="grid-item"  id="btn4" onclick="onbtn('4')">Open</div>
+    <div class="grid-item"  id="btn0" onclick="onbtn('0')">0</div>  
+     <div class="grid-item"  id="btnAB" onclick="onbtn('AB')">AB</div>  
+  <div class="grid-item"  id="btn100" onclick="onbtn('100')">100</div>  
+<div class="grid-item"  id="btn4" onclick="onbtn('4')">Save</div>
+</div>
+-->
 
 <div class="slidecontainer">
   <input type="range" min="0" max="19" value="50" class="slider" id="myRange"  onmouseup="mouseUp()">
@@ -635,7 +644,10 @@ alert("load");
   <div style="user-select: none" id="btn7" onclick="onbtn('7')" >7</div>
   <div style="user-select: none" id="btn8" onclick="onbtn('8')" >8</div>
   <div style="user-select: none" id="btn9" onclick="onbtn('9')" >9</div>
-  <div style="user-select: none" id="btnopen" onclick="OpenFile()" >Open</div>
+  <div class="upload-btn-wrapper">
+  <button class="btn">Open</button>
+  <input type="file" name="myfile" />
+</div>
   <div style="user-select: none" id="btn0" onclick="onbtn('0')" >0</div>
   <div style="user-select: none" id="btnAB" onclick="onbtn('AB')" >AB</div>
   <div style="user-select: none" id="btn100" onclick="onbtn('100')" >100</div>
@@ -644,29 +656,39 @@ alert("load");
 
 
 </div>
-<script>
+<script> 
 var slider = document.getElementById("myRange");
 
 slider.oninput = function() {
 topindex= Number(this.value); 
-//document.getElementById("child3").innerHTML = arr[topindex];    
-//document.getElementById("child13").innerHTML = arr[topindex];    
-newval();
- }
-function OpenFile()
-{ alert("load");
-const temproll = localStorage.getItem('list01');
-arr = JSON.parse(temproll);
-len=arr.length;
-slider.max=len-1;
-topindex=0;
-InitRoll();
+                                             
+	                                    prev1=topindex-1; prev2=topindex-2;   prev3=topindex-3;                               
+                                          if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
+                                          if(topindex==1) {prev2=len-1; prev3=len-2;}
+       				          if(topindex==2)   { prev3=len-1;}
+                 
+                                          document.getElementById("child0").innerHTML = arr[prev3]; 
+                                          document.getElementById("child1").innerHTML = arr[prev2]; 
+                                          document.getElementById("child2").innerHTML = arr[prev1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child6").innerHTML =  arr[(topindex+3)%len];   
+                                          
+                                          document.getElementById("child10").innerHTML = arr[prev3]; 
+                                          document.getElementById("child11").innerHTML = arr[prev2]; 
+                                          document.getElementById("child12").innerHTML = arr[prev1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex]; 
+                                          document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child15").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];   
 
-}
+
+ }
 
 function SaveFile()
 {
-download("hello.txt","This is the content of my file :)");
+download("Test33.mrk","This is the content of my marklist)");
 
  }
 function download(filename, text) {
@@ -681,7 +703,6 @@ function download(filename, text) {
 
   document.body.removeChild(element);
 }
-
 </script>
 </body>
 </html>
