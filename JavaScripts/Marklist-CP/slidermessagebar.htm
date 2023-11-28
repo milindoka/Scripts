@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider with Message</title>
+  <style>
+    /* Optional styling for better appearance */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Slider with Message</h1>
+
+<input type="range" id="slider" min="0" max="100" value="50" step="1" oninput="updateMessage()">
+
+<div id="message">This is the default message.</div>
+
+<script>
+  function updateMessage() {
+    var slider = document.getElementById('slider');
+    var messageDiv = document.getElementById('message');
+    var message = getMessageFromSliderValue(slider.value);
+    messageDiv.textContent = message;
+  }
+
+  function getMessageFromSliderValue(value) {
+    // Define your logic to determine the message based on the slider value
+    // You can customize this function according to your requirements
+    if (value < 25) {
+      return 'Low';
+    } else if (value < 75) {
+      return 'Medium';
+    } else {
+      return 'High';
+    }
+  }
+
+  // Initial update
+  updateMessage();
+</script>
+
+</body>
+</html>
+
