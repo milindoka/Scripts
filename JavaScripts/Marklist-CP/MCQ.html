@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Answer Sheet Assessment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>MCQ Answer Sheet Assessment</h1>
+    
+    <label for="studentAnswers">Student's Answers:</label>
+    <input type="text" id="studentAnswers" placeholder="e.g., AABAACDABC" oninput="calculateScore()">
+    
+    <label for="correctAnswers">Correct Answers:</label>
+    <input type="text" id="correctAnswers" placeholder="e.g., BDAABCA" oninput="calculateScore()">
+    
+    <label for="markScheme">Mark Scheme:</label>
+    <input type="text" id="markScheme" placeholder="e.g., 11111211112" oninput="calculateScore()">
+    
+    <div id="result"></div>
+
+    <script>
+        function calculateScore() {
+            const studentAnswers = document.getElementById('studentAnswers').value.toUpperCase();
+            const correctAnswers = document.getElementById('correctAnswers').value.toUpperCase();
+            const markScheme = document.getElementById('markScheme').value;
+            
+            let score = 0;
+            let maxScore = 0;
+            
+            for (let i = 0; i < studentAnswers.length; i++) {
+                if (i < correctAnswers.length && i < markScheme.length) {
+                    const mark = parseInt(markScheme[i]);
+                    maxScore += mark;
+                    if (studentAnswers[i] === correctAnswers[i]) {
+                        score += mark;
+                    }
+                }
+            }
+            
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = `Score: ${score} out of ${maxScore}`;
+        }
+    </script>
+</body>
+</html>
