@@ -699,9 +699,26 @@ topindex= Number(this.value);
 
 function SaveFile()
 {
-download("Test33.mrk","This is the content of my marklist)");
+    var text = "\n";
+    text=text+"Schoolname01\n";
+    text=text+"Schoolname02\n";
+    text=text+"\n\n";
+    text=text+"========ML-V-01========\n";   
+    text=text+"\n";
+    text=text+"Total Sets : 01\n";
+    text=text+"\n"; 
+    text=text+"Set 01 :\n";
+    text=text+"Set 01 :\n";
+    text=text+"Set 01 :\n";
+    text=text+"\n";
+    text=text+"=========ML-V-01========\n";
+    text=text+"\n";
+    text=text+"Examiner\n";
 
- }
+    download("Test33.mrk",text);
+}
+
+ 
 function download(filename, text) {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
