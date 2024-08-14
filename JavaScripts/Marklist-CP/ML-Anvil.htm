@@ -705,15 +705,33 @@ function SaveFile()
     text=text+"\n\n";
     text=text+"========ML-V-01========\n";   
     text=text+"\n";
-    text=text+"Total Sets : 01\n";
-    text=text+"\n"; 
     text=text+"Set 01 :\n";
     text=text+"Set 01 :\n";
     text=text+"Set 01 :\n";
     text=text+"\n";
     text=text+"=========ML-V-01========\n";
     text=text+"\n";
-    text=text+"Examiner\n";
+    text=text+"Examiner : "+ document.getElementById("examiner").value+ "\n";
+    text=text+"Class : "+ document.getElementById("class").value+ "\n";
+    text=text+"Div : "+ document.getElementById("div").value+ "\n";
+    text=text+"Stream : "+ document.getElementById("stream").value+ "\n";
+    text=text+"Subject : "+ document.getElementById("subject").value+ "\n";
+    text=text+"Examination : "+ document.getElementById("examination").value+ "\n";
+    text=text+"Max Marks : "+ document.getElementById("max").value+ "\n";
+    text=text+"Date : "+ document.getElementById("det").value+ "\n";
+    text=text+"\n";
+    text=text+"=========ML-V-01========\n";
+    text=text+"\n";
+    text=text+" Roll   Marks\n";
+    text=text+"\n";
+    var arrlen=arr.length;        
+
+    for (var i = 0; i < len; i++) 
+      text=text+arr[i]+'\n';
+    
+    text=text+"\n";
+    text=text+"=========END========\n";
+    
 
     download("Test33.mrk",text);
 }
