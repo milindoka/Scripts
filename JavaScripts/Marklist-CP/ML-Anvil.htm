@@ -760,18 +760,75 @@ function download(filename, text) {
   reader.onload = function(progressEvent){    
     var lines = this.result.split(/\r\n|\n/);
    for(var line = 0; line < lines.length-1; line++)
-   {
-      //console.log(lines[line] + "\n");
-      result = lines[line].includes(":");
+   {  arr = [];
+      templine=lines[line];
+      result = templine.includes(":");
       if(result)
-         window.alert(lines[line]);
+      { 
+        if(templine.includes("Set")) continue;
+
+
+        if(templine.includes("Examiner"))     
+        {
+          document.getElementById("examiner").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Class"))
+        {
+          document.getElementById("class").value=templine.split(":")[1].trim();
+          continue;
+        }
+
+        if(templine.includes("Div"))
+        {
+          document.getElementById("div").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Stream")) 
+        {
+          document.getElementById("stream").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Subject"))
+        {
+          document.getElementById("subject").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Examination"))
+        {
+          document.getElementById("examination").value=templine.split(":")[1].trim();
+          window.alert(templine.split(":")[1].trim());
+          continue;
+        }
+        if(templine.includes("Max Marks"))
+        {
+          document.getElementById("max").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Date"))
+        {
+          document.getElementById("det").value=templine.split(":")[1].trim();
+          continue;
+        }
+        
+        arr.push(templine);
+        window.alert(templine);
+
+        //tt=line.split(":")[1].trim();
+
+      }
+         //window.alert(lines[line]);
     }
   
   };
   reader.readAsText(file);
   //window.alert(txt);
+  topindex=0;
+  len=arr.length;
+  firstroll=arr[0].split(":")[0].trim();
+  lastroll=arr[len-1].split(":")[0].trim();
   
-  
+  InitRoll();
 };
 
 </script>
