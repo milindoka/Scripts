@@ -657,7 +657,7 @@ newval();
   <div style="user-select: none" id="btn9" onclick="onbtn('9')" >9</div>
   <div class="upload-btn-wrapper">
   <button class="btn">Open</button>
-  <input type="file" name="myfile" accept=".mrk" />
+  <input type="file" name="file" accept=".mrk" id="file" />
 </div>
   <div style="user-select: none" id="btn0" onclick="onbtn('0')" >0</div>
   <div style="user-select: none" id="btnAB" onclick="onbtn('AB')" >AB</div>
@@ -705,9 +705,9 @@ function SaveFile()
     text=text+"\n\n";
     text=text+"========ML-V-01========\n";   
     text=text+"\n";
-    text=text+"Set 01 :\n";
-    text=text+"Set 01 :\n";
-    text=text+"Set 01 :\n";
+    text=text+"Set 01 : AACDAADCDABADCBBADCDBABCD\n";
+    text=text+"Set 01 : 3323222222232322222222222\n";
+    text=text+"Set 01 : 1111111111111111111111111\n";
     text=text+"\n";
     text=text+"=========ML-V-01========\n";
     text=text+"\n";
@@ -749,6 +749,31 @@ function download(filename, text) {
 
   document.body.removeChild(element);
 }
+
+
+
+  document.getElementById('file').onchange = function()
+    {
+ 
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function(progressEvent){    
+    var lines = this.result.split(/\r\n|\n/);
+   for(var line = 0; line < lines.length-1; line++)
+   {
+      //console.log(lines[line] + "\n");
+      result = lines[line].includes(":");
+      if(result)
+         window.alert(lines[line]);
+    }
+  
+  };
+  reader.readAsText(file);
+  //window.alert(txt);
+  
+  
+};
+
 </script>
 </body>
 </html>
