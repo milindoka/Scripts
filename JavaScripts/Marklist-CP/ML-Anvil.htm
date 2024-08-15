@@ -754,13 +754,13 @@ function download(filename, text) {
 
   document.getElementById('file').onchange = function()
     {
- 
+  arr = [];
   var file = this.files[0];
   var reader = new FileReader();
   reader.onload = function(progressEvent){    
     var lines = this.result.split(/\r\n|\n/);
    for(var line = 0; line < lines.length-1; line++)
-   {  arr = [];
+   {  
       templine=lines[line];
       result = templine.includes(":");
       if(result)
@@ -797,7 +797,7 @@ function download(filename, text) {
         if(templine.includes("Examination"))
         {
           document.getElementById("examination").value=templine.split(":")[1].trim();
-          window.alert(templine.split(":")[1].trim());
+          //window.alert(templine.split(":")[1].trim());
           continue;
         }
         if(templine.includes("Max Marks"))
@@ -812,23 +812,24 @@ function download(filename, text) {
         }
         
         arr.push(templine);
-        window.alert(templine);
+        //window.alert(templine);
 
         //tt=line.split(":")[1].trim();
 
       }
          //window.alert(lines[line]);
     }
+    topindex=0;
+  len=arr.length;
+   document.getElementById("firstroll").value=arr[0].split(":")[0].trim();
+   document.getElementById("lastroll").value=arr[len-1].split(":")[0].trim();
+   //lastroll=arr[len-1].split(":")[0].trim();
   
+  InitRoll();
   };
   reader.readAsText(file);
   //window.alert(txt);
-  topindex=0;
-  len=arr.length;
-  firstroll=arr[0].split(":")[0].trim();
-  lastroll=arr[len-1].split(":")[0].trim();
   
-  InitRoll();
 };
 
 </script>
