@@ -675,11 +675,11 @@ function updateDisplayedRolls() {
   <div style="user-select: none" id="btnsave" onclick="SaveFile()" >Save</div>
 </div>
 
-
 <div style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
   <button id="printButton" onclick="printMarklist()" style="font-size: 18px; padding: 5px 15px;">Print</button>
   <button id="mcqButton" onclick="toggleMCQMode()" style="font-size: 18px; padding: 5px 15px;">MCQ</button>
 </div>
+
 
 <div id="mcqInputs" style="display: none; width: 100%; max-width: 480px; margin: 10px auto;">
   <div style="margin-bottom: 10px;">
@@ -697,9 +697,7 @@ function updateDisplayedRolls() {
   <div style="margin-bottom: 10px;">
     <label for="negativeMarks">Negative Marks:</label>
     <input type="number" id="negativeMarks" style="width: 100%; font-size: 18px;">
-  
-</div>
-
+  </div>
 
   <div id="scoreDisplay" style="margin-top: 10px; font-size: 18px; font-weight: bold;"></div>
 
@@ -710,7 +708,7 @@ function updateDisplayedRolls() {
     <button onclick="addMCQAnswer('D')">D</button>
     <button onclick="addMCQAnswer(' ')">Space</button>
     <button onclick="backspaceMCQAnswer()">Backspace</button>
-    <button onclick="clearStudKey()">Clear</button>
+    <button onclick="toggleMCQMode()">MCQ Close</button>
     <button onclick="transferMarks()">Done</button>
 
   </div>
@@ -884,7 +882,17 @@ function download(filename, text) {
   
 };
 
-
+function toggleMCQMode() {
+  var mcqInputs = document.getElementById('mcqInputs');
+  var numgrid = document.querySelector('.numgrid');
+  if (mcqInputs.style.display === 'none') {
+    mcqInputs.style.display = 'block';
+    numgrid.style.display = 'none';
+  } else {
+    mcqInputs.style.display = 'none';
+    numgrid.style.display = 'grid';
+  }
+}
 function calculateScore() {
     var studentAnswers = document.getElementById('studentAnswers').value;
     var correctAnswers = document.getElementById('correctAnswers').value;
@@ -926,22 +934,6 @@ function transferMarks() {
     document.getElementById('child3').innerHTML = arr[topindex];
     mouseUp();
     //toggleMCQMode();
-}
-
-function toggleMCQMode() {
-  var mcqInputs = document.getElementById('mcqInputs');
-  var mcqButton = document.getElementById('mcqButton');
-  var numgrid = document.querySelector('.numgrid');
-  
-  if (mcqInputs.style.display === 'none') {
-    mcqInputs.style.display = 'block';
-    numgrid.style.display = 'none';
-    mcqButton.textContent = 'MCQ Close';
-  } else {
-    mcqInputs.style.display = 'none';
-    numgrid.style.display = 'grid';
-    mcqButton.textContent = 'MCQ';
-  }
 }
 
 
