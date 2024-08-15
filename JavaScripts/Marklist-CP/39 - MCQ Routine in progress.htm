@@ -657,12 +657,34 @@ newval();
   <div style="user-select: none" id="btn9" onclick="onbtn('9')" >9</div>
   <div class="upload-btn-wrapper">
   <button class="btn">Open</button>
-  <input type="file" name="myfile" accept=".mrk" />
+  <input type="file" name="file" accept=".mrk" id="file" />
 </div>
   <div style="user-select: none" id="btn0" onclick="onbtn('0')" >0</div>
   <div style="user-select: none" id="btnAB" onclick="onbtn('AB')" >AB</div>
   <div style="user-select: none" id="btn100" onclick="onbtn('100')" >100</div>
   <div style="user-select: none" id="btnsave" onclick="SaveFile()" >Save</div>
+</div>
+
+<div style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
+  <button id="printButton" onclick="printMarklist()" style="font-size: 18px; padding: 5px 15px;">Print</button>
+  <button id="mcqButton" onclick="toggleMCQMode()" style="font-size: 18px; padding: 5px 15px;">MCQ</button>
+</div>
+
+
+<div id="mcqInputs" style="display: none;">
+  <input type="text" id="studentAnswers" placeholder="Student Answers">
+  <input type="text" id="correctAnswers" placeholder="Correct Answers">
+  <input type="number" id="marksAwarded" placeholder="Marks Awarded">
+  <input type="number" id="negativeMarks" placeholder="Negative Marks">
+  <div>
+    <button onclick="addMCQAnswer('A')">A</button>
+    <button onclick="addMCQAnswer('B')">B</button>
+    <button onclick="addMCQAnswer('C')">C</button>
+    <button onclick="addMCQAnswer('D')">D</button>
+    <button onclick="addMCQAnswer(' ')">Space</button>
+    <button onclick="backspaceMCQAnswer()">Backspace</button>
+    <button onclick="toggleMCQMode()">MCQ Close</button>
+  </div>
 </div>
 
 
@@ -699,9 +721,44 @@ topindex= Number(this.value);
 
 function SaveFile()
 {
-download("Test33.mrk","This\n is\n the\n content\n ofvp\n my\n marklist\n");
+    var text = "\n";
+    text=text+"Schoolname01\n";
+    text=text+"Schoolname02\n";
+    text=text+"\n\n";
+    text=text+"========ML-V-01========\n";   
+    text=text+"\n";
+    text=text+"Set 01 : AACDAADCDABADCBBADCDBABCD\n";
+    text=text+"Set 01 : 3323222222232322222222222\n";
+    text=text+"Set 01 : 1111111111111111111111111\n";
+    text=text+"\n";
+    text=text+"=========ML-V-01========\n";
+    text=text+"\n";
+    text=text+"Examiner : "+ document.getElementById("examiner").value+ "\n";
+    text=text+"Class : "+ document.getElementById("class").value+ "\n";
+    text=text+"Div : "+ document.getElementById("div").value+ "\n";
+    text=text+"Stream : "+ document.getElementById("stream").value+ "\n";
+    text=text+"Subject : "+ document.getElementById("subject").value+ "\n";
+    text=text+"Examination : "+ document.getElementById("examination").value+ "\n";
+    text=text+"Max Marks : "+ document.getElementById("max").value+ "\n";
+    text=text+"Date : "+ document.getElementById("det").value+ "\n";
+    text=text+"\n";
+    text=text+"=========ML-V-01========\n";
+    text=text+"\n";
+    text=text+" Roll   Marks\n";
+    text=text+"\n";
+    var arrlen=arr.length;        
 
- }
+    for (var i = 0; i < len; i++) 
+      text=text+arr[i]+'\n';
+    
+    text=text+"\n";
+    text=text+"=========END========\n";
+    
+
+    download("Test33.mrk",text);
+}
+
+ 
 function download(filename, text) {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -714,6 +771,114 @@ function download(filename, text) {
 
   document.body.removeChild(element);
 }
+
+
+
+  document.getElementById('file').onchange = function()
+    {
+  arr = [];
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function(progressEvent){    
+    var lines = this.result.split(/\r\n|\n/);
+   for(var line = 0; line < lines.length-1; line++)
+   {  
+      templine=lines[line];
+      result = templine.includes(":");
+      if(result)
+      { 
+        if(templine.includes("Set")) continue;
+
+
+        if(templine.includes("Examiner"))     
+        {
+          document.getElementById("examiner").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Class"))
+        {
+          document.getElementById("class").value=templine.split(":")[1].trim();
+          continue;
+        }
+
+        if(templine.includes("Div"))
+        {
+          document.getElementById("div").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Stream")) 
+        {
+          document.getElementById("stream").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Subject"))
+        {
+          document.getElementById("subject").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Examination"))
+        {
+          document.getElementById("examination").value=templine.split(":")[1].trim();
+          //window.alert(templine.split(":")[1].trim());
+          continue;
+        }
+        if(templine.includes("Max Marks"))
+        {
+          document.getElementById("max").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Date"))
+        {
+          document.getElementById("det").value=templine.split(":")[1].trim();
+          continue;
+        }
+        
+        arr.push(templine);
+        //window.alert(templine);
+
+        //tt=line.split(":")[1].trim();
+
+      }
+         //window.alert(lines[line]);
+    }
+    topindex=0;
+  len=arr.length;
+   document.getElementById("firstroll").value=arr[0].split(":")[0].trim();
+   document.getElementById("lastroll").value=arr[len-1].split(":")[0].trim();
+   //lastroll=arr[len-1].split(":")[0].trim();
+  
+  InitRoll();
+  };
+  reader.readAsText(file);
+  //window.alert(txt);
+  
+};
+
+function toggleMCQMode() {
+  var mcqInputs = document.getElementById('mcqInputs');
+  var numgrid = document.querySelector('.numgrid');
+  if (mcqInputs.style.display === 'none') {
+    mcqInputs.style.display = 'block';
+    numgrid.style.display = 'none';
+  } else {
+    mcqInputs.style.display = 'none';
+    numgrid.style.display = 'grid';
+  }
+}
+
+function addMCQAnswer(answer) {
+  var studentAnswers = document.getElementById('studentAnswers');
+  studentAnswers.value += answer;
+}
+
+function backspaceMCQAnswer() {
+  var studentAnswers = document.getElementById('studentAnswers');
+  studentAnswers.value = studentAnswers.value.slice(0, -1);
+}
+
+
+
+
 </script>
 </body>
 </html>

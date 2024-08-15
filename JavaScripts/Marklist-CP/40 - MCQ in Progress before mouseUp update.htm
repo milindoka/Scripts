@@ -605,48 +605,38 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 
 
 <script>
-function mouseUp() {
-    len = arr.length;
-    prev1 = topindex - 1;
-    prev2 = topindex - 2;
-    prev3 = topindex - 3;
-    if (topindex == 0) { prev1 = len - 1; prev2 = len - 2; prev3 = len - 3; }
-    if (topindex == 1) { prev2 = len - 1; prev3 = len - 2; }
-    if (topindex == 2) { prev3 = len - 1; }
 
-    // Update the displayed roll numbers
-    updateDisplayedRolls();
 
-    // Perform the sliding animation
-    $("#child1").animate({ top: '20px', opacity: 0.0 });
-    $("#child2").animate({ top: '60px', opacity: 0.1 });
-    $("#child3").animate({ top: '100px', opacity: 0.3 });
-    $("#child4").animate({ top: '140px', opacity: 1.0 });
-    $("#child5").animate({ top: '180px', opacity: 0.3 });
-    $("#child6").animate({ top: '220px', opacity: 0.1 });
-
-    topindex = (topindex + 1) % len;
-    $(child6).promise().done(newval);
-}
-
-function updateDisplayedRolls() {
-    document.getElementById("child0").innerHTML = arr[prev3];
-    document.getElementById("child1").innerHTML = arr[prev2];
-    document.getElementById("child2").innerHTML = arr[prev1];
-    document.getElementById("child3").innerHTML = arr[topindex];
-    document.getElementById("child4").innerHTML = arr[(topindex + 1) % len];
-    document.getElementById("child5").innerHTML = arr[(topindex + 2) % len];
-    document.getElementById("child6").innerHTML = arr[(topindex + 3) % len];
-
-    document.getElementById("child10").innerHTML = arr[prev3];
-    document.getElementById("child11").innerHTML = arr[prev2];
-    document.getElementById("child12").innerHTML = arr[prev1];
-    document.getElementById("child13").innerHTML = arr[topindex];
-    document.getElementById("child14").innerHTML = arr[(topindex + 1) % len];
-    document.getElementById("child15").innerHTML = arr[(topindex + 2) % len];
-    document.getElementById("child16").innerHTML = arr[(topindex + 3) % len];
-}
-
+function mouseUp()
+ {
+ //alert("tt"); 
+ 
+ //newval();
+ //const dn = document.getElementById('dn').click();
+  
+         len=arr.length;
+           prev1=topindex-1; prev2=topindex-2;   prev3=topindex-3;                               
+                                          if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
+                                          if(topindex==1) {prev2=len-1; prev3=len-2;}
+       				          if(topindex==2)   { prev3=len-1;}
+                 
+                                          document.getElementById("child0").innerHTML = arr[prev3]; 
+                                          document.getElementById("child1").innerHTML = arr[prev2]; 
+                                          document.getElementById("child2").innerHTML = arr[prev1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child6").innerHTML =  arr[(topindex+3)%len];   
+                                          
+                                          document.getElementById("child10").innerHTML = arr[prev3]; 
+                                          document.getElementById("child11").innerHTML = arr[prev2]; 
+                                          document.getElementById("child12").innerHTML = arr[prev1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex]; 
+                                          document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child15").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];                                 
+newval();                                                                                        
+ }
  </script>
 
 <div class="slidecontainer">

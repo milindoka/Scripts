@@ -605,48 +605,38 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 
 
 <script>
-function mouseUp() {
-    len = arr.length;
-    prev1 = topindex - 1;
-    prev2 = topindex - 2;
-    prev3 = topindex - 3;
-    if (topindex == 0) { prev1 = len - 1; prev2 = len - 2; prev3 = len - 3; }
-    if (topindex == 1) { prev2 = len - 1; prev3 = len - 2; }
-    if (topindex == 2) { prev3 = len - 1; }
 
-    // Update the displayed roll numbers
-    updateDisplayedRolls();
 
-    // Perform the sliding animation
-    $("#child1").animate({ top: '20px', opacity: 0.0 });
-    $("#child2").animate({ top: '60px', opacity: 0.1 });
-    $("#child3").animate({ top: '100px', opacity: 0.3 });
-    $("#child4").animate({ top: '140px', opacity: 1.0 });
-    $("#child5").animate({ top: '180px', opacity: 0.3 });
-    $("#child6").animate({ top: '220px', opacity: 0.1 });
-
-    topindex = (topindex + 1) % len;
-    $(child6).promise().done(newval);
-}
-
-function updateDisplayedRolls() {
-    document.getElementById("child0").innerHTML = arr[prev3];
-    document.getElementById("child1").innerHTML = arr[prev2];
-    document.getElementById("child2").innerHTML = arr[prev1];
-    document.getElementById("child3").innerHTML = arr[topindex];
-    document.getElementById("child4").innerHTML = arr[(topindex + 1) % len];
-    document.getElementById("child5").innerHTML = arr[(topindex + 2) % len];
-    document.getElementById("child6").innerHTML = arr[(topindex + 3) % len];
-
-    document.getElementById("child10").innerHTML = arr[prev3];
-    document.getElementById("child11").innerHTML = arr[prev2];
-    document.getElementById("child12").innerHTML = arr[prev1];
-    document.getElementById("child13").innerHTML = arr[topindex];
-    document.getElementById("child14").innerHTML = arr[(topindex + 1) % len];
-    document.getElementById("child15").innerHTML = arr[(topindex + 2) % len];
-    document.getElementById("child16").innerHTML = arr[(topindex + 3) % len];
-}
-
+function mouseUp()
+ {
+ //alert("tt"); 
+ 
+ //newval();
+ //const dn = document.getElementById('dn').click();
+  
+         len=arr.length;
+           prev1=topindex-1; prev2=topindex-2;   prev3=topindex-3;                               
+                                          if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
+                                          if(topindex==1) {prev2=len-1; prev3=len-2;}
+       				          if(topindex==2)   { prev3=len-1;}
+                 
+                                          document.getElementById("child0").innerHTML = arr[prev3]; 
+                                          document.getElementById("child1").innerHTML = arr[prev2]; 
+                                          document.getElementById("child2").innerHTML = arr[prev1]; 
+                                          document.getElementById("child3").innerHTML = arr[topindex]; 
+                                          document.getElementById("child4").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child5").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child6").innerHTML =  arr[(topindex+3)%len];   
+                                          
+                                          document.getElementById("child10").innerHTML = arr[prev3]; 
+                                          document.getElementById("child11").innerHTML = arr[prev2]; 
+                                          document.getElementById("child12").innerHTML = arr[prev1]; 
+                                          document.getElementById("child13").innerHTML = arr[topindex]; 
+                                          document.getElementById("child14").innerHTML = arr[(topindex+1)%len]; 
+                                          document.getElementById("child15").innerHTML = arr[(topindex+2)%len];    
+                                         document.getElementById("child16").innerHTML =  arr[(topindex+3)%len];                                 
+newval();                                                                                        
+ }
  </script>
 
 <div class="slidecontainer">
@@ -674,46 +664,9 @@ function updateDisplayedRolls() {
   <div style="user-select: none" id="btn100" onclick="onbtn('100')" >100</div>
   <div style="user-select: none" id="btnsave" onclick="SaveFile()" >Save</div>
 </div>
-
 <div style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
   <button id="printButton" onclick="printMarklist()" style="font-size: 18px; padding: 5px 15px;">Print</button>
-  <button id="mcqButton" onclick="toggleMCQMode()" style="font-size: 18px; padding: 5px 15px;">MCQ</button>
 </div>
-
-
-<div id="mcqInputs" style="display: none; width: 100%; max-width: 480px; margin: 10px auto;">
-  <div style="margin-bottom: 10px;">
-    <label for="studentAnswers">Student Answers:</label>
-    <input type="text" id="studentAnswers" style="width: 100%; font-size: 18px;">
-  </div>
-  <div style="margin-bottom: 10px;">
-    <label for="correctAnswers">Correct Answers:</label>
-    <input type="text" id="correctAnswers" style="width: 100%; font-size: 18px;">
-  </div>
-  <div style="margin-bottom: 10px;">
-    <label for="marksAwarded">Marks Awarded:</label>
-    <input type="number" id="marksAwarded" style="width: 100%; font-size: 18px;">
-  </div>
-  <div style="margin-bottom: 10px;">
-    <label for="negativeMarks">Negative Marks:</label>
-    <input type="number" id="negativeMarks" style="width: 100%; font-size: 18px;">
-  </div>
-
-  <div id="scoreDisplay" style="margin-top: 10px; font-size: 18px; font-weight: bold;"></div>
-
-  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;">
-    <button onclick="addMCQAnswer('A')">A</button>
-    <button onclick="addMCQAnswer('B')">B</button>
-    <button onclick="addMCQAnswer('C')">C</button>
-    <button onclick="addMCQAnswer('D')">D</button>
-    <button onclick="addMCQAnswer(' ')">Space</button>
-    <button onclick="backspaceMCQAnswer()">Backspace</button>
-    <button onclick="toggleMCQMode()">MCQ Close</button>
-    <button onclick="transferMarks()">Done</button>
-
-  </div>
-</div>
-
 
 
 </div>
@@ -881,62 +834,6 @@ function download(filename, text) {
   //window.alert(txt);
   
 };
-
-function toggleMCQMode() {
-  var mcqInputs = document.getElementById('mcqInputs');
-  var numgrid = document.querySelector('.numgrid');
-  if (mcqInputs.style.display === 'none') {
-    mcqInputs.style.display = 'block';
-    numgrid.style.display = 'none';
-  } else {
-    mcqInputs.style.display = 'none';
-    numgrid.style.display = 'grid';
-  }
-}
-function calculateScore() {
-    var studentAnswers = document.getElementById('studentAnswers').value;
-    var correctAnswers = document.getElementById('correctAnswers').value;
-    var marksAwarded = document.getElementById('marksAwarded').value;
-    var negativeMarks = document.getElementById('negativeMarks').value;
-
-    var score = 0;
-    var minLength = Math.min(studentAnswers.length, correctAnswers.length, marksAwarded.length, negativeMarks.length);
-
-    for (var i = 0; i < minLength; i++) {
-        if (studentAnswers[i] === correctAnswers[i]) {
-            score += parseInt(marksAwarded[i]);
-        } else if (studentAnswers[i] !== ' ' && correctAnswers[i] !== ' ') {
-            score -= parseInt(negativeMarks[i]);
-        }
-    }
-
-    document.getElementById('scoreDisplay').textContent = 'Current Score: ' + score;
-}
-
-function addMCQAnswer(answer) {
-    var studentAnswers = document.getElementById('studentAnswers');
-    studentAnswers.value += answer;
-    calculateScore();
-}
-
-function backspaceMCQAnswer() {
-    var studentAnswers = document.getElementById('studentAnswers');
-    studentAnswers.value = studentAnswers.value.slice(0, -1);
-    calculateScore();
-}
-
-function transferMarks() {
-    var scoreText = document.getElementById('scoreDisplay').textContent.split(': ')[1];
-    var score = Math.max(0, parseInt(scoreText)); // Ensure positive integer
-    var formattedScore = score < 10 ? '0' + score : score.toString(); // Format as two digits
-    var currentRoll = arr[topindex].split(':')[0].trim();
-    arr[topindex] = currentRoll + ' : ' + formattedScore;
-    document.getElementById('child3').innerHTML = arr[topindex];
-    mouseUp();
-    //toggleMCQMode();
-}
-
-
 
 </script>
 </body>
