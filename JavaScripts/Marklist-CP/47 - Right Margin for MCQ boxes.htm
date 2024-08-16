@@ -713,33 +713,34 @@ function updateDisplayedRolls() {
 <div id="mcqInputs" style="display: none;">
   <div style="margin-bottom: 10px;">
     <label for="studentAnswers">Student Answers:</label>
-    <input type="text" id="studentAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;">
+    <input type="text" id="studentAnswers" onclick="setFocus(this)" style="width: 100%; font-size: 18px; text-transform: uppercase;">
   </div>
   <div style="margin-bottom: 10px;">
     <label for="correctAnswers">Correct Answers:</label>
-    <input type="text" id="correctAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;">
+    <input type="text" id="correctAnswers" onclick="setFocus(this)" style="width: 100%; font-size: 18px; text-transform: uppercase;">
   </div>
   <div style="margin-bottom: 10px;">
     <label for="marksAwarded">Marks Awarded:</label>
-    <input type="text" id="marksAwarded" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;">  </div>
+    <input type="number" id="marksAwarded" onclick="setFocus(this)" style="width: 100%; font-size: 18px;">
+  </div>
   <div style="margin-bottom: 10px;">
     <label for="negativeMarks">Negative Marks:</label>
-    <input type="text" id="negativeMarks" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;">  
+    <input type="number" id="negativeMarks" onclick="setFocus(this)" style="width: 100%; font-size: 18px;">
+  
 </div>
 
 
   <div id="scoreDisplay" style="margin-top: 10px; font-size: 18px; font-weight: bold;"></div>
 
   <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;">
-  
-    <button onclick="handleButtonClick(this)">A</button>
-    <button onclick="handleButtonClick(this)">B</button>
-    <button onclick="handleButtonClick(this)">C</button>
-    <button onclick="handleButtonClick(this)">D</button>
-    <button onclick="handleButtonClick(this)">1</button>
-    <button onclick="handleButtonClick(this)">2</button>
-    <button onclick="handleButtonClick(this)">3</button>
-    <button onclick="handleButtonClick(this)">4</button>
+    <button onclick="addMCQAnswer('A')">A</button>
+    <button onclick="addMCQAnswer('B')">B</button>
+    <button onclick="addMCQAnswer('C')">C</button>
+    <button onclick="addMCQAnswer('D')">D</button>
+    <button onclick="addMCQMarks('1')">1</button>
+    <button onclick="addMCQMarks('2')">2</button>
+    <button onclick="addMCQMarks('3')">3</button>
+    <button onclick="addMCQMarks('4')">4</button>
     <button onclick="addMCQAnswer(' ')">Space</button>
     <button onclick="backspaceMCQAnswer()">Backspace</button>
     <button onclick="clearFocusedInput()">Clear</button>
@@ -1017,40 +1018,6 @@ function clearFocusedInput() {
         calculateScore();
     }
 }
-
-function validateMCQInput(event) {
-    var keyCode = event.which ? event.which : event.keyCode;
-    var char = String.fromCharCode(keyCode).toUpperCase();
-    return /[ABCD]/.test(char);
-}
-
-function validateMarksInput(event) {
-    var keyCode = event.which ? event.which : event.keyCode;
-    var char = String.fromCharCode(keyCode);
-    return /[1234]/.test(char);
-}
-
-function handleButtonClick(button) {
-    if (!focusedInput) return;
-    
-    var value = button.textContent;
-    var currentValue = focusedInput.value;
-    
-    if (focusedInput.id === 'studentAnswers' || focusedInput.id === 'correctAnswers') {
-        if (['A', 'B', 'C', 'D'].includes(value)) {
-            focusedInput.value = currentValue + value;
-        }
-    } else if (focusedInput.id === 'marksAwarded' || focusedInput.id === 'negativeMarks') {
-        if (['1', '2', '3', '4'].includes(value)) {
-            focusedInput.value = currentValue + value;
-        }
-    } else {
-        focusedInput.value = currentValue + value;
-    }
-    
-    calculateScore(); // Add this line to call calculateScore after updating the input
-}
-
 
 </script>
 </body>
