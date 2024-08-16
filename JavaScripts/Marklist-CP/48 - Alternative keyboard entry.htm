@@ -740,7 +740,7 @@ function updateDisplayedRolls() {
     <button onclick="handleButtonClick(this)">2</button>
     <button onclick="handleButtonClick(this)">3</button>
     <button onclick="handleButtonClick(this)">4</button>
-    <button onclick="addMCQAnswer('-')">Skip (-)</button>
+    <button onclick="addMCQAnswer(' ')">Space</button>
     <button onclick="backspaceMCQAnswer()">Backspace</button>
     <button onclick="clearFocusedInput()">Clear</button>
     <button onclick="transferMarks()">Done</button>
@@ -1002,7 +1002,7 @@ function clearFocusedInput() {
 function validateMCQInput(event) {
     var keyCode = event.which ? event.which : event.keyCode;
     var char = String.fromCharCode(keyCode).toUpperCase();
-    return /[ABCD-]/.test(char);
+    return /[ABCD]/.test(char);
 }
 
 function validateMarksInput(event) {
@@ -1018,7 +1018,7 @@ function handleButtonClick(button) {
     var currentValue = focusedInput.value;
     
     if (focusedInput.id === 'studentAnswers' || focusedInput.id === 'correctAnswers') {
-        if (['A', 'B', 'C', 'D','-'].includes(value)) {
+        if (['A', 'B', 'C', 'D'].includes(value)) {
             focusedInput.value = currentValue + value;
         }
     } else if (focusedInput.id === 'marksAwarded' || focusedInput.id === 'negativeMarks') {
@@ -1048,7 +1048,7 @@ function calculateScore() {
     for (var i = 0; i < minLength; i++) {
         if (studentAnswers[i] === correctAnswers[i]) {
             score += parseInt(marksAwarded[i]);
-        } else if (studentAnswers[i] !== '-' && correctAnswers[i] !== '-') {
+        } else if (studentAnswers[i] !== ' ' && correctAnswers[i] !== ' ') {
             score -= parseInt(negativeMarks[i]);
         }
     }
@@ -1063,10 +1063,7 @@ const answerInput = document.getElementById('studentAnswers');
 answerInput.addEventListener('keyup', function(event) {
    kii="ABCD-"
    // Check if the key pressed is Enter (key code 13)
-    if (event.keyCode === kii.charCodeAt(0) || event.keyCode === kii.charCodeAt(1) || 
-    event.keyCode === kii.charCodeAt(2) || event.keyCode === kii.charCodeAt(3) || 
-    event.keyCode === kii.charCodeAt(4))
-  
+    if (event.keyCode === kii.charCodeAt(0) || event.keyCode === kii.charCodeAt(1) || event.keyCode === kii.charCodeAt(2) || event.keyCode === kii.charCodeAt(3) || event.keyCode === kii.charCodeAt(4)) 
     {  
         // Process the answer
        const answer = this.value.trim();
