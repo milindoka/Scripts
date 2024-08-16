@@ -731,7 +731,7 @@ function updateDisplayedRolls() {
     <button onclick="addMCQMarks('4')">4</button>
     <button onclick="addMCQAnswer(' ')">Space</button>
     <button onclick="backspaceMCQAnswer()">Backspace</button>
-    <button onclick="clearFocusedInput()">Clear</button>
+    <button onclick="clearStudKey()">Clear</button>
     <button onclick="transferMarks()">Done</button>
 
   </div>
@@ -984,25 +984,8 @@ function transferMarks() {
     document.getElementById('child3').innerHTML = arr[topindex];
     mouseUp();
     //toggleMCQMode();
-    doneMCQ();
 }
 
-
-function doneMCQ() {
-    calculateScore();
-    let studentAnswersInput = document.getElementById('studentAnswers');
-    setFocus(studentAnswersInput);
-    studentAnswersInput.value = '';
-}
-
-
-
-function clearFocusedInput() {
-    if (focusedInput) {
-        focusedInput.value = '';
-        calculateScore();
-    }
-}
 
 </script>
 </body>
