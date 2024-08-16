@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Button</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #counter {
+            font-size: 18px;
+            min-width: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span id="counter">0</span>
+        <button id="incrementBtn">Click me</button>
+    </div>
+
+    <script>
+        const counter = document.getElementById('counter');
+        const incrementBtn = document.getElementById('incrementBtn');
+        let count = 0;
+
+        incrementBtn.addEventListener('click', () => {
+            count += 2;
+            counter.textContent = count;
+        });
+    </script>
+</body>
+</html>
