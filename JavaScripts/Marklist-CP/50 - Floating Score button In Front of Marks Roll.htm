@@ -715,7 +715,7 @@ function updateDisplayedRolls() {
    <div style="position: absolute; top: 100px; right: 10px; z-index: 1000;">
   <button id="pushButton" onclick="transferMarks()" style="margin-right: 5px;">Push</button>
 </div>
-<span id="scoreDisplay" style="width:90px;background-color:#e7e7e7; color:black; position : absolute; top: 100px; right: 100px; z-index: 1000;";  >Score:</span>
+<span id="scoreDisplay" style="background-color:#e7e7e7; color:black; position : absolute; top: 100px; right: 80px; z-index: 1000;";  >Other</span>
   <div style="margin-bottom: 10px;">
     <label for="studentAnswers">Student Answers:</label>
     <input type="text" id="studentAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;">
@@ -1057,7 +1057,8 @@ function calculateScore() {
         }
     }
 
-    document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+    document.getElementById('scoreDisplay').textContent = 'Current Score: ' + score;
+    document.getElementById('pushButton').textContent =  score;
 
    //// window.alert(score);
 }
