@@ -9,7 +9,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open ML-Anvil.htm",
-            "file": "/home/milind/Data/Projects/Scripts/JavaScripts/Marklist-CP/ML-Anvil.htm"
+            "file": "/home/milind/Data/Projects/Scripts/JavaScripts/Marklist-CP/ML.htm"
         }
     ]
 }

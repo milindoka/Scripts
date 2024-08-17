@@ -671,8 +671,8 @@ function updateDisplayedRolls() {
 <div class="slidecontainer">
   <input type="range" min="0" max="19" value="50" class="slider" id="myRange"  onmouseup="mouseUp()">
 </div>
-<!--
-<div class="numgrid">
+
+<div class="numgrid" >
   <div  style="user-select: none" id="btn1" onclick="onbtn('1')">1</div>
   <div style="user-select: none" id="btn2" onclick="onbtn('2')" >2</div>
   <div style="user-select: none" id="btn3" onclick="onbtn('3')" >3</div>
@@ -693,42 +693,7 @@ function updateDisplayedRolls() {
   <div style="user-select: none" id="btn100" onclick="onbtn('100')" >100</div>
   <div style="user-select: none" id="btnsave" onclick="SaveFile()" >Save</div>
 </div>
--->
-<div id="numbut" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
 
-  <style>
-    .mcq-button {
-      font-size: 18px;
-      padding: 15px 20px;
-      min-width: 80px;
-      min-height: 60px;
-      border-radius: 8px;
-      border: 2px solid #007bff;
-      background-color: #f8f9fa;
-      color: #007bff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .mcq-button:hover {
-      background-color: #007bff;
-      color: white;
-    }
-  </style>
-
-  <button class="mcq-button" id="btn1" onclick="onbtn('1')">1</button>
-  <button class="mcq-button" id="btn2" onclick="onbtn('2')">2</button>
-  <button class="mcq-button" id="btn3" onclick="onbtn('3')">3</button>
-  <button class="mcq-button" id="btnback" onclick="onbtn('X')">X</button>
-  <button class="mcq-button" onclick="handleButtonClick(this)">1</button>
-  <button class="mcq-button" onclick="handleButtonClick(this)">2</button>
-  <button class="mcq-button" onclick="handleButtonClick(this)">3</button>
-  <button class="mcq-button" onclick="handleButtonClick(this)">4</button>
-  <button class="mcq-button" onclick="addMCQAnswer('-')">Skip (-)</button>
-  <button class="mcq-button" onclick="backspaceMCQAnswer()">Backspace</button>
-  <button class="mcq-button" onclick="clearFocusedInput()">Clear</button>
-  <button class="mcq-button" onclick="onbtn('AB')">AB</button>
-
-</div>
 
 
 <div id="mcqInputs" style="display: none;">
@@ -977,16 +942,16 @@ function backspaceMCQAnswer() {
 function toggleMCQMode() {
   var mcqInputs = document.getElementById('mcqInputs');
   var mcqButton = document.getElementById('mcqButton');
-  var numgrid = document.querySelector('numbut');
+  var numgrid = document.querySelector('.numgrid');
   
   if (mcqInputs.style.display === 'none') {
     mcqInputs.style.display = 'block';
-    numbut.style.display = 'none';
+    numgrid.style.display = 'none';
     mcqButton.textContent = 'MCQ Close';
     setFocus(document.getElementById('studentAnswers')); // Set initial focus
   } else {
     mcqInputs.style.display = 'none';
-    numbut.style.display = 'grid';
+    numgrid.style.display = 'grid';
     mcqButton.textContent = 'MCQ';
     if (focusedInput) {
       focusedInput.classList.remove('focused-input');
