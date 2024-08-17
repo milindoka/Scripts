@@ -1037,57 +1037,41 @@ function handleButtonClick(button) {
     
 }
 
-
 function calculateScore() {
- // window.alert("Calculating Score...");
-  
+  console.log('Calculating fn called...');
     var studentAnswers = document.getElementById('studentAnswers').value.toUpperCase();
     var correctAnswers = document.getElementById('correctAnswers').value.toUpperCase();
     var marksAwarded = document.getElementById('marksAwarded').value;
     var negativeMarks = document.getElementById('negativeMarks').value;
 
+    console.log('Student Answers:', studentAnswers);
+    console.log('Correct Answers:', correctAnswers);
+    console.log('Marks Awarded:', marksAwarded);
+    console.log('Negative Marks:', negativeMarks);
     var score = 0;
-    var minLength = Math.min(studentAnswers.length, correctAnswers.length, marksAwarded.length, negativeMarks.length);
+    var minLength = Math.min(studentAnswers.length, correctAnswers.length, marksAwarded.length);
 
     for (var i = 0; i < minLength; i++) {
+      
+    console.log('Processing answer', i);
+    // rest of the loop
+   
+
         if (studentAnswers[i] === correctAnswers[i]) {
-            score += parseInt(marksAwarded[i]);
-        } else if (studentAnswers[i] !== '-' && correctAnswers[i] !== '-') {
-            score -= parseInt(negativeMarks[i]);
+            score += parseInt(marksAwarded[i] || 0);
+        } else if (studentAnswers[i] !== '-' && correctAnswers[i] !== '-' && negativeMarks && negativeMarks.trim() !== '') {
+            score -= parseInt(negativeMarks[i] || 0);
         }
     }
 
     document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
-
-   //// window.alert(score);
+    console.log('Score:', score);
 }
 
-// Assuming you have an input field with id 'answerInput'
-const answerInput = document.getElementById('studentAnswers');
-
-answerInput.addEventListener('keyup', function(event) {
-   kii="ABCD-"
-   // Check if the key pressed is Enter (key code 13)
-    if (event.keyCode === kii.charCodeAt(0) || event.keyCode === kii.charCodeAt(1) || 
-    event.keyCode === kii.charCodeAt(2) || event.keyCode === kii.charCodeAt(3) || 
-    event.keyCode === kii.charCodeAt(4))
-  
-    {  
-        // Process the answer
-       const answer = this.value.trim();
-        
-        // Call your existing answer processing logic here
-        // For example:
-        // processAnswer(answer);
-
-        // Then call calculateScore
-        calculateScore();
-
-        // Clear the input field
-       //    this.value = '';
-    }
-});
-
+document.getElementById('studentAnswers').addEventListener('input', calculateScore);
+document.getElementById('correctAnswers').addEventListener('input', calculateScore);
+document.getElementById('marksAwarded').addEventListener('input', calculateScore);
+document.getElementById('negativeMarks').addEventListener('input', calculateScore);
 
 </script>
 </body>

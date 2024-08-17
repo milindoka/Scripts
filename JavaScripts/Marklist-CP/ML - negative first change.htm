@@ -747,7 +747,7 @@ function updateDisplayedRolls() {
     <button onclick="addMCQAnswer('-')">Skip (-)</button>
     <button onclick="backspaceMCQAnswer()">Backspace</button>
     <button onclick="clearFocusedInput()">Clear</button>
-    <button onclick="onbtn('AB')">AB</button>
+    <button onclick="transferMarks()">Done</button>
 
   </div>
 </div>
@@ -1037,31 +1037,6 @@ function handleButtonClick(button) {
     
 }
 
-
-function calculateScore() {
- // window.alert("Calculating Score...");
-  
-    var studentAnswers = document.getElementById('studentAnswers').value.toUpperCase();
-    var correctAnswers = document.getElementById('correctAnswers').value.toUpperCase();
-    var marksAwarded = document.getElementById('marksAwarded').value;
-    var negativeMarks = document.getElementById('negativeMarks').value;
-
-    var score = 0;
-    var minLength = Math.min(studentAnswers.length, correctAnswers.length, marksAwarded.length, negativeMarks.length);
-
-    for (var i = 0; i < minLength; i++) {
-        if (studentAnswers[i] === correctAnswers[i]) {
-            score += parseInt(marksAwarded[i]);
-        } else if (studentAnswers[i] !== '-' && correctAnswers[i] !== '-') {
-            score -= parseInt(negativeMarks[i]);
-        }
-    }
-
-    document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
-
-   //// window.alert(score);
-}
-
 // Assuming you have an input field with id 'answerInput'
 const answerInput = document.getElementById('studentAnswers');
 
@@ -1087,6 +1062,29 @@ answerInput.addEventListener('keyup', function(event) {
        //    this.value = '';
     }
 });
+
+
+function calculateScore() {
+    var studentAnswers = document.getElementById('studentAnswers').value.toUpperCase();
+    var correctAnswers = document.getElementById('correctAnswers').value.toUpperCase();
+    var marksAwarded = document.getElementById('marksAwarded').value;
+    var negativeMarks = document.getElementById('negativeMarks').value;
+
+    var score = 0;
+    var minLength = Math.min(studentAnswers.length, correctAnswers.length, marksAwarded.length);
+
+    for (var i = 0; i < minLength; i++) {
+        if (studentAnswers[i] === correctAnswers[i]) {
+            score += parseInt(marksAwarded[i] || 0);
+        } else if (studentAnswers[i] !== '-' && correctAnswers[i] !== '-' && negativeMarks && negativeMarks.trim() !== '') {
+            score -= parseInt(negativeMarks[i] || 0);
+        }
+    }
+
+    document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+}
+
+
 
 
 </script>
