@@ -600,17 +600,35 @@ table.pref
 
 table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 
+.float-btn {
+  position: absolute;
+  top: 35px;
+  right: 15px;
+  padding: 5px 5px;
+  background-color: #d4f8eb;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 1000;
+  width:100px;
+}
+
+
 </style>
 </head>
 <body>
 <div class="container">
+  <button id="mcqToggle" class="float-btn" onclick="toggleMCQ()">MCQ</button>
+
 <button id="up" style="font-size:24px;">&#10147 </button> 
 <button id="dn" style="font-size:24px;">&#10147 </button> 
 
 <div class=c0 id="child0">M03018 :</div>
 <div class=c1 id="child1">M03019 :</div>
 <div class=c2 id="child2">M03020 :</div>
-<div class=c3 id="child3">M03001 : </div>
+<div class=c3 id="child3">M03001 :</div>
 <div class=c4 id="child4">M03002 :</div>
 <div class=c5 id="child5">M03003 :</div>
 <div class=c6 id="child6">M03004 :</div>
@@ -618,7 +636,7 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 <div class=c0 id="child10">M03018 :</div>
 <div class=c1 id="child11">M03019 :</div>
 <div class=c2 id="child12">M03020 :</div>
-<div class=c3 id="child13">M03001 : </div>
+<div class=c3 id="child13">M03001 :</div>
 <div class=c4 id="child14">M03002 :</div>
 <div class=c5 id="child15">M03003 :</div>
 <div class=c6 id="child16">M03004 :</div>
@@ -642,6 +660,7 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 <tr><td>Max Marks : &ensp;</td><td><input type="text" size="10" value="50" id="max"></td></tr>
 <tr><td>Date : &ensp;</td><td><input type="text" size="10" value="01/01/24" id="det"></td></tr>
 </table>
+
 
 
 <script>
@@ -737,139 +756,28 @@ topindex= Number(this.value);
  }
 
 function SaveFile()
-{
-    var text = "\n";
-    text=text+"Schoolname01\n";
-    text=text+"Schoolname02\n";
-    text=text+"\n\n";
-    text=text+"========ML-V-01========\n";   
-    text=text+"\n";
-    text=text+"Set 01 : AACDAADCDABADCBBADCDBABCD\n";
-    text=text+"Set 01 : 3323222222232322222222222\n";
-    text=text+"Set 01 : 1111111111111111111111111\n";
-    text=text+"\n";
-    text=text+"=========ML-V-01========\n";
-    text=text+"\n";
-    text=text+"Examiner : "+ document.getElementById("examiner").value+ "\n";
-    text=text+"Class : "+ document.getElementById("class").value+ "\n";
-    text=text+"Div : "+ document.getElementById("div").value+ "\n";
-    text=text+"Stream : "+ document.getElementById("stream").value+ "\n";
-    text=text+"Subject : "+ document.getElementById("subject").value+ "\n";
-    text=text+"Examination : "+ document.getElementById("examination").value+ "\n";
-    text=text+"Max Marks : "+ document.getElementById("max").value+ "\n";
-    text=text+"Date : "+ document.getElementById("det").value+ "\n";
-    text=text+"\n";
-    text=text+"=========ML-V-01========\n";
-    text=text+"\n";
-    text=text+" Roll   Marks\n";
-    text=text+"\n";
-    var arrlen=arr.length;        
-
-    for (var i = 0; i < len; i++) 
-      text=text+arr[i]+'\n';
-    
-    text=text+"\n";
-    text=text+"=========END========\n";
-    
-
-    download("Test33.mrk",text);
-}
+{ window.alert('save file') ;
+    }
 
  
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
+function download(filename, text) 
+{ // temporary link element
+  }
 
-  element.style.display = 'none';
-  document.body.appendChild(element);
+///file change function here
 
-  element.click();
 
-  document.body.removeChild(element);
+function toggleMCQ() {
+  var btn = document.getElementById("mcqToggle");
+  if (btn.textContent === "MCQ") {
+    btn.textContent = "MCQ Close";
+    // Add your MCQ open logic here
+  } else {
+    btn.textContent = "MCQ";
+    // Add your MCQ close logic here
+  }
 }
 
-
-
-  document.getElementById('file').onchange = function()
-    {
-  arr = [];
-  var file = this.files[0];
-  var reader = new FileReader();
-  reader.onload = function(progressEvent){    
-    var lines = this.result.split(/\r\n|\n/);
-   for(var line = 0; line < lines.length-1; line++)
-   {  
-      templine=lines[line];
-      result = templine.includes(":");
-      if(result)
-      { 
-        if(templine.includes("Set")) continue;
-
-
-        if(templine.includes("Examiner"))     
-        {
-          document.getElementById("examiner").value=templine.split(":")[1].trim();
-          continue;
-        }
-        if(templine.includes("Class"))
-        {
-          document.getElementById("class").value=templine.split(":")[1].trim();
-          continue;
-        }
-
-        if(templine.includes("Div"))
-        {
-          document.getElementById("div").value=templine.split(":")[1].trim();
-          continue;
-        }
-        if(templine.includes("Stream")) 
-        {
-          document.getElementById("stream").value=templine.split(":")[1].trim();
-          continue;
-        }
-        if(templine.includes("Subject"))
-        {
-          document.getElementById("subject").value=templine.split(":")[1].trim();
-          continue;
-        }
-        if(templine.includes("Examination"))
-        {
-          document.getElementById("examination").value=templine.split(":")[1].trim();
-          //window.alert(templine.split(":")[1].trim());
-          continue;
-        }
-        if(templine.includes("Max Marks"))
-        {
-          document.getElementById("max").value=templine.split(":")[1].trim();
-          continue;
-        }
-        if(templine.includes("Date"))
-        {
-          document.getElementById("det").value=templine.split(":")[1].trim();
-          continue;
-        }
-        
-        arr.push(templine);
-        //window.alert(templine);
-
-        //tt=line.split(":")[1].trim();
-
-      }
-         //window.alert(lines[line]);
-    }
-    topindex=0;
-  len=arr.length;
-   document.getElementById("firstroll").value=arr[0].split(":")[0].trim();
-   document.getElementById("lastroll").value=arr[len-1].split(":")[0].trim();
-   //lastroll=arr[len-1].split(":")[0].trim();
-  
-  InitRoll();
-  };
-  reader.readAsText(file);
-  //window.alert(txt);
-  
-};
 
 </script>
 </body>
