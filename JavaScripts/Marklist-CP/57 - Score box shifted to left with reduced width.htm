@@ -8,6 +8,7 @@ var topindex=0;   ///centre line index
 var start='M03001';
 var end='M03020';
 
+///&#x27F3 refresh
 let animrunning=0;
  var arr = [];
  
@@ -19,6 +20,7 @@ var len=arr.length;
 
  for (var i = 0; i < len; i++) 
   {  arr[i]=arr[i]+' : ';
+     // window.alert(arr[i]);
     }
     
 window.addEventListener('load', InitRoll);
@@ -70,6 +72,8 @@ $(document).ready(function(){
            $(child5).promise().done(newval);
     });  
     
+     
+ 
 
 });  ////end of doc ready function
 
@@ -505,6 +509,17 @@ table.roll tr { max-height: 40px;
   opacity:0.0;
 }
 
+.c10 {
+ position: absolute;
+  height: 38px;
+  width: 475px;
+  font-size:26px;
+  top:-265px;
+  left:80px;
+  opacity:0.0;
+}
+
+
 .input1{
 height:100%;
 border:none;
@@ -605,7 +620,7 @@ input[type=number] {
 </table>
 
 <div style="position: absolute; top: 40px; right: 10px; z-index: 1000;">
-  <button id="printButton" onclick="printMarklist()" style="padding:5px;width:100px;margin-right: 5px;">Print</button>
+  <button id="printButton" onclick="printMarklist()" style="padding:5px;width:45px;margin-right: 5px;">Print</button>
   <button style="padding:5px;width:100px;" id="mcqButton" onclick="toggleMCQMode()">MCQ</button>
 </div>
 
@@ -700,17 +715,24 @@ function updateDisplayedRolls() {
    <div style="position: absolute; top: 140px; right: 5px; z-index: 1000;">
   <button id="pushButton" onclick="transferMarks()" style="padding:5px;width:100px;margin-right: 5px;">Push</button>
 </div>
-<span id="scoreDisplay" style="width:90px;padding-left:12px;padding-top:5px;padding-bottom:4px;border:1px solid black;background-color:#e7e7e7; color:black; position : absolute; top: 140px; right: 118px; z-index: 1000;";  >Score:</span>
+   <span id="scoreDisplay" style="width:30px;padding-left:12px;padding-top:5px;padding-bottom:4px;
+       border:1px solid black;background-color:#e7e7e7; color:black; 
+       position : absolute; top: 140px; right: 118px; z-index: 1000;" 
+       >0</span>
   <div style="margin-bottom: 10px;">
-       <input type="text" id="studentAnswers" placeholder="STUDENT'S ANS, FOR EX : AABA-CDAB" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;">
+    <label for="studentAnswers">Student Answers:</label>
+    <input type="text" id="studentAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;" readonly>
   </div>
   <div style="margin-bottom: 10px;">
-    <input type="text" id="correctAnswers" placeholder="ANSWERKEY, FOR EX : ABBACCDABC" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;">
+    <label for="correctAnswers">Correct Answers:</label>
+    <input type="text" id="correctAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" style="width: 100%; font-size: 18px; text-transform: uppercase;" readonly>
   </div>
   <div style="margin-bottom: 10px;">
-    <input type="text" id="marksAwarded" placeholder="MARKS CARRIED, FOR EX : 223211121" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;">  </div>
+    <label for="marksAwarded">Marks Awarded:</label>
+    <input type="text" id="marksAwarded" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;" readonly>  </div>
   <div style="margin-bottom: 10px;">
-    <input type="text" id="negativeMarks" placeholder="OPTIONAL -VE MARKS, FOR EX : 12221111" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;">  
+    <label for="negativeMarks">Negative Marks:</label>
+    <input type="text" id="negativeMarks" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;" readonly>  
 </div>
 
 
@@ -906,21 +928,28 @@ function download(filename, text) {
         }
         
         arr.push(templine);
+        //window.alert(templine);
 
-        }
+        //tt=line.split(":")[1].trim();
+
       }
+         //window.alert(lines[line]);
+    }
     topindex=0;
   len=arr.length;
    document.getElementById("firstroll").value=arr[0].split(":")[0].trim();
    document.getElementById("lastroll").value=arr[len-1].split(":")[0].trim();
+   //lastroll=arr[len-1].split(":")[0].trim();
   
   InitRoll();
   };
   reader.readAsText(file);
+  //window.alert(txt);
   
 };
 
 let focusedInput = null;
+
 function setFocus(element) {
   if (focusedInput) {
     focusedInput.classList.remove('focused-input');
@@ -933,6 +962,7 @@ function addMCQAnswer(answer) {
   if (focusedInput) {
     focusedInput.value += answer.toUpperCase();
     calculateScore();
+    
   }
 }
 
@@ -942,6 +972,7 @@ function addMCQMarks(mark) {
     calculateScore();
   }
 }
+
 function backspaceMCQAnswer() {
   if (focusedInput) {
     focusedInput.value = focusedInput.value.slice(0, -1);
@@ -972,13 +1003,14 @@ function toggleMCQMode() {
 
 
 function transferMarks() {
-    var scoreText = document.getElementById('scoreDisplay').textContent.split(': ')[1];
+  var scoreText = document.getElementById('scoreDisplay').textContent;
     var score = Math.max(0, parseInt(scoreText)); // Ensure positive integer
     var formattedScore = score < 10 ? '0' + score : score.toString(); // Format as two digits
     var currentRoll = arr[topindex].split(':')[0].trim();
     arr[topindex] = currentRoll + ' : ' + formattedScore;
     document.getElementById('child3').innerHTML = arr[topindex];
     mouseUp();
+    //toggleMCQMode();
     doneMCQ();
 }
 
@@ -1050,6 +1082,7 @@ function calculateScore() {
     for (var i = 0; i < minLength; i++) {
       
     console.log('Processing answer', i);
+    // rest of the loop
    
 
         if (studentAnswers[i] === correctAnswers[i]) {
@@ -1059,7 +1092,7 @@ function calculateScore() {
         }
     }
 
-    document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+    document.getElementById('scoreDisplay').textContent = score;
     console.log('Score:', score);
 }
 
