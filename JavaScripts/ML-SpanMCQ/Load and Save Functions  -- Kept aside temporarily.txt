@@ -1,0 +1,168 @@
+
+
+function SaveFile()
+{   
+    var text = "\n";
+    text=text+"Schoolname01\n";
+    text=text+"Schoolname02\n";
+    text=text+"\n\n";
+    text=text+"========ML-V-01========\n";   
+    text=text+"\n";
+    text=text+"Set 01 : AACDAADCDABADCBBADCDBABCD\n";
+    text=text+"Set 01 : 3323222222232322222222222\n";
+    text=text+"Set 01 : 1111111111111111111111111\n";
+    text=text+"\n";
+    text=text+"=========ML-V-01========\n";
+    text=text+"\n";
+    text=text+"Examiner : "+ document.getElementById("examiner").value+ "\n";
+    text=text+"Class : "+ document.getElementById("class").value+ "\n";
+    text=text+"Div : "+ document.getElementById("div").value+ "\n";
+    text=text+"Stream : "+ document.getElementById("stream").value+ "\n";
+    text=text+"Subject : "+ document.getElementById("subject").value+ "\n";
+    text=text+"Examination : "+ document.getElementById("examination").value+ "\n";
+    text=text+"Max Marks : "+ document.getElementById("max").value+ "\n";
+    text=text+"Date : "+ document.getElementById("det").value+ "\n";
+    text=text+"\n";
+    text=text+"=========ML-V-01========\n";
+    text=text+"\n";
+    text=text+" Roll   Marks\n";
+    text=text+"\n";
+    var arrlen=arr.length;        
+
+    for (var i = 0; i < len; i++) 
+      text=text+arr[i]+'\n';
+    
+    text=text+"\n";
+    text=text+"=========END========\n";
+    
+
+    download("Test33.mrk",text);
+}
+
+ 
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+
+
+  document.getElementById('file').onchange = function()
+    {
+  arr = [];
+  var file = this.files[0];
+  var reader = new FileReader();
+  reader.onload = function(progressEvent){    
+    var lines = this.result.split(/\r\n|\n/);
+   for(var line = 0; line < lines.length-1; line++)
+   {  
+      templine=lines[line];
+      result = templine.includes(":");
+      if(result)
+      { 
+        if(templine.includes("Set")) continue;
+
+
+        if(templine.includes("Examiner"))     
+        {
+          document.getElementById("examiner").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Class"))
+        {
+          document.getElementById("class").value=templine.split(":")[1].trim();
+          continue;
+        }
+
+        if(templine.includes("Div"))
+        {
+          document.getElementById("div").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Stream")) 
+        {
+          document.getElementById("stream").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Subject"))
+        {
+          document.getElementById("subject").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Examination"))
+        {
+          document.getElementById("examination").value=templine.split(":")[1].trim();
+          //window.alert(templine.split(":")[1].trim());
+          continue;
+        }
+        if(templine.includes("Max Marks"))
+        {
+          document.getElementById("max").value=templine.split(":")[1].trim();
+          continue;
+        }
+        if(templine.includes("Date"))
+        {
+          document.getElementById("det").value=templine.split(":")[1].trim();
+          continue;
+        }
+        
+        arr.push(templine);
+        //window.alert(templine);
+
+        //tt=line.split(":")[1].trim();
+
+      }
+         //window.alert(lines[line]);
+    }
+    topindex=0;
+  len=arr.length;
+   document.getElementById("firstroll").value=arr[0].split(":")[0].trim();
+   document.getElementById("lastroll").value=arr[len-1].split(":")[0].trim();
+   //lastroll=arr[len-1].split(":")[0].trim();
+  
+  InitRoll();
+  };
+  reader.readAsText(file);
+  //window.alert(txt);
+  
+};
+
+function  OnNewRoll()
+{
+start = document.getElementById("firstroll").value; 
+end = document.getElementById("lastroll").value; 
+
+topindex=0;
+ arr=[];  /// intialize basic roll array
+tempstart=start;
+////  fill roll array
+for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
+
+len=arr.length;        
+slider.max=len-1;
+
+ for (var i = 0; i < len; i++) 
+  {  arr[i]=arr[i]+' : ';
+    }
+
+
+InitRoll();  ///refresh browser with modified roll array
+}
+
+function FirstBlank()
+{
+for (var i = 0; i < len; i++) 
+  {   result = arr[i].indexOf(":");
+       left = arr[i].substring(result);
+       if(left.length==2) { topindex=i; slider.value=topindex; mouseUp(); return;  }
+    }
+}
+

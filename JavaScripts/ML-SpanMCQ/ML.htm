@@ -191,10 +191,7 @@ function IncrementAlphanumeric(roll)
         }
 }
 function InitRoll()
-{
-
-
-                                          ///initialise roll number display
+{   ///initialise roll number display
   //                        window.alert('s');                
                                           len=arr.length;
                                           document.getElementById("child1").innerHTML = arr[len-2]; 
@@ -202,8 +199,6 @@ function InitRoll()
                                           document.getElementById("child3").innerHTML = arr[topindex]; 
                                           document.getElementById("child4").innerHTML = arr[topindex+1]; 
                                           document.getElementById("child5").innerHTML = arr[topindex+2];    
-//window.alert('e');
-                                        
                                           document.getElementById("child11").innerHTML = arr[len-2]; 
                                           document.getElementById("child12").innerHTML = arr[len-1]; 
                                           document.getElementById("child13").innerHTML = arr[topindex]; 
@@ -268,40 +263,14 @@ function flash()
 }
 
 function  OnNewRoll()
-{
-
-start = document.getElementById("firstroll").value; 
-end = document.getElementById("lastroll").value; 
-
-topindex=0;
- arr=[];  /// intialize basic roll array
-tempstart=start;
-////  fill roll array
-for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
-
-len=arr.length;        
-slider.max=len-1;
-
- for (var i = 0; i < len; i++) 
-  {  arr[i]=arr[i]+' : ';
-     // window.alert(arr[i]);
-    }
-//alert(arr[len-2]);
-
-
-InitRoll();  ///refresh browser with modified roll array
-// const button1 = document.getElementById('button1').click();
-
+{ //add later
 }
 
 function FirstBlank()
 {
-for (var i = 0; i < len; i++) 
-  {   result = arr[i].indexOf(":");
-       left = arr[i].substring(result);
-       if(left.length==2) { topindex=i; slider.value=topindex; mouseUp(); return;  }
-    }
+//add later 
 }
+
 </script>
 
 <style>
@@ -340,7 +309,6 @@ border: 4px solid lightgreen;
 .slider:hover {
    background :lightgreen;
 }
-
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -356,10 +324,7 @@ border: 4px solid lightgreen;
   background: #04AA6D;
   cursor: pointer;
 }
-
-
 /* ----   slider class end --------------*/
-
 table.roll { 
                 border-collapse: collapse;
                 font-size : 22px;
@@ -437,8 +402,6 @@ table.roll tr { max-height: 40px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-
-
 .grid-container {
  margin-top:250px;
   display: grid;
@@ -450,7 +413,6 @@ table.roll tr { max-height: 40px;
   margin-left:auto;
   margin-right:auto;
   padding:0px;
-  
 }
 
 .grid-item {
@@ -615,7 +577,6 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
   width:100px;
 }
 
-
 </style>
 </head>
 <body>
@@ -649,7 +610,6 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 </td><td style="width:45%;padding-right:8px" ><input class="input1" value="M03020" style="height: 25px;width:100%;font-size:24px; text-transform: uppercase;" type="text" id="lastroll"  maxlength="10" ></td></tr>
 </table>
 
-
 <table  class="pref"> 
 <tr><td style="width : 50%">Examiner </td><td><input type="text"  size="8" value="MO" id="examiner"></td></tr>
 <tr><td>Class</td><td><input type="text" size="22" value="FY" id="class" ></td></tr>
@@ -661,18 +621,10 @@ table.pref td { font-size : 14px;  height : 30px; border:1px solid; }
 <tr><td>Date : &ensp;</td><td><input type="text" size="10" value="01/01/24" id="det"></td></tr>
 </table>
 
-
-
 <script>
-
 
 function mouseUp()
  {
- //alert("tt"); 
- 
- //newval();
- //const dn = document.getElementById('dn').click();
-  
          len=arr.length;
            prev1=topindex-1; prev2=topindex-2;   prev3=topindex-3;                               
                                           if(topindex==0) {prev1=len-1; prev2=len-2; prev3=len-3;}
@@ -761,7 +713,7 @@ function SaveFile()
 
  
 function download(filename, text) 
-{ // temporary link element
+{ // add later
   }
 
 ///file change function here
@@ -777,8 +729,6 @@ function toggleMCQ() {
     // Add your MCQ close logic here
   }
 }
-
-
 </script>
 </body>
 </html>
