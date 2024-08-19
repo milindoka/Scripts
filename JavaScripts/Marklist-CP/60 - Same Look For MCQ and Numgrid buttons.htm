@@ -593,12 +593,11 @@ input[type=number] {
 
 
 .pg input {
-  .h-formfield-uppercase input
-   {
+  .h-formfield-uppercase input {
   text-transform: uppercase;
   &::placeholder {
     text-transform: none;
-  } 
+  }
 }
 }
 
@@ -736,22 +735,22 @@ function updateDisplayedRolls() {
        >0</span>
   <div style="margin-bottom: 10px;">
     <span class="pg">
+    
     <input type="text" placeholder="Studets Answers eg ABADCBA..." id="studentAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" maxlength="25" 
-    style="font-family: monospace; width: 100%; font-size: 18px;" readonly>
+    style="width: 100%; font-size: 18px;" readonly>
   </div>
   <div style="margin-bottom: 10px;">
+  
     <input type="text" placeholder="Correct Answers eg DABCADB..." id="correctAnswers" onclick="setFocus(this)" onkeypress="return validateMCQInput(event)" 
-    maxlength="25" style="font-family: monospace; width: 100%; font-size: 18px;" readonly>
+    maxlength="25" style="width: 100%; font-size: 18px;" readonly>
   </div>
   </span>
   <div style="margin-bottom: 10px;">
     
-    <input type="text"  placeholder="Marks Awarded eg 2422321..." id="marksAwarded" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" 
-    style="font-family: monospace; width: 100%; font-size: 18px;" readonly>  </div>
+    <input type="text" placeholder="Marks Awarded eg 2422321..." id="marksAwarded" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;" readonly>  </div>
   <div style="margin-bottom: 10px;">
     
-    <input type="text" placeholder="Optional Negative Marks eg 1211111..." id="negativeMarks" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" 
-    style="font-family: monospace; width: 100%; font-size: 18px;" readonly>  
+    <input type="text" placeholder="Optional Negative Marks eg 1211111..." id="negativeMarks" onclick="setFocus(this)" onkeypress="return validateMarksInput(event)" maxlength="25" style="width: 100%; font-size: 18px;" readonly>  
 </div>
 
 
