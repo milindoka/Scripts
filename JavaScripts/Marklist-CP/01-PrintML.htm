@@ -101,16 +101,10 @@ border : none;
 <br>
 <table class="roll" id="myTable" style="width:100%">
   <tr class="roll" >
-      <td class="roll" width="100px">ROLL</td>
-      <td class="roll" width="50px">MRK</td>
-      <td class="roll" width="100px">ROLL</td>
-      <td class="roll" width="50px">MRK</td>
-      <td class="roll" width="100px">ROLL</td>
-      <td class="roll" width="50px">MRK</td>
-      <td class="roll" width="100px">ROLL</td>
-      <td class="roll" width="50px">MRK</td>
-      <td class="roll" width="100px">ROLL</td>
-      <td class="roll" width="50px">MRK</td>
+      <td class="roll" width="60px">Sr No</td>
+      <td class="roll" width="120px">Seat No</td>
+      <td class="roll" width="370px">Name of the Candidate</td>
+      <td class="roll" width="190px">Student's Signature</td>
   </tr>
 </table>
 <br><br>
@@ -168,7 +162,8 @@ sessionString=sessionStorage.getItem("batchArray");
 
 var arr = [];
 
-for (i=0; i<40;i++) arr.push(i.toString().padStart(3,'0'));  
+for (i=0; i<200;i++) arr.push(i.toString().padStart(3,'0'));  
+
 
 
 
@@ -177,49 +172,28 @@ rn = arr.length;
 //cn = 8;
 index=0;
 
- for(var r=0;r<40;r++)
+ for(var r=0;r<20;r++)
   {
-     var x=document.getElementById('myTable').insertRow(r+1);
-     x.className="roll";
+   var x=document.getElementById('myTable').insertRow(r+1);
+   x.className="roll";
+      //    window.alert(entry[0]);
               var y=  x.insertCell(0);
               y.className="roll";
-              y.innerHTML=arr[r];  ///Roll No
+              y.innerHTML= ' '+(r+1);  ///Sr number
+              
               y=  x.insertCell(1);
               y.className="roll";
-              y.innerHTML= ' '+(r+1);  ////Marks
-
-              var y=  x.insertCell(2);
+              y.innerHTML=arr[r];  ///Seat Number
+;
+              y=  x.insertCell(2);
               y.className="roll";
-              y.innerHTML=arr[r];  ///Roll No
+              y.innerHTML= ' ';  ///blank row Name of candidate
+             
               y=  x.insertCell(3);
               y.className="roll";
-              y.innerHTML= ' '+(r+1);  ////Marks
-
-
-              var y=  x.insertCell(4);
-              y.className="roll";
-              y.innerHTML=arr[r];  ///Roll No
-              y=  x.insertCell(5);
-              y.className="roll";
-              y.innerHTML= ' '+(r+1);  ////Marks
-
-              var y=  x.insertCell(6);
-              y.className="roll";
-              y.innerHTML=arr[r];  ///Roll No
-              y=  x.insertCell(7);
-              y.className="roll";
-              y.innerHTML= ' '+(r+1);  ////Marks
-
-              var y=  x.insertCell();
-              y.className="roll";
-              y.innerHTML=arr[r];  ///Roll No
-              y=  x.insertCell(9);
-              y.className="roll";
-              y.innerHTML= ' '+(r+1);  ////Marks
-  }
-
+              y.innerHTML=' ';  /// blank row Signature of candidate
+ }
 }
-
 </script>
 </body>
 </html>
