@@ -1124,55 +1124,31 @@ function printMarklist()
  
 sessionStorage.setItem("mrkArray", JSON.stringify(arr));
 
-
-schoolcollege1=document.getElementById("schoolcollege").value;
+schoolcollege1=document.getElementById("schoolcollege1").value;
 schoolcollege2=document.getElementById("schoolcollege2").value;
 examiner=document.getElementById("examiner").value;
 clas=document.getElementById("clas").value;
-Deev=document.getElementById("Deev").value;
+deev=document.getElementById("deev").value;
 stream=document.getElementById("stream").value;
 subject=document.getElementById("subject").value;
 examination=document.getElementById("examination").value;
 max=document.getElementById("max").value;
 det=document.getElementById("det").value;
 
-
-
-
-oralpract=document.getElementById("oralpract").value;
-school=document.getElementById("school").value;
-batchno=document.getElementById("batchno").value;
-
-subject=document.getElementById("subject").value;
-subjectno=document.getElementById("subjectno").value;
-medium=document.getElementById("medium").value;
-
-
-seatno=start+"-"+crr[totalroll-1];
-det=document.getElementById("det").value;
-
-tyme=document.getElementById("tyme").value;
-extra=document.getElementById("extra").value;
-
-sessionStorage.setItem("collegeindex", collegeindex);
-sessionStorage.setItem("board", board);
-sessionStorage.setItem("oralpract", oralpract);
-sessionStorage.setItem("school", school);
-sessionStorage.setItem("batchno", batchno);
+sessionStorage.setItem("schoolcollege1", schoolcollege1);
+sessionStorage.setItem("schoolcollege2",schoolcollege2);
+sessionStorage.setItem("clas", clas);
+sessionStorage.setItem("deev", deev);
+sessionStorage.setItem("stream", stream);
 sessionStorage.setItem("subject", subject);
-sessionStorage.setItem("subjectno", subjectno);
-sessionStorage.setItem("medium", medium);
-sessionStorage.setItem("seatno", seatno);
+sessionStorage.setItem("examination", examination);
+sessionStorage.setItem("max", max);
 sessionStorage.setItem("det", det);
-sessionStorage.setItem("tyme", tyme);
-sessionStorage.setItem("extra", extra);
+sessionStorage.setItem("examiner", examiner);
 
+ //open printML html file
 
- //open printBatch html file
- if(oralpract.toUpperCase().includes("PRAC"))
-{window.location.href = "PrintBatchPractical.htm";}
-else
-{window.location.href = "PrintBatchOral.htm";}
+window.location.href = "PrintML.htm";
  
 }
 
