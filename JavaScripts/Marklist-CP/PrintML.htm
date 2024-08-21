@@ -93,7 +93,7 @@ tr.roll {
 </tr>
 <tr>
   <td id="examination">Examination : Prelim</td>
-  <td id="totalmarks">Total Marks : 50</td>
+  <td id="max">Total Marks : 50</td>
   <td id="det">Date : 01/01/24</td>
 </tr>
 </table>
@@ -168,11 +168,36 @@ tr.roll {
 
 window.addEventListener('load', createTable);
 
-function createTable() {
-    var arr = [];
-    var totalroll = Math.floor(Math.random() * 190) + 10;
-    for (i = 0; i < totalroll; i++) arr.push(i.toString().padStart(3, '0'));
+function createTable() 
+{
 
+   schoolcollege1=sessionStorage.getItem('scchoolcollege1');
+   schoolcollege2=sessionStorage.getItem('schoolcollege2');
+   clas=sessionStorage.getItem('clas');
+   deev=sessionStorage.getItem('deev');
+   subject=sessionStorage.getItem('subject');
+   examination=sessionStorage.getItem('examination');
+   max=sessionStorage.getItem('max');
+   stream=sessionStorage.getItem('stream');
+   det=sessionStorage.getItem('det');
+   examiner=sessionStorage.getItem('examiner');
+   document.getElementById('schoolcollege1').textContent = schoolcollege1;
+   document.getElementById('schoolcollege2').textContent = schoolcollege2;
+   document.getElementById('clasdiv').textContent = clas + ' : ' + deev;
+   document.getElementById('subject').textContent = subject;
+   document.getElementById('examination').textContent = examination;
+   document.getElementById('max').textContent = max;
+   document.getElementById('det').textContent = det;
+   document.getElementById('examiner').textContent = examiner;
+
+   sessionString=sessionStorage.getItem("mrkArray");
+   var arr = JSON.parse(sessionString);
+   var totalroll = arr.length
+
+   ////    var totalroll = Math.floor(Math.random() * 190) + 10;
+   /////arr.push(i.toString().padStart(3, '0')); //padding with 0
+
+    for (i = 0; i < totalroll; i++) 
     var entriesPerTable = 40;
     var tablesNeeded = Math.ceil(totalroll / entriesPerTable);
 
@@ -189,10 +214,10 @@ function createTable() {
                 x.className = "roll";
                 var y = x.insertCell(0);
                 y.className = "roll";
-                y.innerHTML = arr[r];
+                y.innerHTML = arr[r].split(":")[0].trim();;
                 y = x.insertCell(1);
                 y.className = "roll";
-                y.innerHTML = ' ' + (r + 1);
+                y.innerHTML = arr[r].split(":")[1].trim();
             }
         } else {
             // Hide unused tables
