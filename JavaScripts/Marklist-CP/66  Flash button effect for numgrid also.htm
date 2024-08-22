@@ -14,7 +14,7 @@ let animrunning=0;
  
 tempstart=start;
 ////  fill roll array
-for(jj=0;jj<200;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
+for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
 
 var len=arr.length;        
 
@@ -270,14 +270,14 @@ function flash()
 function  OnNewRoll()
 {
 
-start = document.getElementById("firstroll").value.toUpperCase();
-end = document.getElementById("lastroll").value.toUpperCase(); 
+start = document.getElementById("firstroll").value; 
+end = document.getElementById("lastroll").value; 
 
 topindex=0;
  arr=[];  /// intialize basic roll array
 tempstart=start;
 ////  fill roll array
-for(jj=0;jj<200;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
+for(jj=0;jj<160;jj++)  {arr.push(tempstart);  if(tempstart==end)  break;  tempstart=IncrementAlphanumeric(tempstart); }
 
 len=arr.length;        
 slider.max=len-1;
@@ -646,13 +646,10 @@ input[type=number] {
 </td><td style="width:45%;padding-right:8px" ><input class="input1" value="M03020" style="height: 25px;width:100%;font-size:24px; text-transform: uppercase;" type="text" id="lastroll"  maxlength="10" ></td></tr>
 </table>
 
-<div style="position: absolute; top: 40px; right: 5px; z-index: 1000;">
-  <button id="printButton" onclick="printMarklist()" style="padding:5px;width:100px;margin-right: 5px;">Print</button>
+<div style="position: absolute; top: 40px; right: 10px; z-index: 1000;">
+  <button id="printButton" onclick="printMarklist()" style="padding:5px;width:45px;margin-right: 5px;">Print</button>
+  <button style="padding:5px;width:100px;" id="mcqButton" onclick="toggleMCQMode()">MCQ</button>
 </div>
-<div style="position: absolute; top: 90px; right: 10px; z-index: 1000;">
-    <button style="padding:5px;width:100px;" id="mcqButton" onclick="toggleMCQMode()">MCQ</button>
-</div>
-
 
 
 
