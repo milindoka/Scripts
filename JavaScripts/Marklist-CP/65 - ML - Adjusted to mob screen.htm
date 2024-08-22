@@ -295,11 +295,11 @@ InitRoll();  ///refresh browser with modified roll array
 }
 
 function FirstBlank()
-{ len=arr.length;
+{
 for (var i = 0; i < len; i++) 
   {   result = arr[i].indexOf(":");
        left = arr[i].substring(result);
-       if(left.length==2) { topindex=(i-1)%len; slider.value=topindex; mouseUp(); return;  }
+       if(left.length==2) { topindex=i; slider.value=topindex; mouseUp(); return;  }
     }
 }
 </script>
@@ -402,17 +402,8 @@ table.roll tr { max-height: 40px;
   font-size: 18px;
   margin-left: 5px;
   margin-right: 5px;
-  margin-top: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.numgrid div:active {
-  background-color: #007bff;
-  color: white;
-  transform: scale(0.95);
-  transition: all 0.1s ease;
-}
 
 .grid-container {
  margin-top:250px;
@@ -434,7 +425,6 @@ table.roll tr { max-height: 40px;
   justify-content:center;
   font-size: 22px;
   align-items:center;
-
 }
 
 #up {
@@ -569,7 +559,7 @@ font-size:24px;
 table.pref
 {width : 100%;
   position: absolute;
-  margin-top : 640px;
+  margin-top : 680px;
   border : 1px solid;
   border-collapse: collapse;
 }
@@ -784,13 +774,10 @@ function updateDisplayedRolls() {
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
-  .mcq-button:active {
-  background-color: #007bff;
-  color: white;
-  transform: scale(0.95);
-  transition: all 0.1s ease;
-}
+    .mcq-button:hover {
+      background-color: #007bff;
+      color: white;
+    }
   </style>
 
   <button class="mcq-button" onclick="handleButtonClick(this)">A</button>
@@ -864,8 +851,8 @@ function SaveFile()
     text=text+"=========ML-V-01========\n";
     text=text+"\n";
     text=text+"Examiner : "+ document.getElementById("examiner").value+ "\n";
-    text=text+"Class : "+ document.getElementById("clas").value+ "\n";
-    text=text+"Div : "+ document.getElementById("deev").value+ "\n";
+    text=text+"Class : "+ document.getElementById("class").value+ "\n";
+    text=text+"Div : "+ document.getElementById("div").value+ "\n";
     text=text+"Stream : "+ document.getElementById("stream").value+ "\n";
     text=text+"Subject : "+ document.getElementById("subject").value+ "\n";
     text=text+"Examination : "+ document.getElementById("examination").value+ "\n";
@@ -927,13 +914,13 @@ function download(filename, text) {
         }
         if(templine.includes("Class"))
         {
-          document.getElementById("clas").value=templine.split(":")[1].trim();
+          document.getElementById("class").value=templine.split(":")[1].trim();
           continue;
         }
 
         if(templine.includes("Div"))
         {
-          document.getElementById("deev").value=templine.split(":")[1].trim();
+          document.getElementById("div").value=templine.split(":")[1].trim();
           continue;
         }
         if(templine.includes("Stream")) 

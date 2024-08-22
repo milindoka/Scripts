@@ -403,16 +403,8 @@ table.roll tr { max-height: 40px;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.numgrid div:active {
-  background-color: #007bff;
-  color: white;
-  transform: scale(0.95);
-  transition: all 0.1s ease;
-}
 
 .grid-container {
  margin-top:250px;
@@ -434,7 +426,6 @@ table.roll tr { max-height: 40px;
   justify-content:center;
   font-size: 22px;
   align-items:center;
-
 }
 
 #up {
@@ -569,7 +560,7 @@ font-size:24px;
 table.pref
 {width : 100%;
   position: absolute;
-  margin-top : 640px;
+  margin-top : 680px;
   border : 1px solid;
   border-collapse: collapse;
 }
@@ -784,13 +775,10 @@ function updateDisplayedRolls() {
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
-  .mcq-button:active {
-  background-color: #007bff;
-  color: white;
-  transform: scale(0.95);
-  transition: all 0.1s ease;
-}
+    .mcq-button:hover {
+      background-color: #007bff;
+      color: white;
+    }
   </style>
 
   <button class="mcq-button" onclick="handleButtonClick(this)">A</button>
