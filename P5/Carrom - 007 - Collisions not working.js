@@ -37,7 +37,6 @@ class Mover {
       this.velocity.setMag(0);
     }
   }
-
   checkCollision(other) {
     let distance = p5.Vector.dist(this.position, other.position);
     let minDistance = this.radius + other.radius;
@@ -55,8 +54,8 @@ class Mover {
       // Only resolve if objects are moving towards each other
       if (velocityAlongNormal < 0) {
         // Calculate impulse strength
-        let restitution = 1.0; // Coefficient of restitution (bounce factor)
-        let impulseStrength = -(1 + restitution) * velocityAlongNormal / 2;
+        let restitution = 1.5; // Coefficient of restitution (bounce factor)
+        let impulseStrength = -(1 + restitution) * velocityAlongNormal;
         
         // Apply impulse
         let impulse = p5.Vector.mult(normal, impulseStrength);
@@ -71,7 +70,6 @@ class Mover {
       }
     }
   }
-  
   // ... existing show() and checkEdges() methods ...
   show()
    {
@@ -106,7 +104,7 @@ class Mover {
 
   checkCollision(other) {
     let distance = p5.Vector.dist(this.position, other.position);
-    if (distance < 24) {  // 25 is the diameter of our circles
+    if (distance < 25) {  // 25 is the diameter of our circles
       let normal = p5.Vector.sub(other.position, this.position).normalize();
       let relativeVelocity = p5.Vector.sub(this.velocity, other.velocity);
       let separatingVelocity = p5.Vector.dot(relativeVelocity, normal);
