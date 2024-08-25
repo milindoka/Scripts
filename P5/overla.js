@@ -1,14 +1,12 @@
-
+let movers = [];
 let whiteMovers = [];
-let blackMovers = [];
 let striker;
 let queen;
 
 function setup() {
   createCanvas(450, 450);
-  for (let i = 0; i < 9; i++) 
-    {
-    blackMovers.push(new BlackMover());
+  for (let i = 0; i < 9; i++) {
+    movers.push(new Mover());
     whiteMovers.push(new WhiteMover());
   }
   striker = new Striker();
@@ -16,34 +14,73 @@ function setup() {
 }
 
 
-function draw() 
-{
+function draw() {
   background(205);
   
-  let allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
+  striker.update();
+  striker.checkEdges();
+  striker.show();
   
-  for (let i = 0; i < allMovers.length; i++) {
-    allMovers[i].update();
-    allMovers[i].checkEdges();
-    allMovers[i].show();
-    
-    // Check collisions with all other movers
-    for (let j = i + 1; j < allMovers.length; j++) {
-      if (dist(allMovers[i].position.x, allMovers[i].position.y, 
-               allMovers[j].position.x, allMovers[j].position.y) <= (allMovers[i].size + allMovers[j].size) / 2) {
-        handleCollision(allMovers[i], allMovers[j]);
-      }
+  queen.update();
+  queen.checkEdges();
+  queen.show();
+  
+  // Update and show all movers
+  for (let moverArray of [movers, whiteMovers]) {
+    for (let mover of moverArray) {
+      mover.update();
+      mover.checkEdges();
+      mover.show();
     }
+  }
+  
+  // Check collisions
+  for (let i = 0; i < movers.length; i++) {
+    // Black movers with striker and queen
+    checkCollision(striker, movers[i]);
+    checkCollision(queen, movers[i]);
+    
+    // Black movers with other black movers
+    for (let j = i + 1; j < movers.length; j++) {
+      checkCollision(movers[i], movers[j]);
+    }
+    
+    // Black movers with white movers
+    for (let whiteMover of whiteMovers) {
+      checkCollision(movers[i], whiteMover);
+    }
+  }
+  
+  for (let i = 0; i < whiteMovers.length; i++) {
+    // White movers with striker and queen
+    checkCollision(striker, whiteMovers[i]);
+    checkCollision(queen, whiteMovers[i]);
+    
+    // White movers with other white movers
+    for (let j = i + 1; j < whiteMovers.length; j++) {
+      checkCollision(whiteMovers[i], whiteMovers[j]);
+    }
+  }
+  
+  // Striker with queen
+  checkCollision(striker, queen);
+}
+
+function checkCollision(mover1, mover2) {
+  if (dist(mover1.position.x, mover1.position.y, 
+           mover2.position.x, mover2.position.y) <= (mover1.size + mover2.size) / 2) {
+    handleCollision(mover1, mover2);
   }
 }
 
+
 class Mover {
-  constructor(x, y, size, color) {
-    this.position = createVector(x || random(width), y || random(height));
-    this.velocity = createVector(8, -8);
+  constructor() {
+    this.position = createVector(random(width), random(height));
+   // this.velocity = createVector(random(-4, 4), random(-4, 4));
+   this.velocity = createVector(0,0);
+
     this.damping = 0.99;
-    this.size = size || 18;
-    this.color = color || color(127);
   }
 
   update() {
@@ -54,7 +91,41 @@ class Mover {
   show() {
     stroke(0);
     strokeWeight(2);
-    fill(this.color);
+    fill(127);
+    circle(this.position.x, this.position.y, 18);
+  }
+
+  checkEdges() {
+    if (this.position.x > width - 12.5) {
+      this.position.x = width - 12.5;
+      this.velocity.x *= -1;
+    } else if (this.position.x < 12.5) {
+      this.position.x = 12.5;
+      this.velocity.x *= -1;
+    }
+    if (this.position.y > height - 12.5) {
+      this.position.y = height - 12.5;
+      this.velocity.y *= -1;
+    } else if (this.position.y < 12.5) {
+      this.position.y = 12.5;
+      this.velocity.y *= -1;
+    }
+  }
+}
+
+class Striker extends Mover 
+{
+  constructor() 
+  {
+    super();
+    this.size = 30;
+    this.velocity = createVector(8,-8);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(245,245,45);  // Red color to distinguish the striker
     circle(this.position.x, this.position.y, this.size);
   }
 
@@ -75,31 +146,33 @@ class Mover {
     }
   }
 }
-////////////////////////////////////////////
-class WhiteMover extends Mover {
-  constructor(x, y) {
-    super(x, y, 18, color(255));
+
+
+class WhiteMover extends Mover 
+{
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(255);
+    circle(this.position.x, this.position.y, 18);
   }
 }
 
-class BlackMover extends Mover {
-  constructor(x, y) {
-    super(x, y, 18, color(0));
+class Queen extends Mover 
+{
+  constructor() {
+    super();
+    this.size = 18;
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(255, 0, 0);
+    circle(this.position.x, this.position.y, this.size);
   }
 }
 
-class Queen extends Mover {
-  constructor(x, y) {
-    super(x, y, 18, color(255, 0, 0));
-  }
-}
-
-class Striker extends Mover {
-  constructor(x, y) {
-    super(x, y, 30, color(245, 245, 45));
-  }
-}
-////////////////////////
 
 
 
