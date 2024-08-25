@@ -1,31 +1,18 @@
 let movers = [];
-let striker;
 
 function setup() {
   createCanvas(450, 450);
   for (let i = 0; i < 8; i++) {
     movers.push(new Mover());
   }
-  striker = new Striker();
 }
 
 function draw() {
   background(205);
-  
-  striker.update();
-  striker.checkEdges();
-  striker.show();
-  
   for (let i = 0; i < movers.length; i++) {
     movers[i].update();
     movers[i].checkEdges();
     movers[i].show();
-    
-    // Check collisions with striker
-    if (dist(striker.position.x, striker.position.y, 
-             movers[i].position.x, movers[i].position.y) <= (striker.size + 18) / 2) {
-      handleCollision(striker, movers[i]);
-    }
     
     // Check collisions with other movers
     for (let j = i + 1; j < movers.length; j++) {
@@ -75,44 +62,6 @@ class Mover {
     }
   }
 }
-
-class Striker extends Mover 
-{
-  constructor() 
-  {
-    super();
-    this.size = 35;
-  }
-
-  show() {
-    stroke(0);
-    strokeWeight(2);
-    fill(255, 0, 0);  // Red color to distinguish the striker
-    circle(this.position.x, this.position.y, this.size);
-  }
-
-  checkEdges() {
-    if (this.position.x > width - this.size/2) {
-      this.position.x = width - this.size/2;
-      this.velocity.x *= -1;
-    } else if (this.position.x < this.size/2) {
-      this.position.x = this.size/2;
-      this.velocity.x *= -1;
-    }
-    if (this.position.y > height - this.size/2) {
-      this.position.y = height - this.size/2;
-      this.velocity.y *= -1;
-    } else if (this.position.y < this.size/2) {
-      this.position.y = this.size/2;
-      this.velocity.y *= -1;
-    }
-  }
-
-}
-
-
-
-
 
 function handleCollision(mover1, mover2) {
   let x1 = [mover1.position.x, mover1.position.y];
