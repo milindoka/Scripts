@@ -1,28 +1,66 @@
 let movers = [];
+let whiteMovers = [];
+let striker;
+let queen;
 
 function setup() {
   createCanvas(450, 450);
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 9; i++) {
     movers.push(new Mover());
+    whiteMovers.push(new WhiteMover());
   }
+  striker = new Striker();
+  queen = new Queen();
 }
 
-function draw() {
+
+function draw() 
+{
   background(205);
-  for (let i = 0; i < movers.length; i++) {
-    movers[i].update();
-    movers[i].checkEdges();
-    movers[i].show();
-    
-    // Check collisions with other movers
-    for (let j = i + 1; j < movers.length; j++) {
-      if (dist(movers[i].position.x, movers[i].position.y, 
-               movers[j].position.x, movers[j].position.y) <= 25) {
-        handleCollision(movers[i], movers[j]);
+  
+  striker.update();
+  striker.checkEdges();
+  striker.show();
+  
+  queen.update();
+  queen.checkEdges();
+  queen.show();
+  
+  for (let moverArray of [movers, whiteMovers]) {
+    for (let i = 0; i < moverArray.length; i++) {
+      moverArray[i].update();
+      moverArray[i].checkEdges();
+      moverArray[i].show();
+      
+      // Check collisions with striker
+      if (dist(striker.position.x, striker.position.y, 
+               moverArray[i].position.x, moverArray[i].position.y) <= (striker.size + 18) / 2) {
+        handleCollision(striker, moverArray[i]);
+      }
+      
+      // Check collisions with queen
+      if (dist(queen.position.x, queen.position.y, 
+               moverArray[i].position.x, moverArray[i].position.y) <= (queen.size + 18) / 2) {
+        handleCollision(queen, moverArray[i]);
+      }
+      
+      // Check collisions with other movers
+      for (let j = i + 1; j < moverArray.length; j++) {
+        if (dist(moverArray[i].position.x, moverArray[i].position.y, 
+                 moverArray[j].position.x, moverArray[j].position.y) <= 25) {
+          handleCollision(moverArray[i], moverArray[j]);
+        }
       }
     }
   }
+  
+  // Check collision between striker and queen
+  if (dist(striker.position.x, striker.position.y, 
+           queen.position.x, queen.position.y) <= (striker.size + queen.size) / 2) {
+    handleCollision(striker, queen);
+  }
 }
+
 
 class Mover {
   constructor() {
@@ -42,7 +80,7 @@ class Mover {
     stroke(0);
     strokeWeight(2);
     fill(127);
-    circle(this.position.x, this.position.y, 25);
+    circle(this.position.x, this.position.y, 18);
   }
 
   checkEdges() {
@@ -62,6 +100,68 @@ class Mover {
     }
   }
 }
+
+class Striker extends Mover 
+{
+  constructor() 
+  {
+    super();
+    this.size = 30
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(245,245,45);  // Red color to distinguish the striker
+    circle(this.position.x, this.position.y, this.size);
+  }
+
+  checkEdges() {
+    if (this.position.x > width - this.size/2) {
+      this.position.x = width - this.size/2;
+      this.velocity.x *= -1;
+    } else if (this.position.x < this.size/2) {
+      this.position.x = this.size/2;
+      this.velocity.x *= -1;
+    }
+    if (this.position.y > height - this.size/2) {
+      this.position.y = height - this.size/2;
+      this.velocity.y *= -1;
+    } else if (this.position.y < this.size/2) {
+      this.position.y = this.size/2;
+      this.velocity.y *= -1;
+    }
+  }
+}
+
+
+class WhiteMover extends Mover 
+{
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(255);
+    circle(this.position.x, this.position.y, 18);
+  }
+}
+
+class Queen extends Mover 
+{
+  constructor() {
+    super();
+    this.size = 18;
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(255, 0, 0);
+    circle(this.position.x, this.position.y, this.size);
+  }
+}
+
+
+
 
 function handleCollision(mover1, mover2) {
   let x1 = [mover1.position.x, mover1.position.y];
@@ -95,15 +195,6 @@ function handleCollision(mover1, mover2) {
 }
 
 // Include the helper functions: dotProduct, vectorMag, vectorSub, vectorMult
-
-
-
-
-
-
-
-
-
 
 function dotProduct(a,b){
   // Dot product of a*b (inner product/ scalar product)
