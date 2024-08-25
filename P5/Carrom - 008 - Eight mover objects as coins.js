@@ -1,21 +1,22 @@
-let mover;
-//Declare the Mover object.
+let movers = [];
+// Declare an array to hold multiple Mover objects
 
-function setup() 
-{
+function setup() {
   createCanvas(450, 450);
-  mover = new Mover();
-//Create the Mover object.
-
+  for (let i = 0; i < 8; i++) {
+    movers.push(new Mover());
   }
+  // Create 8 Mover objects and add them to the array
+}
 
-function draw()
- {
+function draw() {
   background(205);
-  mover.update();
-  mover.checkEdges();
-  mover.show();
-//Call methods on the Mover object.
+  for (let mover of movers) {
+    mover.update();
+    mover.checkEdges();
+    mover.show();
+  }
+  // Update, check edges, and show each Mover object
 }
 
 class Mover 
