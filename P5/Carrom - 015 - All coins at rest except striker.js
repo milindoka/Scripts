@@ -6,7 +6,6 @@ let queen;
 
 function setup() {
   createCanvas(450, 450);
-  
   for (let i = 0; i < 9; i++) 
     {
     blackMovers.push(new BlackMover());
@@ -16,11 +15,10 @@ function setup() {
   queen = new Queen();
 }
 
+
 function draw() 
 {
   background(205);
-  fill('#bfe693');
-  rect(100, 350, 250, 35, 20);
   
   let allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
   
