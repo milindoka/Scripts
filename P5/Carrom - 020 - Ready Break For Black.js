@@ -48,9 +48,9 @@ function createCircleOfMovers(centerX, centerY, radius, count) {
     let y = centerY + radius * sin(angle);
     
     if (i % 2 === 0) {
-      whiteMovers.push(new WhiteMover(x, y));
-    } else {
       blackMovers.push(new BlackMover(x, y));
+    } else {
+      whiteMovers.push(new WhiteMover(x, y));
     }
   }
 }

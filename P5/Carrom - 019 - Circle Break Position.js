@@ -15,47 +15,35 @@ let strikerY = rectangleY + rectangleHeight / 2;
 function setup() {
   createCanvas(450, 450);
   
-  let centerX = carromwidth / 2;
-  let centerY = carromheight / 2;
-  
   // Place the queen at the center
-  queen = new Queen(centerX, centerY);
+  queen = new Queen(carromwidth/2, carromheight/2);
   
-  let moverSize = 18; // Diameter of a mover
-  let queenSize = 18; // Diameter of the queen
+  // Calculate the radius for the outer circle of movers
+  let radius = 175 / 2; // Half the diameter of the outer circle
   
-  // First circle: 6 movers touching the queen
-  let firstCircleRadius = (queenSize + moverSize) / 2;
-  createCircleOfMovers(centerX, centerY, firstCircleRadius, 6);
+  // Calculate the angle between each mover
+  let angleStep = TWO_PI / 18; // 18 movers in total (9 white + 9 black)
   
-  // Second circle: 12 movers
-  let secondCircleRadius = firstCircleRadius + moverSize;
-  createCircleOfMovers(centerX, centerY, secondCircleRadius, 12);
-  
-  // Outer circle: remaining movers
-  let outerCircleRadius = secondCircleRadius + moverSize;
-  let remainingMovers = 18 - (6 + 12); // Total movers - (first circle + second circle)
-  createCircleOfMovers(centerX, centerY, outerCircleRadius, remainingMovers);
+  for (let i = 0; i < 9; i++) {
+    let angle = i * 2 * angleStep; // Alternate positions for black and white
+    
+    // Calculate positions
+    let x = carromwidth/2 + radius * cos(angle);
+    let y = carromheight/2 + radius * sin(angle);
+    
+    // Create and position black mover
+    blackMovers.push(new BlackMover(x, y));
+    
+    // Calculate position for white mover
+    x = carromwidth/2 + radius * cos(angle + angleStep);
+    y = carromheight/2 + radius * sin(angle + angleStep);
+    
+    // Create and position white mover
+    whiteMovers.push(new WhiteMover(x, y));
+  }
   
   striker = new Striker();
 }
-
-function createCircleOfMovers(centerX, centerY, radius, count) {
-  let angleStep = TWO_PI / count;
-  for (let i = 0; i < count; i++) {
-    let angle = i * angleStep;
-    let x = centerX + radius * cos(angle);
-    let y = centerY + radius * sin(angle);
-    
-    if (i % 2 === 0) {
-      whiteMovers.push(new WhiteMover(x, y));
-    } else {
-      blackMovers.push(new BlackMover(x, y));
-    }
-  }
-}
-
-
 /////////////////////
 function draw() 
 {
