@@ -11,7 +11,6 @@ let rectangleWidth = 250;
 let rectangleHeight = 35;
 let strikerX = rectangleX + rectangleWidth / 2;
 let strikerY = rectangleY + rectangleHeight / 2;
-let enableslider=false;
 ////////////////
 function setup() {
   createCanvas(550, 550);
@@ -39,12 +38,8 @@ function setup() {
   createCircleOfMovers(centerX, centerY, outerCircleRadius, remainingMovers);
   
   striker = new Striker();
-
-  // Create the slider
-  slider = createSlider(rectangleX, rectangleX + rectangleWidth, strikerX);
-  slider.position(50 + rectangleX, sliderY);
-  slider.style('width', rectangleWidth + 'px');
 }
+
 function createCircleOfMovers(centerX, centerY, radius, count) {
   let angleStep = TWO_PI / count;
   for (let i = 0; i < count; i++) {
@@ -95,8 +90,6 @@ function draw()
   circle(carromwidth/2, carromheight/2, 175);
   circle(carromwidth/2, carromheight/2, 20);
 
-  // Update striker position based on slider
-  if (enableslider) striker.position.x = slider.value();
  
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
@@ -146,7 +139,6 @@ let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
     isDraggingStriker = true;
-    enableslider=false;
     striker.dragStart = createVector(mouseX - 50, mouseY - 50);
   }
 }
@@ -284,15 +276,17 @@ class Striker extends Mover {
     return this.velocity.mag() < 0.1; // Adjust this threshold as needed
   }
 
+
   reset() {
-    this.position.x = slider.value();
+    this.position.x = rectangleX + rectangleWidth / 2;
     this.position.y = rectangleY + rectangleHeight / 2;
     this.velocity.set(0, 0);
     this.isLaunched = false;
     this.dragStart = null;
-    enableslider=true;
   }
 }
+
+////////////////////////
 function isInPocket(mover) {
   let pocketSize = 32;
   let pocketOffset = 16;
@@ -394,6 +388,3 @@ function vectorMult(v,s){
   }
   return mult; // This is also a vector
 }
-
-let slider;
-let sliderY = 515; // Position of the slider below the carrom board

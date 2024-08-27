@@ -11,7 +11,6 @@ let rectangleWidth = 250;
 let rectangleHeight = 35;
 let strikerX = rectangleX + rectangleWidth / 2;
 let strikerY = rectangleY + rectangleHeight / 2;
-let enableslider=false;
 ////////////////
 function setup() {
   createCanvas(550, 550);
@@ -96,7 +95,7 @@ function draw()
   circle(carromwidth/2, carromheight/2, 20);
 
   // Update striker position based on slider
-  if (enableslider) striker.position.x = slider.value();
+  striker.position.x = slider.value();
  
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
@@ -146,7 +145,6 @@ let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
     isDraggingStriker = true;
-    enableslider=false;
     striker.dragStart = createVector(mouseX - 50, mouseY - 50);
   }
 }
@@ -290,7 +288,6 @@ class Striker extends Mover {
     this.velocity.set(0, 0);
     this.isLaunched = false;
     this.dragStart = null;
-    enableslider=true;
   }
 }
 function isInPocket(mover) {
