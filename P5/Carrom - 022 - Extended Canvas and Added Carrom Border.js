@@ -169,23 +169,17 @@ class Striker extends Mover {
     this.position.y = rectangleY + rectangleHeight / 2;
     this.velocity = createVector(0, 0);
   }
-  
-
   setVelocity() {
-    let adjustedMouseX = mouseX - 50;
-    let adjustedMouseY = mouseY - 50;
-    let mouseVector = createVector(adjustedMouseX - this.position.x, adjustedMouseY - this.position.y);
+    let mouseVector = createVector(mouseX - this.position.x, mouseY - this.position.y);
     mouseVector.limit(10); // Limit the velocity to a maximum of 10
     this.velocity = mouseVector;
   }
-  
-  show() {
+
+   show() {
     super.show();
     if (mouseIsPressed) {
       stroke(255, 0, 0);
-      let adjustedMouseX = mouseX - 50;
-      let adjustedMouseY = mouseY - 50;
-      line(this.position.x, this.position.y, adjustedMouseX, adjustedMouseY);
+      line(this.position.x, this.position.y, mouseX, mouseY);
     }
   }
 }
