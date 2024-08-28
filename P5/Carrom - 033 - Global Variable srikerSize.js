@@ -18,7 +18,7 @@ let strikerY = rectangleY + rectangleHeight / 2;
 let enableslider=true;
 ////////////////
 function setup() {
-  createCanvas(460, 550);
+  createCanvas(550, 550);
   
   let centerX = carromwidth / 2;
   let centerY = carromheight / 2;
@@ -43,12 +43,11 @@ function setup() {
   createCircleOfMovers(centerX, centerY, outerCircleRadius, remainingMovers);
   
   striker = new Striker();
+
   // Create the slider
-  let sliderWidth = rectangleWidth;
-  let sliderX = (width - sliderWidth) / 2;
   slider = createSlider(rectangleX, rectangleX + rectangleWidth, strikerX);
-  slider.position(sliderX, sliderY);
-  slider.style('width', sliderWidth + 'px');
+  slider.position(50 + rectangleX, sliderY);
+  slider.style('width', rectangleWidth + 'px');
 }
 function createCircleOfMovers(centerX, centerY, radius, count) {
   let angleStep = TWO_PI / count;
@@ -65,13 +64,15 @@ function createCircleOfMovers(centerX, centerY, radius, count) {
   }
 }
 
+/////////////////////
 function draw() 
 {
+ 
   background(220);
   
   // Draw the carrom board rectangle with round corners and thick border
   push();
-  translate(5, 50);
+  translate(50, 50);
   strokeWeight(2);
   stroke(100, 70, 40); // Brown color for the border
   fill('#bfe693');
@@ -145,11 +146,12 @@ function draw()
 
 }
 let isDraggingStriker = false;
+
 function mousePressed() {
   if (isMouseOverStriker()) {
     isDraggingStriker = true;
     enableslider=false;
-    striker.dragStart = createVector(mouseX - 5, mouseY - 50);
+    striker.dragStart = createVector(mouseX - 50, mouseY - 50);
   }
 }
 
@@ -167,7 +169,7 @@ function mouseReleased() {
 }
 
 function isMouseOverStriker() {
-  let d = dist(mouseX - 5, mouseY - 50, striker.position.x, striker.position.y);
+  let d = dist(mouseX - 50, mouseY - 50, striker.position.x, striker.position.y);
   return d <= striker.size / 2;
 }
 class Mover {
