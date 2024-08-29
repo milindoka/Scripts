@@ -19,12 +19,6 @@ let enableslider=true;
 let quenPocketed=false;
 let whiteScore=0;
 let blackScore=0;
-let playTurn='white';
-let setTurn =false;
-
-
-
-
 ////////////////
 function setup() {
   createCanvas(460, 550);
@@ -79,11 +73,6 @@ function draw()
   background(220);
   text('B:'+str(blackScore),400, 20);
   text('W:'+str(whiteScore), 10, 20);
-  
-
-  text('Turn :      ');
-  text('Turn:'+playTurn, 200, 20);
-
   // Draw the carrom board rectangle with round corners and thick border
   push();
   translate(5, 50);
@@ -120,15 +109,13 @@ function draw()
     striker.setVelocity();
   }
 
-  
-  if (striker.isLaunched && allMoversStopped()) 
-    {
+  if (striker.isLaunched && striker.hasStopped()) {
     striker.reset();
-   if(setTurn==false) switchTurn();
-   else setTurn=false;
   }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
+  
+
   }
   else allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
   
@@ -138,32 +125,23 @@ function draw()
     allMovers[i].show();
 
     // Check if mover is in a pocket
-        if (isInPocket(allMovers[i])) {
+    if (isInPocket(allMovers[i])) {
       if (allMovers[i] instanceof Queen) {
         console.log("Queen pocketed!");
         // You might want to handle this specially
         quenPocketed = true;
-        if(playTurn == 'white') whiteScore+=3;
-        if(playTurn == 'black') blackScore+=3;
-        setTurn = true;
-      } else if (allMovers[i] instanceof WhiteMover) 
-        {
-        console.log("White coin pocketed!");
-        whiteScore+=1;
-        if(planeTurn = 'white') setTurn = true;   
 
+      } else if (allMovers[i] instanceof WhiteMover) {
+        console.log("White coin pocketed!");
         whiteMovers.splice(whiteMovers.indexOf(allMovers[i]), 1);
-      } else if (allMovers[i] instanceof BlackMover)
-         {
+      } else if (allMovers[i] instanceof BlackMover) {
         console.log("Black coin pocketed!");
-        blackScore+=1;
-        if(playTurn == 'black') setTurn = 'true'; 
         blackMovers.splice(blackMovers.indexOf(allMovers[i]), 1);
       }
       allMovers.splice(i, 1);
       continue;
     }
- 
+    
     // Check collisions with all other movers
     for (let j = i + 1; j < allMovers.length; j++) {
       if (dist(allMovers[i].position.x, allMovers[i].position.y, 
@@ -171,13 +149,11 @@ function draw()
         handleCollision(allMovers[i], allMovers[j]);
       }
     }
-    
-    }
-    
-  
-    pop();
-}
+  }
 
+  pop();
+
+}
 let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
@@ -186,23 +162,6 @@ function mousePressed() {
     striker.dragStart = createVector(mouseX - 5, mouseY - 50);
   }
 }
-
-function allMoversStopped() {
-  let allMovers = quenPocketed ? [striker, ...whiteMovers, ...blackMovers] : [striker, queen, ...whiteMovers, ...blackMovers];
-  for (let mover of allMovers) {
-    if (mover.velocity.mag() > 0.1) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function switchTurn() 
-{ if (playTurn == 'white') playTurn = 'black'; 
-  else playTurn = 'white'; 
-  setTurn = false;
-}
-
 
 function mouseDragged() {
   if (isDraggingStriker) {
@@ -234,7 +193,6 @@ class Mover {
   update() {
     this.position.add(this.velocity);
     this.velocity.mult(this.damping);
-    
   }
 
   show() {
@@ -244,7 +202,6 @@ class Mover {
     circle(this.position.x, this.position.y, this.size);
   }
 
-  
 
 checkEdges() {
   if (this.position.x > carromwidth - this.size/2) {
