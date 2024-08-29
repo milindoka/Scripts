@@ -16,7 +16,6 @@ let rectangleHeight = 35;
 let strikerX = rectangleX + rectangleWidth / 2;
 let strikerY = rectangleY + rectangleHeight / 2;
 let enableslider=true;
-let quenPocketed=false;
 ////////////////
 function setup() {
   createCanvas(460, 550);
@@ -110,11 +109,7 @@ function draw()
     striker.reset();
   }
   
-  if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
-  
-
-  }
-  else allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
+  let allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
   
   for (let i = 0; i < allMovers.length; i++) {
     allMovers[i].update();
@@ -126,8 +121,6 @@ function draw()
       if (allMovers[i] instanceof Queen) {
         console.log("Queen pocketed!");
         // You might want to handle this specially
-        quenPocketed = true;
-
       } else if (allMovers[i] instanceof WhiteMover) {
         console.log("White coin pocketed!");
         whiteMovers.splice(whiteMovers.indexOf(allMovers[i]), 1);
