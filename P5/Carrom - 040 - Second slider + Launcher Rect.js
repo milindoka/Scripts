@@ -253,7 +253,7 @@ class Mover {
     circle(this.position.x, this.position.y, this.size);
   }
 
-
+  
 
 checkEdges() {
   if (this.position.x > carromwidth - this.size/2) {
@@ -349,16 +349,14 @@ class Striker extends Mover {
   }
 
   reset() {
-    this.position.x = opponentSlider.value();
-    this.position.y = opponentRectangleY + opponentRectangleHeight / 2;
+    this.position.x = slider.value();
+    this.position.y = rectangleY + rectangleHeight / 2;
     this.velocity.set(0, 0);
     this.isLaunched = false;
     this.dragStart = null;
-    enableslider = true;
+    enableslider=true;
   }
 }
-
-
 function isInPocket(mover) {
   let pocketSize = 32;
   let pocketOffset = 16;
