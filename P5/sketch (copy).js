@@ -22,16 +22,6 @@ let blackScore=0;
 let playTurn='white';
 let setTurn =false;
 
-let slider;
-let sliderY = 515; // Position of the slider below the carrom board
-
-let opponentRectangleX = 100;
-let opponentRectangleY = 65;
-let opponentRectangleWidth = 250;
-let opponentRectangleHeight = 35;
-let opponentSlider;
-let opponentSliderY = 10; // Position Y of the opponent's slider
-
 
 
 function setup() {
@@ -71,7 +61,7 @@ function setup() {
   let opponentSliderWidth = opponentRectangleWidth;
   let opponentSliderX = (width - opponentSliderWidth) / 2;
   opponentSlider = createSlider(opponentRectangleX, opponentRectangleX + opponentRectangleWidth, opponentRectangleX + opponentRectangleWidth / 2);
-  opponentSlider.position(opponentSliderX, opponentSliderY);
+  opponentSlider.position(opponentSliderX, opponentRectangleY + opponentRectangleHeight / 2);
   opponentSlider.style('width', opponentSliderWidth + 'px');
 }
 function createCircleOfMovers(centerX, centerY, radius, count) {
@@ -472,3 +462,11 @@ function vectorMult(v,s){
   return mult; // This is also a vector
 }
 
+let slider;
+let sliderY = 515; // Position of the slider below the carrom board
+
+let opponentRectangleX = 100;
+let opponentRectangleY = 65;
+let opponentRectangleWidth = 250;
+let opponentRectangleHeight = 35;
+let opponentSlider;
