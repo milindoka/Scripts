@@ -73,7 +73,6 @@ function setup() {
   opponentSlider.position(opponentSliderX, opponentSliderY);
   opponentSlider.style('width', opponentSliderWidth + 'px');
 }
-
 function createCircleOfMovers(centerX, centerY, radius, count) {
   let angleStep = TWO_PI / count;
   for (let i = 0; i < count; i++) {
@@ -88,10 +87,6 @@ function createCircleOfMovers(centerX, centerY, radius, count) {
     }
   }
 }
-
-let whitePocketedThisTurn = false;
-let blackPocketedThisTurn = false;
-let queenPocketedThisTurn = false;
 
 function draw() 
 {
@@ -142,84 +137,51 @@ function draw()
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
   }
+
+  
   if (striker.isLaunched && allMoversStopped()) 
-  {
-    let shouldSwitchTurn = true;
+    {
+   if(setTurn==false) switchTurn();
+   setTurn=false;
+   striker.reset();
 
-    if (playTurn == 'white' && (whitePocketedThisTurn || queenPocketedThisTurn)) {
-      shouldSwitchTurn = false;
-    } else if (playTurn == 'black' && (blackPocketedThisTurn || queenPocketedThisTurn)) {
-      shouldSwitchTurn = false;
-    }
-
-    if (shouldSwitchTurn) {
-      switchTurn();
-    }
-
-    // Reset pocketing flags for the next turn
-    whitePocketedThisTurn = false;
-    blackPocketedThisTurn = false;
-    queenPocketedThisTurn = false;
-
-    striker.reset();
   }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
   }
   else allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
   
-  whitePocketed = false;
-  blackPocketed = false;
-  quenPocketed = false;
-
   for (let i = 0; i < allMovers.length; i++) {
     allMovers[i].update();
     allMovers[i].checkEdges();
     allMovers[i].show();
 
     // Check if mover is in a pocket
-    if (isInPocket(allMovers[i])) 
-    {
-      if (allMovers[i] instanceof Queen) 
-      {
+        if (isInPocket(allMovers[i])) {
+      if (allMovers[i] instanceof Queen) {
         console.log("Queen pocketed!");
-        queenPocketedThisTurn = true;
         // You might want to handle this specially
         quenPocketed = true;
         if(playTurn == 'white') whiteScore+=3;
         if(playTurn == 'black') blackScore+=3;
-      } 
-      if (allMovers[i] instanceof WhiteMover) 
-      {
+        setTurn = true;
+      } else if (allMovers[i] instanceof WhiteMover) 
+        {
         console.log("White coin pocketed!");
-        whitePocketedThisTurn = true;
         whiteScore+=1;
-        whitePocketed = true;
+        if(planeTurn = 'white') setTurn = true;   
         whiteMovers.splice(whiteMovers.indexOf(allMovers[i]), 1);
-      } 
-      if (allMovers[i] instanceof BlackMover)
-      {
+      } else if (allMovers[i] instanceof BlackMover)
+         {
         console.log("Black coin pocketed!");
-        blackPocketedThisTurn = true;
         blackScore+=1;
-        blackPocketed = true;
+        if(playTurn == 'black') setTurn = 'true'; 
         blackMovers.splice(blackMovers.indexOf(allMovers[i]), 1);
       }
       allMovers.splice(i, 1);
       continue;
     }
  
-    if(quenPocketed)
-       { setTurn=true; queenPocketed=false; } 
-      else
-      if (playTurn=='white' && whitePocketed == true) 
-        { setTurn=true; }
-      else
-      if(playTurn=='black' && blackPocketed == true)
-        { setTurn=true; }
-      else
-        setTurn=false;
-      
     // Check collisions with all other movers
     for (let j = i + 1; j < allMovers.length; j++) {
       if (dist(allMovers[i].position.x, allMovers[i].position.y, 
@@ -231,6 +193,7 @@ function draw()
     }
     pop();
 }
+
 let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
@@ -239,6 +202,7 @@ function mousePressed() {
     striker.dragStart = createVector(mouseX - 5, mouseY - 50);
   }
 }
+
 function allMoversStopped() {
   let allMovers = quenPocketed ? [striker, ...whiteMovers, ...blackMovers] : [striker, queen, ...whiteMovers, ...blackMovers];
   for (let mover of allMovers) {
