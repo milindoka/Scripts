@@ -146,7 +146,6 @@ function draw()
         } else {
           setTurn = false;
         }
-        striker.isLaunched = false;
       }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
@@ -201,13 +200,13 @@ function draw()
 
 let isDraggingStriker = false;
 function mousePressed() {
- if (isMouseOverStriker() && 
-     ((currentPlayer === 'white' && mouseY > height / 2) || 
-      (currentPlayer === 'black' && mouseY < height / 2))) {
-   isDraggingStriker = true;
-   enableslider = false;
-   striker.dragStart = createVector(mouseX - 5, mouseY - 50);
- }
+  if (isMouseOverStriker()) {
+    isDraggingStriker = true;
+    enableslider=false;
+    striker.dragStart = createVector(mouseX - 5, mouseY - 50);
+  }
+}
+
 function allMoversStopped() {
   let allMovers = quenPocketed ? [striker, ...whiteMovers, ...blackMovers] : [striker, queen, ...whiteMovers, ...blackMovers];
   for (let mover of allMovers) {
@@ -216,11 +215,20 @@ function allMoversStopped() {
     }
   }
   return true;
-function switchTurn() {
-  playTurn = (playTurn === 'white') ? 'black' : 'white';
-  setTurn = false;
-  enableslider = true;
 }
+function switchTurn() {
+  if (currentPlayer === 'white') {
+    currentPlayer = 'black';
+    enableWhiteSlider(false);
+    enableBlackSlider(true);
+  } else {
+    currentPlayer = 'white';
+    enableWhiteSlider(true);
+    enableBlackSlider(false);
+  }
+  setTurn = false;
+}
+
 function enableWhiteSlider(enable) {
   slider.attribute('disabled', !enable);
   enableslider = enable;
@@ -364,6 +372,7 @@ class Striker extends Mover {
   hasStopped() {
     return this.velocity.mag() < 0.1; // Adjust this threshold as needed
   }
+
   reset() {
     this.position.x = opponentSlider.value();
     this.position.y = opponentRectangleY + opponentRectangleHeight / 2;

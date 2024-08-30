@@ -139,15 +139,14 @@ function draw()
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
   }
-      if (striker.isLaunched && allMoversStopped()) {
-        striker.reset();
-        if (!setTurn) {
-          switchTurn();
-        } else {
-          setTurn = false;
-        }
-        striker.isLaunched = false;
-      }
+
+  
+  if (striker.isLaunched && allMoversStopped()) 
+    {
+    striker.reset();
+   if(setTurn==false) switchTurn();
+   else setTurn=false;
+  }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
   }
@@ -201,13 +200,13 @@ function draw()
 
 let isDraggingStriker = false;
 function mousePressed() {
- if (isMouseOverStriker() && 
-     ((currentPlayer === 'white' && mouseY > height / 2) || 
-      (currentPlayer === 'black' && mouseY < height / 2))) {
-   isDraggingStriker = true;
-   enableslider = false;
-   striker.dragStart = createVector(mouseX - 5, mouseY - 50);
- }
+  if (isMouseOverStriker()) {
+    isDraggingStriker = true;
+    enableslider=false;
+    striker.dragStart = createVector(mouseX - 5, mouseY - 50);
+  }
+}
+
 function allMoversStopped() {
   let allMovers = quenPocketed ? [striker, ...whiteMovers, ...blackMovers] : [striker, queen, ...whiteMovers, ...blackMovers];
   for (let mover of allMovers) {
@@ -216,19 +215,14 @@ function allMoversStopped() {
     }
   }
   return true;
-function switchTurn() {
-  playTurn = (playTurn === 'white') ? 'black' : 'white';
-  setTurn = false;
-  enableslider = true;
-}
-function enableWhiteSlider(enable) {
-  slider.attribute('disabled', !enable);
-  enableslider = enable;
 }
 
-function enableBlackSlider(enable) {
-  opponentSlider.attribute('disabled', !enable);
+function switchTurn() 
+{ if (playTurn == 'white') playTurn = 'black'; 
+  else playTurn = 'white'; 
+  setTurn = false;
 }
+
 
 function mouseDragged() {
   if (isDraggingStriker) {
@@ -364,6 +358,7 @@ class Striker extends Mover {
   hasStopped() {
     return this.velocity.mag() < 0.1; // Adjust this threshold as needed
   }
+
   reset() {
     this.position.x = opponentSlider.value();
     this.position.y = opponentRectangleY + opponentRectangleHeight / 2;

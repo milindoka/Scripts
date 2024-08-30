@@ -19,8 +19,18 @@ let enableslider=true;
 let quenPocketed=false;
 let whiteScore=0;
 let blackScore=0;
-let playTurn='white';
+let currentPlayer = 'white'; // 'white' or 'black'
 let setTurn =false;
+
+let slider;
+let sliderY = 515; // Position of the slider below the carrom board
+
+let opponentRectangleX = 100;
+let opponentRectangleY = 65;
+let opponentRectangleWidth = 250;
+let opponentRectangleHeight = 35;
+let opponentSlider;
+let opponentSliderY = 10; // Position Y of the opponent's slider
 
 
 
@@ -61,7 +71,7 @@ function setup() {
   let opponentSliderWidth = opponentRectangleWidth;
   let opponentSliderX = (width - opponentSliderWidth) / 2;
   opponentSlider = createSlider(opponentRectangleX, opponentRectangleX + opponentRectangleWidth, opponentRectangleX + opponentRectangleWidth / 2);
-  opponentSlider.position(opponentSliderX, opponentRectangleY + opponentRectangleHeight / 2);
+  opponentSlider.position(opponentSliderX, opponentSliderY);
   opponentSlider.style('width', opponentSliderWidth + 'px');
 }
 function createCircleOfMovers(centerX, centerY, radius, count) {
@@ -129,14 +139,15 @@ function draw()
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
   }
-
-  
-  if (striker.isLaunched && allMoversStopped()) 
-    {
-    striker.reset();
-   if(setTurn==false) switchTurn();
-   else setTurn=false;
-  }
+      if (striker.isLaunched && allMoversStopped()) {
+        striker.reset();
+        if (!setTurn) {
+          switchTurn();
+        } else {
+          setTurn = false;
+        }
+        striker.isLaunched = false;
+      }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
   }
@@ -190,13 +201,13 @@ function draw()
 
 let isDraggingStriker = false;
 function mousePressed() {
-  if (isMouseOverStriker()) {
-    isDraggingStriker = true;
-    enableslider=false;
-    striker.dragStart = createVector(mouseX - 5, mouseY - 50);
-  }
-}
-
+ if (isMouseOverStriker() && 
+     ((currentPlayer === 'white' && mouseY > height / 2) || 
+      (currentPlayer === 'black' && mouseY < height / 2))) {
+   isDraggingStriker = true;
+   enableslider = false;
+   striker.dragStart = createVector(mouseX - 5, mouseY - 50);
+ }
 function allMoversStopped() {
   let allMovers = quenPocketed ? [striker, ...whiteMovers, ...blackMovers] : [striker, queen, ...whiteMovers, ...blackMovers];
   for (let mover of allMovers) {
@@ -205,14 +216,19 @@ function allMoversStopped() {
     }
   }
   return true;
-}
-
-function switchTurn() 
-{ if (playTurn == 'white') playTurn = 'black'; 
-  else playTurn = 'white'; 
+function switchTurn() {
+  playTurn = (playTurn === 'white') ? 'black' : 'white';
   setTurn = false;
+  enableslider = true;
+}
+function enableWhiteSlider(enable) {
+  slider.attribute('disabled', !enable);
+  enableslider = enable;
 }
 
+function enableBlackSlider(enable) {
+  opponentSlider.attribute('disabled', !enable);
+}
 
 function mouseDragged() {
   if (isDraggingStriker) {
@@ -348,7 +364,6 @@ class Striker extends Mover {
   hasStopped() {
     return this.velocity.mag() < 0.1; // Adjust this threshold as needed
   }
-
   reset() {
     this.position.x = opponentSlider.value();
     this.position.y = opponentRectangleY + opponentRectangleHeight / 2;
@@ -462,11 +477,3 @@ function vectorMult(v,s){
   return mult; // This is also a vector
 }
 
-let slider;
-let sliderY = 515; // Position of the slider below the carrom board
-
-let opponentRectangleX = 100;
-let opponentRectangleY = 65;
-let opponentRectangleWidth = 250;
-let opponentRectangleHeight = 35;
-let opponentSlider;
