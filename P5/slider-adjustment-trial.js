@@ -6,7 +6,6 @@ let queen;
 let coinSize = 22;
 let strikerSize = 30;
 
-
 let carromwidth=450;
 let carromheight=450;
 let rectangleX = 100;
@@ -19,7 +18,7 @@ let enableslider=true;
 let quenPocketed=false;
 let whiteScore=0;
 let blackScore=0;
-let currentPlayer = 'white'; // 'white' or 'black'
+let playTurn='white';
 let setTurn =false;
 
 let slider;
@@ -74,6 +73,7 @@ function setup() {
   opponentSlider.position(opponentSliderX, opponentSliderY);
   opponentSlider.style('width', opponentSliderWidth + 'px');
 }
+
 function createCircleOfMovers(centerX, centerY, radius, count) {
   let angleStep = TWO_PI / count;
   for (let i = 0; i < count; i++) {
@@ -89,6 +89,10 @@ function createCircleOfMovers(centerX, centerY, radius, count) {
   }
 }
 
+let whitePocketedThisTurn = false;
+let blackPocketedThisTurn = false;
+let queenPocketedThisTurn = false;
+
 function draw() 
 {
   background(220);
@@ -96,9 +100,8 @@ function draw()
   text('B:'+str(blackScore),400, 20);
   text('W:'+str(whiteScore), 10, 20);
   
-
-//  text('Turn :      ');
- // text('Turn:'+playTurn, 200, 20);
+  text('Turn :       ',10,520);
+  text('Turn:'+playTurn, 10, 520);
 
   // Draw the carrom board rectangle with round corners and thick border
   push();
@@ -134,56 +137,89 @@ function draw()
   rect(opponentRectangleX, opponentRectangleY, opponentRectangleWidth, opponentRectangleHeight, 20);
 
   // Update striker position based on opponent's slider
-  if (enableslider) striker.position.x = opponentSlider.value();
+ // if (!enableslider) striker.position.x = opponentSlider.value();
  
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
   }
-
-  
   if (striker.isLaunched && allMoversStopped()) 
-    {
+  {
+    let shouldSwitchTurn = true;
+
+    if (playTurn == 'white' && (whitePocketedThisTurn || queenPocketedThisTurn)) {
+      shouldSwitchTurn = false;
+    } else if (playTurn == 'black' && (blackPocketedThisTurn || queenPocketedThisTurn)) {
+      shouldSwitchTurn = false;
+    }
+
+    if (shouldSwitchTurn) {
+      switchTurn();
+    }
+
+    // Reset pocketing flags for the next turn
+    whitePocketedThisTurn = false;
+    blackPocketedThisTurn = false;
+    queenPocketedThisTurn = false;
+
     striker.reset();
-   if(setTurn==false) switchTurn();
-   else setTurn=false;
   }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
   }
   else allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
   
+  whitePocketed = false;
+  blackPocketed = false;
+  
+
   for (let i = 0; i < allMovers.length; i++) {
     allMovers[i].update();
     allMovers[i].checkEdges();
     allMovers[i].show();
 
     // Check if mover is in a pocket
-        if (isInPocket(allMovers[i])) {
-      if (allMovers[i] instanceof Queen) {
+    if (isInPocket(allMovers[i])) 
+    {
+      if (allMovers[i] instanceof Queen) 
+      {
         console.log("Queen pocketed!");
+        queenPocketedThisTurn = true;
         // You might want to handle this specially
         quenPocketed = true;
         if(playTurn == 'white') whiteScore+=3;
         if(playTurn == 'black') blackScore+=3;
-        setTurn = true;
-      } else if (allMovers[i] instanceof WhiteMover) 
-        {
+      } 
+      if (allMovers[i] instanceof WhiteMover) 
+      {
         console.log("White coin pocketed!");
+        whitePocketedThisTurn = true;
         whiteScore+=1;
-        if(planeTurn = 'white') setTurn = true;   
-
+        whitePocketed = true;
         whiteMovers.splice(whiteMovers.indexOf(allMovers[i]), 1);
-      } else if (allMovers[i] instanceof BlackMover)
-         {
+      } 
+      if (allMovers[i] instanceof BlackMover)
+      {
         console.log("Black coin pocketed!");
+        blackPocketedThisTurn = true;
         blackScore+=1;
-        if(playTurn == 'black') setTurn = 'true'; 
+        blackPocketed = true;
         blackMovers.splice(blackMovers.indexOf(allMovers[i]), 1);
       }
       allMovers.splice(i, 1);
       continue;
     }
  
+    if(quenPocketed)
+       { setTurn=true; queenPocketed=false; } 
+      else
+      if (playTurn=='white' && whitePocketed == true) 
+        { setTurn=true; }
+      else
+      if(playTurn=='black' && blackPocketed == true)
+        { setTurn=true; }
+      else
+        setTurn=false;
+      
     // Check collisions with all other movers
     for (let j = i + 1; j < allMovers.length; j++) {
       if (dist(allMovers[i].position.x, allMovers[i].position.y, 
@@ -193,11 +229,8 @@ function draw()
     }
     
     }
-    
-  
     pop();
 }
-
 let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
@@ -206,7 +239,6 @@ function mousePressed() {
     striker.dragStart = createVector(mouseX - 5, mouseY - 50);
   }
 }
-
 function allMoversStopped() {
   let allMovers = quenPocketed ? [striker, ...whiteMovers, ...blackMovers] : [striker, queen, ...whiteMovers, ...blackMovers];
   for (let mover of allMovers) {
@@ -220,9 +252,7 @@ function allMoversStopped() {
 function switchTurn() 
 { if (playTurn == 'white') playTurn = 'black'; 
   else playTurn = 'white'; 
-  setTurn = false;
 }
-
 
 function mouseDragged() {
   if (isDraggingStriker) {
@@ -254,7 +284,6 @@ class Mover {
   update() {
     this.position.add(this.velocity);
     this.velocity.mult(this.damping);
-    
   }
 
   show() {
@@ -264,9 +293,7 @@ class Mover {
     circle(this.position.x, this.position.y, this.size);
   }
 
-
-
-checkEdges() {
+  checkEdges() {
   if (this.position.x > carromwidth - this.size/2) {
     this.position.x = carromwidth - this.size/2;
     this.velocity.x *= -1;
@@ -282,7 +309,6 @@ checkEdges() {
     this.velocity.y *= -1;
   }
 }
-
 }
   ////////////////////////////////////////////
 class WhiteMover extends Mover {
@@ -355,20 +381,23 @@ class Striker extends Mover {
     }
   }
 
-  hasStopped() {
-    return this.velocity.mag() < 0.1; // Adjust this threshold as needed
-  }
 
   reset() {
-    this.position.x = opponentSlider.value();
-    this.position.y = opponentRectangleY + opponentRectangleHeight / 2;
+    if(playTurn=='black')
+    { this.position.x = opponentSlider.value();
+    this.position.y = opponentRectangleY + 
+    opponentRectangleHeight / 2; }
+    else
+    { this.position.x = slider.value();
+      this.position.y = rectangleY + rectangleHeight / 2;
+    }
+
     this.velocity.set(0, 0);
     this.isLaunched = false;
     this.dragStart = null;
     enableslider = true;
   }
 }
-
 
 function isInPocket(mover) {
   let pocketSize = 32;
@@ -379,7 +408,6 @@ function isInPocket(mover) {
     {x: pocketOffset, y: carromheight - pocketOffset},
     {x: carromwidth - pocketOffset, y: carromheight - pocketOffset}
   ];
-
   for (let pocket of pockets) {
     if (dist(mover.position.x, mover.position.y, pocket.x, pocket.y) < pocketSize / 2) {
       return true;
@@ -387,8 +415,6 @@ function isInPocket(mover) {
   }
   return false;
 }
-
-
 
 function handleCollision(mover1, mover2) {
   let x1 = [mover1.position.x, mover1.position.y];
@@ -471,4 +497,3 @@ function vectorMult(v,s){
   }
   return mult; // This is also a vector
 }
-

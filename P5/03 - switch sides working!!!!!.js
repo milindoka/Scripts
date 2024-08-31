@@ -16,14 +16,13 @@ let rectangleHeight = 35;
 let strikerX = rectangleX + rectangleWidth / 2;
 let strikerY = rectangleY + rectangleHeight / 2;
 let enableslider=true;
+let oppositeRectangleX = 100;
+let oppositeRectangleY = 65;
+let oppositeSlider;
+let currentTurn = 'bottom'; // 'bottom' or 'top'
 let quenPocketed=false;
 let whiteScore=0;
 let blackScore=0;
-let playTurn='white';
-
-
-
-
 ////////////////
 function setup() {
   createCanvas(460, 550);
@@ -57,8 +56,12 @@ function setup() {
   slider = createSlider(rectangleX, rectangleX + rectangleWidth, strikerX);
   slider.position(sliderX, sliderY);
   slider.style('width', sliderWidth + 'px');
-}
-function createCircleOfMovers(centerX, centerY, radius, count) {
+  
+  // Create the opposite slider
+  oppositeSlider = createSlider(oppositeRectangleX, oppositeRectangleX + rectangleWidth, strikerX);
+  oppositeSlider.position(sliderX, oppositeRectangleY);
+  oppositeSlider.style('width', sliderWidth + 'px');
+}function createCircleOfMovers(centerX, centerY, radius, count) {
   let angleStep = TWO_PI / count;
   for (let i = 0; i < count; i++) {
     let angle = i * angleStep;
@@ -78,8 +81,6 @@ function draw()
   background(220);
   text('B:'+str(blackScore),400, 20);
   text('W:'+str(whiteScore), 10, 20);
-  text('Turn :      ');
-  text('Turn:'+playTurn, 200, 20);
   // Draw the carrom board rectangle with round corners and thick border
   push();
   translate(5, 50);
@@ -109,8 +110,20 @@ function draw()
   circle(carromwidth/2, carromheight/2, 175);
   circle(carromwidth/2, carromheight/2, 20);
 
-  // Update striker position based on slider
-  if (enableslider) striker.position.x = slider.value();
+  // Draw the opposite rectangle
+  fill('#bfe693');
+  rect(oppositeRectangleX, oppositeRectangleY, rectangleWidth, rectangleHeight, 20);
+
+  // Update striker position based on current turn
+  if (enableslider) {
+    if (currentTurn === 'bottom') {
+      striker.position.x = slider.value();
+      striker.position.y = rectangleY + rectangleHeight / 2;
+    } else {
+      striker.position.x = oppositeSlider.value();
+      striker.position.y = oppositeRectangleY + rectangleHeight / 2;
+    }
+  }
  
   if (mouseIsPressed && !striker.isLaunched) {
     striker.setVelocity();
@@ -121,6 +134,8 @@ function draw()
   }
   
   if(quenPocketed) {allMovers = [striker, ...whiteMovers, ...blackMovers];
+  
+
   }
   else allMovers = [striker, queen, ...whiteMovers, ...blackMovers];
   
@@ -130,23 +145,17 @@ function draw()
     allMovers[i].show();
 
     // Check if mover is in a pocket
-    setTurn = false;
     if (isInPocket(allMovers[i])) {
       if (allMovers[i] instanceof Queen) {
         console.log("Queen pocketed!");
         // You might want to handle this specially
         quenPocketed = true;
-        if(playTurn == 'white') whiteScore+=3;
-        else blackScore+=3; setTurn = true;
+
       } else if (allMovers[i] instanceof WhiteMover) {
         console.log("White coin pocketed!");
-        whiteScore+=1;
-          if(playTurn == 'black') { playturn='white'; setTurn = true; }
         whiteMovers.splice(whiteMovers.indexOf(allMovers[i]), 1);
       } else if (allMovers[i] instanceof BlackMover) {
         console.log("Black coin pocketed!");
-        blackScore+=1;
-        if(playTurn == 'white'){ playturn='black'; setupTurn = true; }
         blackMovers.splice(blackMovers.indexOf(allMovers[i]), 1);
       }
       allMovers.splice(i, 1);
@@ -160,13 +169,11 @@ function draw()
         handleCollision(allMovers[i], allMovers[j]);
       }
     }
-    if(!setTurn) switchTurn();
   }
 
   pop();
 
-}
-let isDraggingStriker = false;
+}let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
     isDraggingStriker = true;
@@ -174,11 +181,6 @@ function mousePressed() {
     striker.dragStart = createVector(mouseX - 5, mouseY - 50);
   }
 }
-
-function switchTurn() 
-{ if (playTurn == 'white') playTurn = 'black'; else playTurn = 'white'; 
-}
-
 
 function mouseDragged() {
   if (isDraggingStriker) {
@@ -312,14 +314,20 @@ class Striker extends Mover {
   hasStopped() {
     return this.velocity.mag() < 0.1; // Adjust this threshold as needed
   }
-
   reset() {
-    this.position.x = slider.value();
-    this.position.y = rectangleY + rectangleHeight / 2;
+    if (currentTurn === 'bottom') {
+      this.position.x = slider.value();
+      this.position.y = rectangleY + rectangleHeight / 2;
+      currentTurn = 'top';
+    } else {
+      this.position.x = oppositeSlider.value();
+      this.position.y = oppositeRectangleY + rectangleHeight / 2;
+      currentTurn = 'bottom';
+    }
     this.velocity.set(0, 0);
     this.isLaunched = false;
     this.dragStart = null;
-    enableslider=true;
+    enableslider = true;
   }
 }
 function isInPocket(mover) {
