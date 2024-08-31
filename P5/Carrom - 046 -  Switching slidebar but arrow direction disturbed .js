@@ -369,14 +369,12 @@ class Striker extends Mover {
     this.maxVelocity = 15;
     this.isLaunched = false;
     this.launchVelocity = createVector(0, 0);
-    this.launchAngle = 0;
   }
 
   setVelocity() {
     if (this.dragStart) {
-      let currentPos = createVector(mouseX - 5, mouseY - 50);
+      let currentPos = createVector(mouseX - 50, mouseY - 50);
       this.launchVelocity = p5.Vector.sub(this.dragStart, currentPos);
-      this.launchAngle = this.launchVelocity.heading();
       this.launchVelocity.limit(this.maxVelocity);
     }
   }
@@ -404,7 +402,7 @@ class Striker extends Mover {
     
   launch() {
     this.isLaunched = true;
-    this.velocity = p5.Vector.fromAngle(this.launchAngle).mult(this.launchVelocity.mag());
+    this.velocity = this.launchVelocity.copy();
   }
 
   update() {
@@ -430,6 +428,7 @@ class Striker extends Mover {
     enableslider = true;
   }
 }
+
 function isInPocket(mover) {
   let pocketSize = 32;
   let pocketOffset = 16;
