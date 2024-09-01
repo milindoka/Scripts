@@ -23,6 +23,7 @@ let currentTurn = 'bottom'; // 'bottom' or 'top'
 let quenPocketed=false;
 let whiteScore=0;
 let blackScore=0;
+let retainTurn = false;
 ////////////////
 function setup() {
   createCanvas(460, 550);
@@ -145,25 +146,31 @@ function draw()
     allMovers[i].update();
     allMovers[i].checkEdges();
     allMovers[i].show();
-
     // Check if mover is in a pocket
     if (isInPocket(allMovers[i])) {
       if (allMovers[i] instanceof Queen) {
         console.log("Queen pocketed!");
-        // You might want to handle this specially
         quenPocketed = true;
-
+        retainTurn = true;
+        if (currentTurn === 'bottom') {
+          whiteScore += 3;
+        } else {
+          blackScore += 3;
+        }
       } else if (allMovers[i] instanceof WhiteMover) {
         console.log("White coin pocketed!");
         whiteMovers.splice(whiteMovers.indexOf(allMovers[i]), 1);
+        whiteScore += 1;
+        if (currentTurn === 'bottom') retainTurn = true;
       } else if (allMovers[i] instanceof BlackMover) {
         console.log("Black coin pocketed!");
         blackMovers.splice(blackMovers.indexOf(allMovers[i]), 1);
+        blackScore += 1;
+        if (currentTurn === 'top') retainTurn = true;
       }
       allMovers.splice(i, 1);
       continue;
     }
-    
     // Check collisions with all other movers
     for (let j = i + 1; j < allMovers.length; j++) {
       if (dist(allMovers[i].position.x, allMovers[i].position.y, 
@@ -178,7 +185,29 @@ function draw()
 }let isDraggingStriker = false;
 function mousePressed() {
   if (isMouseOverStriker()) {
-    isDraggingStriker = true;
+
+class Striker extends Mover {
+  // ... existing code ...
+
+  reset() {
+    if (!retainTurn) {
+      currentTurn = (currentTurn === 'bottom') ? 'top' : 'bottom';
+    }
+    retainTurn = false;  // Reset for the next turn
+
+    if (currentTurn === 'bottom') {
+      this.position.x = slider.value();
+      this.position.y = rectangleY + rectangleHeight / 2;
+    } else {
+      this.position.x = oppositeSlider.value();
+      this.position.y = oppositeRectangleY + rectangleHeight / 2;
+    }
+    this.velocity.set(0, 0);
+    this.isLaunched = false;
+    this.dragStart = null;
+    enableslider = true;
+  }
+}    isDraggingStriker = true;
     enableslider = false;
     striker.dragStart = createVector(mouseX - 5, mouseY - 50);
   }
@@ -321,20 +350,26 @@ class Striker extends Mover {
   hasStopped() {
     return this.velocity.mag() < 0.1; // Adjust this threshold as needed
   }
+
   reset() {
+    if (!retainTurn) {
+      currentTurn = (currentTurn === 'bottom') ? 'top' : 'bottom';
+    }
+    console.log("Current turn: " + currentTurn);
+    console.log("Retain turn: " + retainTurn);
+
     if (currentTurn === 'bottom') {
       this.position.x = slider.value();
       this.position.y = rectangleY + rectangleHeight / 2;
-      currentTurn = 'top';
     } else {
       this.position.x = oppositeSlider.value();
       this.position.y = oppositeRectangleY + rectangleHeight / 2;
-      currentTurn = 'bottom';
     }
     this.velocity.set(0, 0);
     this.isLaunched = false;
     this.dragStart = null;
     enableslider = true;
+    retainTurn = false;  // Reset for the next turn
   }
 }
 function isInPocket(mover) {
