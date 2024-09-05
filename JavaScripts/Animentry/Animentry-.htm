@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animated Spreadsheet</title>
+  <title>Animated Spreadsheet with Sticky Headers</title>
   <style>
     :root {
       --item-height: 50px;
       --item-width: 800px;
       --animation-duration: 0.5s;
     }
-
     .list-container {
       position: relative;
       height: calc(var(--item-height) * 7);
@@ -18,7 +17,10 @@
       margin: 20px auto;
       overflow: hidden;
     }
-
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
     .list-item {
       position: absolute;
       height: var(--item-height);
@@ -29,42 +31,69 @@
       justify-content: space-between;
       font-size: 16px;
     }
-
     .list-item td {
       padding: 0 10px;
       text-align: center;
+    }
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 1; /* Ensure the header is above the items */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .header-row th {
+      font-weight: normal; 
+      background-color: transparent;
+      
     }
   </style>
 </head>
 <body>
   <button id="animate-btn">Animate</button>
-  <div id="list-container" class="list-container"></div>
-
+  <div id="list-container" class="list-container">
+    <table id="data-table">
+      <thead>
+        <tr class="header-row">
+          <th>Column 1</th>
+          <th>Column 2</th>
+          <th>Column 3</th>
+          <th>Column 4</th>
+          <th>Column 5</th>
+          <th>Column 6</th>
+          <th>Column 7</th>
+          <th>Column 8</th>
+        </tr>
+      </thead>
+      <tbody id="list-body"></tbody>
+    </table>
+  </div>
   <script>
     const listContainer = document.getElementById('list-container');
     const animateBtn = document.getElementById('animate-btn');
+    const listBody = document.getElementById('list-body');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
-
     const items = Array.from({length: 9}, (_, i) => 
       Array.from({length: 8}, (_, j) => `Num${(i+1)*10 + (j+1)}`)
     );
     let currentIndex = 0;
     let isAnimating = false;
-function createListItems() {
-  for (let i = 0; i < 7; i++) {
-    const item = document.createElement('table');
-    item.className = 'list-item';
-    item.style.top = `${i * itemHeight}px`;
-    item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
-    const row = item.insertRow();
-    for (let j = 0; j < 8; j++) {
-      row.insertCell();
+
+    function createListItems() {
+      for (let i = 0; i < 7; i++) {
+        const item = document.createElement('tr');
+        item.className = 'list-item';
+        item.style.top = `${i * itemHeight}px`;
+        item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
+
+        for (let j = 0; j < 8; j++) {
+          const cell = document.createElement('td');
+          item.appendChild(cell);
+        }
+        listBody.appendChild(item);
+      }
+      updateListItems();
     }
-    listContainer.appendChild(item);
-  }
-  updateListItems();
-}
-    
 
     function updateListItems() {
       const listItems = document.querySelectorAll('.list-item');
@@ -76,16 +105,15 @@ function createListItems() {
         }
       });
     }
+
     function animateList() {
       if (isAnimating) return;
       isAnimating = true;
-
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         item.style.top = `${(index - 1) * itemHeight}px`;
         item.style.opacity = index === 4 ? 1 : index === 3 || index === 5 ? 0.5 : index === 2 || index === 6 ? 0.25 : 0;
       });
-
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateListItems();

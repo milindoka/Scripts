@@ -5,11 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         
+        
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open AE.htm",
-            "file": "/home/milind/Data/Projects/Scripts/JavaScripts/Animentry/AE.htm"
+            "name": "Open Animentry-.htm",
+            "file": "/home/milind/Data/Projects/Scripts/JavaScripts/Animentry/Animentry-.htm"
         }
     ]
 }

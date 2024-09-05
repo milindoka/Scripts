@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Spreadsheet with Sticky Header</title>
+  <style>
+    :root {
+      --item-height: 50px;
+      --item-width: 800px;
+      --animation-duration: 0.5s;
+    }
+    .list-container {
+      position: relative;
+      height: calc(var(--item-height) * 7 + var(--item-height)); /* Adjust for header height */
+      width: var(--item-width);
+      margin: 20px auto;
+      overflow: hidden;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: white; /* Change as needed */
+      z-index: 1; /* Ensure it stays above other items */
+    }
+    th {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 2px solid #ccc; /* Add a border for separation */
+    }
+    .list-item {
+      transition: all var(--animation-duration) ease;
+    }
+    td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ccc; /* Add border for rows */
+    }
+  </style>
+</head>
+<body>
+  <button id="animate-btn">Animate</button>
+  <div id="list-container" class="list-container">
+    <table id="data-table" class="data-table">
+      <thead>
+        <tr>
+          <th>Header 1</th>
+          <th>Header 2</th>
+          <th>Header 3</th>
+          <th>Header 4</th>
+          <th>Header 5</th>
+          <th>Header 6</th>
+          <th>Header 7</th>
+          <th>Header 8</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const listContainer = document.getElementById('list-container');
+    const animateBtn = document.getElementById('animate-btn');
+    const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
+    const items = Array.from({length: 9}, (_, i) => 
+      Array.from({length: 8}, (_, j) => `Num${(i+1)*10 + (j+1)}`)
+    );
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    function createListItems() {
+      const tbody = document.querySelector('#data-table tbody');
+      for (let i = 0; i < 7; i++) {
+        const row = tbody.insertRow();
+        for (let j = 0; j < 8; j++) {
+          const cell = row.insertCell();
+          cell.textContent = ""; // Initialize with empty text
+        }
+      }
+      updateListItems();
+    }
+
+    function updateListItems() {
+      const listItems = document.querySelectorAll('#data-table tbody tr');
+      listItems.forEach((row, index) => {
+        const cells = row.getElementsByTagName('td');
+        const rowData = items[(currentIndex + index) % items.length];
+        for (let i = 0; i < cells.length; i++) {
+          cells[i].textContent = rowData[i];
+        }
+      });
+    }
+
+    function animateList() {
+      if (isAnimating) return;
+      isAnimating = true;
+      const listItems = document.querySelectorAll('#data-table tbody tr');
+      listItems.forEach((row, index) => {
+        row.style.transform = `translateY(-${itemHeight}px)`;
+        row.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
+      });
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateListItems();
+        listItems.forEach((row, index) => {
+          row.style.transition = 'none';
+          row.style.transform = `translateY(${index * itemHeight}px)`;
+          row.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
+        });
+        setTimeout(() => {
+          listItems.forEach(row => row.style.transition = '');
+          isAnimating = false;
+        }, 50);
+      }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
+    }
+
+    createListItems();
+    animateBtn.addEventListener('click', animateList);
+  </script>
+</body>
+</html>
