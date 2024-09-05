@@ -73,10 +73,13 @@
     const animateBtn = document.getElementById('animate-btn');
     const listBody = document.getElementById('list-body');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
+    
+    // Initialize items array with default values
     const items = Array.from({length: 9}, (_, i) => 
       Array.from({length: 8}, (_, j) => `Num${(i+1)*10 + (j+1)}`)
     );
-    let currentIndex = 0;
+    
+    let currentIndex = 6;
     let isAnimating = false;
 
     function createListItems() {
@@ -85,11 +88,23 @@
         item.className = 'list-item';
         item.style.top = `${i * itemHeight}px`;
         item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
+        
         for (let j = 0; j < 8; j++) {
           const cell = document.createElement('td');
-          cell.setAttribute('contenteditable', 'true'); // Make cells editable
+          // Make cells in the center row editable
+          if (i === 3) {
+            cell.setAttribute('contenteditable', 'true'); // Only center row cells are editable
+            cell.addEventListener('blur', (event) => {
+              // Update the items array when the cell loses focus
+              const rowOffset = currentIndex + 3; // Center row index is 3
+              items[rowOffset][j] = event.target.textContent; // Update the correct row
+            });
+          } else {
+            cell.setAttribute('contenteditable', 'false'); // Other cells are not editable
+          }
           item.appendChild(cell);
         }
+
         listBody.appendChild(item);
       }
       updateListItems();
@@ -99,7 +114,7 @@
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         const cells = item.getElementsByTagName('td');
-        const rowData = items[(currentIndex + index) % items.length];
+        const rowData = items[(currentIndex + index) % items.length]; // Get the correct row data
         for (let i = 0; i < cells.length; i++) {
           cells[i].textContent = rowData[i];
         }

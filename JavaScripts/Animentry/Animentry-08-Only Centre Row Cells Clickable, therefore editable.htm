@@ -85,11 +85,18 @@
         item.className = 'list-item';
         item.style.top = `${i * itemHeight}px`;
         item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
+        
         for (let j = 0; j < 8; j++) {
           const cell = document.createElement('td');
-          cell.setAttribute('contenteditable', 'true'); // Make cells editable
+          // Make cells in the center row editable
+          if (i === 3) {
+            cell.setAttribute('contenteditable', 'true'); // Only center row cells are editable
+          } else {
+            cell.setAttribute('contenteditable', 'false'); // Other cells are not editable
+          }
           item.appendChild(cell);
         }
+
         listBody.appendChild(item);
       }
       updateListItems();
