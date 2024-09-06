@@ -50,7 +50,8 @@
   </style>
 </head>
 <body>
-  <button id="animate-btn">Animate</button>
+  <button id="animate-btn">Animate Up</button>
+  <button id="animate-down-btn">Animate Down</button>
   <div id="list-container" class="list-container">
     <table id="data-table">
       <thead>
@@ -71,6 +72,7 @@
   <script>
     const listContainer = document.getElementById('list-container');
     const animateBtn = document.getElementById('animate-btn');
+    const animateDownBtn = document.getElementById('animate-down-btn');
     const listBody = document.getElementById('list-body');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
     
@@ -88,7 +90,6 @@
         item.className = 'list-item';
         item.style.top = `${i * itemHeight}px`;
         item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
-        
         for (let j = 0; j < 8; j++) {
           const cell = document.createElement('td');
           // Make cells in the center row editable
@@ -96,7 +97,7 @@
             cell.setAttribute('contenteditable', 'true'); // Only center row cells are editable
             cell.addEventListener('blur', (event) => {
               // Update the items array when the cell loses focus
-              const rowOffset = (currentIndex + 3)%items.length; // Center row index is 3
+              const rowOffset = (currentIndex + 3) % items.length; // Center row index is 3
               items[rowOffset][j] = event.target.textContent; // Update the correct row
             });
           } else {
@@ -104,7 +105,6 @@
           }
           item.appendChild(cell);
         }
-
         listBody.appendChild(item);
       }
       updateListItems();
@@ -144,8 +144,32 @@
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
 
+    function animateListDown() {
+      if (isAnimating) return;
+      isAnimating = true;
+      const listItems = document.querySelectorAll('.list-item');
+      listItems.forEach((item, index) => {
+        item.style.top = `${(index + 1) * itemHeight}px`;
+        item.style.opacity = index === 2 ? 1 : index === 3 || index === 1 ? 0.5 : index === 4 || index === 0 ? 0.25 : 0;
+      });
+      setTimeout(() => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length; // Move to the previous index
+        updateListItems();
+        listItems.forEach((item, index) => {
+          item.style.transition = 'none';
+          item.style.top = `${index * itemHeight}px`;
+          item.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
+        });
+        setTimeout(() => {
+          listItems.forEach(item => item.style.transition = '');
+          isAnimating = false;
+        }, 50);
+      }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
+    }
+
     createListItems();
     animateBtn.addEventListener('click', animateList);
+    animateDownBtn.addEventListener('click', animateListDown);
   </script>
 </body>
 </html>
