@@ -107,7 +107,6 @@
         listBody.appendChild(item);
       }
       updateListItems();
-
       // Set focus on the first cell of the current row (center row)
       const firstCell = listBody.querySelectorAll('.list-item')[3].firstChild; // 3 is the index for the center row
       firstCell.focus();
@@ -127,11 +126,35 @@
     function animateList() {
       if (isAnimating) return;
       isAnimating = true;
+
+      // Get the currently focused cell index
+      const activeElement = document.activeElement;
+      let focusedCellIndex = -1;
+      let focusedRowIndex = -1;
+
+      // Ensure focus is on a cell, otherwise set it to the center cell
+      if (activeElement.tagName === 'TD') {
+        const currentRow = activeElement.parentElement; // Get the current row
+        const cells = currentRow.getElementsByTagName('td'); // Get all cells in the current row
+        focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement); // Get the index of the current cell
+        focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow); // Get the index of the current row
+      } else {
+        // Focus the first cell of the center row if no cell is focused
+        const centerRow = listBody.querySelectorAll('.list-item')[3];
+        const firstCell = centerRow.firstChild;
+        firstCell.focus();
+        focusedCellIndex = 0; // Set to the first cell index
+        focusedRowIndex = 3; // Center row index
+      }
+
+      console.log('Before Animation - Focused Row Index:', focusedRowIndex, 'Focused Cell Index:', focusedCellIndex);
+
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         item.style.top = `${(index - 1) * itemHeight}px`;
         item.style.opacity = index === 4 ? 1 : index === 3 || index === 5 ? 0.5 : index === 2 || index === 6 ? 0.25 : 0;
       });
+
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateListItems();
@@ -140,9 +163,18 @@
           item.style.top = `${index * itemHeight}px`;
           item.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
         });
+
         setTimeout(() => {
           listItems.forEach(item => item.style.transition = '');
           isAnimating = false;
+
+          // Restore focus to the previously focused cell
+          if (focusedCellIndex !== -1 && focusedRowIndex !== -1) {
+            const newRow = listItems[3]; // Center row index is still 3
+            const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
+            console.log('Restoring Focus to Row 3, Cell Index:', focusedCellIndex);
+            newCell.focus();
+          }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
@@ -150,11 +182,36 @@
     function animateListDown() {
       if (isAnimating) return;
       isAnimating = true;
+
+      // Get the currently focused cell index
+      const activeElement = document.activeElement;
+      let focusedCellIndex = -1;
+      let focusedRowIndex = -1;
+
+      // Ensure focus is on a cell, otherwise set it to the center cell
+      if (activeElement.tagName === 'TD') {
+        const currentRow = activeElement.parentElement; // Get the current row
+        const cells = currentRow.getElementsByTagName('td'); // Get all cells in the current row
+        focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement); // Get the index of the current cell
+        focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow); // Get the index of the current row
+        console.log('Before Animation Down - Focused Row Index:', focusedRowIndex, 'Focused Cell Index:', focusedCellIndex);
+      } else {
+        // Focus the first cell of the center row if no cell is focused
+        const centerRow = listBody.querySelectorAll('.list-item')[3];
+        const firstCell = centerRow.firstChild;
+        firstCell.focus();
+        focusedCellIndex = 0; // Set to the first cell index
+        focusedRowIndex = 3; // Center row index
+      }
+
+      
+
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         item.style.top = `${(index + 1) * itemHeight}px`;
         item.style.opacity = index === 2 ? 1 : index === 3 || index === 1 ? 0.5 : index === 4 || index === 0 ? 0.25 : 0;
       });
+
       setTimeout(() => {
         currentIndex = (currentIndex - 1 + items.length) % items.length; // Move to the previous index
         updateListItems();
@@ -163,9 +220,18 @@
           item.style.top = `${index * itemHeight}px`;
           item.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
         });
+
         setTimeout(() => {
           listItems.forEach(item => item.style.transition = '');
           isAnimating = false;
+
+          // Restore focus to the previously focused cell
+          if (focusedCellIndex !== -1 && focusedRowIndex !== -1) {
+            const newRow = listItems[3]; // Center row index is still 3
+            const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
+            console.log('Restoring Focus to Row 3, Cell Index:', focusedCellIndex);
+            newCell.focus();
+          }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
@@ -174,10 +240,8 @@
       const listItems = document.querySelectorAll('.list-item');
       const currentRow = (currentIndex + 3) % items.length; // Center row index
       const newRow = Array.from({length: 8}, (_, j) => `Num${(items.length + 1) * 10 + (j + 1)}`); // Create a new row with default values
-
       // Insert the new row into the items array
       items.splice(currentRow + 1, 0, newRow); // Insert after the current row
-
       // Update the list items to reflect the new data
       updateListItems();
     }
@@ -186,10 +250,8 @@
       const listItems = document.querySelectorAll('.list-item');
       const currentRow = (currentIndex + 3) % items.length; // Center row index
       const newRow = Array.from({length: 8}, (_, j) => `Num${(items.length + 1) * 10 + (j + 1)}`); // Create a new row with default values
-
       // Insert the new row into the items array
       items.splice(currentRow, 0, newRow); // Insert before the current row
-
       // Update the list items to reflect the new data
       updateListItems();
     }
@@ -197,13 +259,11 @@
     // Add event listener for keydown events to handle arrow keys
     document.addEventListener('keydown', (event) => {
       const activeElement = document.activeElement;
-      
       // Check if the active element is a cell
       if (activeElement.tagName === 'TD') {
         const currentRow = activeElement.parentElement; // Get the current row
         const cells = currentRow.getElementsByTagName('td'); // Get all cells in the current row
         const cellIndex = Array.prototype.indexOf.call(cells, activeElement); // Get the index of the current cell
-
         if (event.key === 'ArrowRight') {
           // Move focus to the right cell
           if (cellIndex < cells.length - 1) {
@@ -221,8 +281,8 @@
     });
 
     createListItems();
-    animateBtn.addEventListener('click', animateList);
-    animateDownBtn.addEventListener('click', animateListDown);
+    animateBtn.addEventListener('mousedown', animateList);
+    animateDownBtn.addEventListener('mousedown', animateListDown);
     insertBelowBtn.addEventListener('click', insertRowBelow);
     insertAboveBtn.addEventListener('click', insertRowAbove);
   </script>
