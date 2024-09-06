@@ -50,7 +50,10 @@
   </style>
 </head>
 <body>
-  <button id="animate-btn">Animate</button>
+  <button id="animate-btn">Animate Up</button>
+  <button id="animate-down-btn">Animate Down</button>
+  <button id="insert-below-btn">Insert Below</button>
+  <button id="insert-above-btn">Insert Above</button>
   <div id="list-container" class="list-container">
     <table id="data-table">
       <thead>
@@ -71,6 +74,9 @@
   <script>
     const listContainer = document.getElementById('list-container');
     const animateBtn = document.getElementById('animate-btn');
+    const animateDownBtn = document.getElementById('animate-down-btn');
+    const insertBelowBtn = document.getElementById('insert-below-btn');
+    const insertAboveBtn = document.getElementById('insert-above-btn');
     const listBody = document.getElementById('list-body');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
     const items = Array.from({length: 9}, (_, i) => 
@@ -85,22 +91,19 @@
         item.className = 'list-item';
         item.style.top = `${i * itemHeight}px`;
         item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
-        
         for (let j = 0; j < 8; j++) {
           const cell = document.createElement('td');
-          // Make cells in the center row editable
           if (i === 3) {
-            cell.setAttribute('contenteditable', 'true'); // Only center row cells are editable
+            cell.setAttribute('contenteditable', 'true');
             cell.addEventListener('blur', (event) => {
-              // Update the items array when the cell loses focus
-              items[currentIndex + i][j] = event.target.textContent;
+              const rowOffset = (currentIndex + 3) % items.length; // Center row index is 3
+              items[rowOffset][j] = event.target.textContent;
             });
           } else {
-            cell.setAttribute('contenteditable', 'false'); // Other cells are not editable
+            cell.setAttribute('contenteditable', 'false');
           }
           item.appendChild(cell);
         }
-
         listBody.appendChild(item);
       }
       updateListItems();
@@ -110,7 +113,7 @@
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         const cells = item.getElementsByTagName('td');
-        const rowData = items[(currentIndex + index) % items.length];
+        const rowData = items[(currentIndex + index) % items.length]; // Get the correct row data
         for (let i = 0; i < cells.length; i++) {
           cells[i].textContent = rowData[i];
         }
@@ -140,8 +143,58 @@
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
 
+    function animateListDown() {
+      if (isAnimating) return;
+      isAnimating = true;
+      const listItems = document.querySelectorAll('.list-item');
+      listItems.forEach((item, index) => {
+        item.style.top = `${(index + 1) * itemHeight}px`;
+        item.style.opacity = index === 2 ? 1 : index === 3 || index === 1 ? 0.5 : index === 4 || index === 0 ? 0.25 : 0;
+      });
+      setTimeout(() => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length; // Move to the previous index
+        updateListItems();
+        listItems.forEach((item, index) => {
+          item.style.transition = 'none';
+          item.style.top = `${index * itemHeight}px`;
+          item.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
+        });
+        setTimeout(() => {
+          listItems.forEach(item => item.style.transition = '');
+          isAnimating = false;
+        }, 50);
+      }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
+    }
+
+    function insertRowBelow() {
+      const listItems = document.querySelectorAll('.list-item');
+      const currentRow = (currentIndex + 3) % items.length; // Center row index
+      const newRow = Array.from({length: 8}, (_, j) => `Num${(items.length + 1) * 10 + (j + 1)}`); // Create a new row with default values
+
+      // Insert the new row into the items array
+      items.splice(currentRow + 1, 0, newRow); // Insert after the current row
+
+      // Update the list items to reflect the new data
+      updateListItems();
+    }
+
+    function insertRowAbove() {
+      const listItems = document.querySelectorAll('.list-item');
+      const currentRow = (currentIndex + 3) % items.length; // Center row index
+      const newRow = Array.from({length: 8}, (_, j) => `Num${(items.length + 1) * 10 + (j + 1)}`); // Create a new row with default values
+
+      // Insert the new row into the items array
+      items.splice(currentRow, 0, newRow); // Insert before the current row
+
+      // Update the list items to reflect the new data
+      updateListItems();
+    }
+
     createListItems();
     animateBtn.addEventListener('click', animateList);
+    animateDownBtn.addEventListener('click', animateListDown);
+    insertBelowBtn.addEventListener('click', insertRowBelow);
+    insertAboveBtn.addEventListener('click', insertRowAbove);
   </script>
 </body>
 </html>
