@@ -194,6 +194,7 @@
         const cells = currentRow.getElementsByTagName('td'); // Get all cells in the current row
         focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement); // Get the index of the current cell
         focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow); // Get the index of the current row
+        console.log('Before Animation Down - Focused Row Index:', focusedRowIndex, 'Focused Cell Index:', focusedCellIndex);
       } else {
         // Focus the first cell of the center row if no cell is focused
         const centerRow = listBody.querySelectorAll('.list-item')[3];
@@ -203,7 +204,7 @@
         focusedRowIndex = 3; // Center row index
       }
 
-      console.log('Before Animation Down - Focused Row Index:', focusedRowIndex, 'Focused Cell Index:', focusedCellIndex);
+      
 
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
@@ -280,8 +281,8 @@
     });
 
     createListItems();
-    animateBtn.addEventListener('click', animateList);
-    animateDownBtn.addEventListener('click', animateListDown);
+    animateBtn.addEventListener('mousedown', animateList);
+    animateDownBtn.addEventListener('mousedown', animateListDown);
     insertBelowBtn.addEventListener('click', insertRowBelow);
     insertAboveBtn.addEventListener('click', insertRowAbove);
   </script>
