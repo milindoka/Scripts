@@ -83,7 +83,7 @@
     const items = Array.from({length: 9}, (_, i) => 
       Array.from({length: 8}, (_, j) => `Num${(i+1)*10 + (j+1)}`)
     );
-    let currentIndex = items.length-3;
+    let currentIndex = 0;
     let isAnimating = false;
 ////////////////////////
 function createListItems() {
@@ -95,7 +95,7 @@ function createListItems() {
 
     // Create and append the serial number cell
     const serialCell = document.createElement('td');
-    serialCell.textContent = i+1 ; // Serial numbers start from 1
+    serialCell.textContent = i + 1; // Serial numbers start from 1
     item.appendChild(serialCell);
 
     for (let j = 0; j < 8; j++) {
@@ -125,8 +125,7 @@ function updateListItems() {
     const cells = item.getElementsByTagName('td');
     const rowData = items[(currentIndex + index) % items.length]; // Get the correct row data
     // Update the serial number cell
-    
-    cells[0].textContent = (currentIndex + index) % (items.length)+1; // Update serial number
+    cells[0].textContent = (currentIndex + index + 1) % items.length + 1; // Update serial number
     for (let i = 0; i < cells.length - 1; i++) { // Start from 1 to skip serial number cell
       cells[i + 1].textContent = rowData[i]; // Update other cells
     }
