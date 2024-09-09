@@ -300,7 +300,7 @@
           // Update the data array with the current cell content
           const currentRow = activeElement.parentElement;
           const rowIndex = Array.from(listBody.children).indexOf(currentRow);
-          const cellIndex = Array.from(currentRow.children).indexOf(activeElement) - 1;
+          const cellIndex = Array.from(currentRow.children).indexOf(activeElement) - 1; // Subtract 1 to account for the serial number cell
           const dataIndex = (currentIndex + rowIndex) % items.length;
           items[dataIndex][cellIndex] = activeElement.textContent;
         }
@@ -308,23 +308,9 @@
         if (event.key === 'ArrowUp') {
           animateListDown();
         } else {
-          // Both ArrowDown and Enter will trigger animateList()
           animateList();
         }
-    
         event.preventDefault();
-
-        // After animation, select all content in the newly focused cell
-        setTimeout(() => {
-          const focusedCell = document.activeElement;
-          if (focusedCell.tagName === 'TD') {
-            const range = document.createRange();
-            range.selectNodeContents(focusedCell);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-          }
-        }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
       }
 
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
@@ -345,7 +331,8 @@
           event.preventDefault();
         }
       }
-    });    createListItems();
+    });
+    createListItems();
     animateBtn.addEventListener('mousedown', animateList);
     animateDownBtn.addEventListener('mousedown', animateListDown);
     insertBelowBtn.addEventListener('click', insertRowBelow);

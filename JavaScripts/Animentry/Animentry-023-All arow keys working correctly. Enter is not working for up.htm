@@ -294,13 +294,13 @@
     }
     // Add event listener for keydown events to handle arrow keys
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         const activeElement = document.activeElement;
         if (activeElement.tagName === 'TD' && activeElement.isContentEditable) {
           // Update the data array with the current cell content
           const currentRow = activeElement.parentElement;
           const rowIndex = Array.from(listBody.children).indexOf(currentRow);
-          const cellIndex = Array.from(currentRow.children).indexOf(activeElement) - 1;
+          const cellIndex = Array.from(currentRow.children).indexOf(activeElement) - 1; // Subtract 1 to account for the serial number cell
           const dataIndex = (currentIndex + rowIndex) % items.length;
           items[dataIndex][cellIndex] = activeElement.textContent;
         }
@@ -308,7 +308,6 @@
         if (event.key === 'ArrowUp') {
           animateListDown();
         } else {
-          // Both ArrowDown and Enter will trigger animateList()
           animateList();
         }
     
