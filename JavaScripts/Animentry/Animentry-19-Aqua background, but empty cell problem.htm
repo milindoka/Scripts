@@ -13,13 +13,25 @@
     .list-container {
       position: relative;
       height: calc(var(--item-height) * 7);
-      width: var(--item-width);
+      width: 100%;
       margin: 20px auto;
       overflow: hidden;
     }
     table {
+      empty-cells: show;
+    table-layout: fixed;
+    white-space: nowrap;
       width: 100%;
-      border-collapse: collapse;
+    }
+    .header-row th {
+      width: 2%; /* First column width */
+      max-width: 2%; /* Prevents exceeding 4% */
+      min-width: 2%;
+    }
+    .header-row th:nth-child(n+2) { /* All other columns */
+      width: 9%;
+      max-width: 9%; /* Prevents exceeding 12% */
+      min-width: 9%;
     }
     .list-item {
       position: absolute;
@@ -32,10 +44,24 @@
       font-size: 16px;
     }
     .list-item td {
+      
       padding: 0 10px;
       text-align: center;
       border: 1px solid #ccc; /* Add a border for better visibility */
+      background-color: aqua;
+      max-width: 2%; /* Prevents exceeding 2% for other columns */
+      min-width: 2%;
     }
+
+    .list-item td:nth-child(n+2) {
+      padding: 0 10px;
+      text-align: center;
+      border: 1px solid #ccc; /* Add a border for better visibility */
+      background-color: aqua;
+      max-width: 9%; /* Prevents exceeding 9% for other columns */
+      min-width: 9%;
+    }
+
     .sticky-header {
       position: sticky;
       top: 0;
@@ -47,17 +73,22 @@
       font-weight: normal; 
       background-color: transparent;
     }
+    .button-container {
+      display: flex;
+      justify-content: center; /* Center the buttons horizontally */
+      margin: 20px 0; /* Add some margin for spacing */
+    }
+    .button-container button {
+      margin: 0 10px; /* Add space between buttons */
+    }
   </style>
 </head>
 <body>
-  <button id="animate-btn">Animate Up</button>
-  <button id="animate-down-btn">Animate Down</button>
-  <button id="insert-below-btn">Insert Below</button>
-  <button id="insert-above-btn">Insert Above</button>
   <div id="list-container" class="list-container">
     <table id="data-table">
       <thead>
         <tr class="header-row">
+          <th>Sr No.</th> <!-- New Header for Serial Number -->
           <th>Column 1</th>
           <th>Column 2</th>
           <th>Column 3</th>
@@ -71,6 +102,13 @@
       <tbody id="list-body"></tbody>
     </table>
   </div>
+  <!-- Button Container -->
+  <div class="button-container">
+    <button id="animate-btn">Animate Up</button>
+    <button id="animate-down-btn">Animate Down</button>
+    <button id="insert-below-btn">Insert Below</button>
+    <button id="insert-above-btn">Insert Above</button>
+  </div>
   <script>
     const listContainer = document.getElementById('list-container');
     const animateBtn = document.getElementById('animate-btn');
@@ -82,15 +120,18 @@
     const items = Array.from({length: 9}, (_, i) => 
       Array.from({length: 8}, (_, j) => `Num${(i+1)*10 + (j+1)}`)
     );
-    let currentIndex = 0;
+    let currentIndex = items.length-3;
     let isAnimating = false;
-
     function createListItems() {
       for (let i = 0; i < 7; i++) {
         const item = document.createElement('tr');
         item.className = 'list-item';
         item.style.top = `${i * itemHeight}px`;
         item.style.opacity = i === 2 || i === 4 ? 0.5 : i === 3 ? 1 : i === 1 || i === 5 ? 0.25 : 0;
+        // Create and append the serial number cell
+        const serialCell = document.createElement('td');
+        serialCell.textContent = i + 1; // Serial numbers start from 1
+        item.appendChild(serialCell);
         for (let j = 0; j < 8; j++) {
           const cell = document.createElement('td');
           if (i === 3) {
@@ -111,27 +152,25 @@
       const firstCell = listBody.querySelectorAll('.list-item')[3].firstChild; // 3 is the index for the center row
       firstCell.focus();
     }
-
     function updateListItems() {
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         const cells = item.getElementsByTagName('td');
         const rowData = items[(currentIndex + index) % items.length]; // Get the correct row data
-        for (let i = 0; i < cells.length; i++) {
-          cells[i].textContent = rowData[i];
+        // Update the serial number cell
+        cells[0].textContent = (currentIndex + index) % (items.length) + 1; // Update serial number
+        for (let i = 0; i < cells.length - 1; i++) { // Start from 1 to skip serial number cell
+          cells[i + 1].textContent = rowData[i]; // Update other cells
         }
       });
     }
-
     function animateList() {
       if (isAnimating) return;
       isAnimating = true;
-
       // Get the currently focused cell index
       const activeElement = document.activeElement;
       let focusedCellIndex = -1;
       let focusedRowIndex = -1;
-
       // Ensure focus is on a cell, otherwise set it to the center cell
       if (activeElement.tagName === 'TD') {
         const currentRow = activeElement.parentElement; // Get the current row
@@ -146,15 +185,11 @@
         focusedCellIndex = 0; // Set to the first cell index
         focusedRowIndex = 3; // Center row index
       }
-
-      console.log('Before Animation - Focused Row Index:', focusedRowIndex, 'Focused Cell Index:', focusedCellIndex);
-
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         item.style.top = `${(index - 1) * itemHeight}px`;
         item.style.opacity = index === 4 ? 1 : index === 3 || index === 5 ? 0.5 : index === 2 || index === 6 ? 0.25 : 0;
       });
-
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateListItems();
@@ -163,31 +198,25 @@
           item.style.top = `${index * itemHeight}px`;
           item.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
         });
-
         setTimeout(() => {
           listItems.forEach(item => item.style.transition = '');
           isAnimating = false;
-
           // Restore focus to the previously focused cell
           if (focusedCellIndex !== -1 && focusedRowIndex !== -1) {
             const newRow = listItems[3]; // Center row index is still 3
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
-            console.log('Restoring Focus to Row 3, Cell Index:', focusedCellIndex);
             newCell.focus();
           }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
-
     function animateListDown() {
       if (isAnimating) return;
       isAnimating = true;
-
       // Get the currently focused cell index
       const activeElement = document.activeElement;
       let focusedCellIndex = -1;
       let focusedRowIndex = -1;
-
       // Ensure focus is on a cell, otherwise set it to the center cell
       if (activeElement.tagName === 'TD') {
         const currentRow = activeElement.parentElement; // Get the current row
@@ -202,15 +231,11 @@
         focusedCellIndex = 0; // Set to the first cell index
         focusedRowIndex = 3; // Center row index
       }
-
-      console.log('Before Animation Down - Focused Row Index:', focusedRowIndex, 'Focused Cell Index:', focusedCellIndex);
-
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         item.style.top = `${(index + 1) * itemHeight}px`;
         item.style.opacity = index === 2 ? 1 : index === 3 || index === 1 ? 0.5 : index === 4 || index === 0 ? 0.25 : 0;
       });
-
       setTimeout(() => {
         currentIndex = (currentIndex - 1 + items.length) % items.length; // Move to the previous index
         updateListItems();
@@ -219,22 +244,18 @@
           item.style.top = `${index * itemHeight}px`;
           item.style.opacity = index === 3 ? 1 : index === 2 || index === 4 ? 0.5 : index === 1 || index === 5 ? 0.25 : 0;
         });
-
         setTimeout(() => {
           listItems.forEach(item => item.style.transition = '');
           isAnimating = false;
-
           // Restore focus to the previously focused cell
           if (focusedCellIndex !== -1 && focusedRowIndex !== -1) {
             const newRow = listItems[3]; // Center row index is still 3
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
-            console.log('Restoring Focus to Row 3, Cell Index:', focusedCellIndex);
             newCell.focus();
           }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
-
     function insertRowBelow() {
       const listItems = document.querySelectorAll('.list-item');
       const currentRow = (currentIndex + 3) % items.length; // Center row index
@@ -244,7 +265,6 @@
       // Update the list items to reflect the new data
       updateListItems();
     }
-
     function insertRowAbove() {
       const listItems = document.querySelectorAll('.list-item');
       const currentRow = (currentIndex + 3) % items.length; // Center row index
@@ -254,7 +274,6 @@
       // Update the list items to reflect the new data
       updateListItems();
     }
-
     // Add event listener for keydown events to handle arrow keys
     document.addEventListener('keydown', (event) => {
       const activeElement = document.activeElement;
@@ -278,10 +297,9 @@
         }
       }
     });
-
     createListItems();
-    animateBtn.addEventListener('click', animateList);
-    animateDownBtn.addEventListener('click', animateListDown);
+    animateBtn.addEventListener('mousedown', animateList);
+    animateDownBtn.addEventListener('mousedown', animateListDown);
     insertBelowBtn.addEventListener('click', insertRowBelow);
     insertAboveBtn.addEventListener('click', insertRowAbove);
   </script>

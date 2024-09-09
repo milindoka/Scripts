@@ -18,15 +18,18 @@
       overflow: hidden;
     }
     table {
+      empty-cells: show;
     table-layout: fixed;
     white-space: nowrap;
       width: 100%;
-    
     }
+
+    
+
     .header-row th {
-      width: 3%; /* First column width */
-      max-width: 3%; /* Prevents exceeding 4% */
-      min-width: 3%;
+      width: 2%; /* First column width */
+      max-width: 2%; /* Prevents exceeding 4% */
+      min-width: 2%;
     }
     .header-row th:nth-child(n+2) { /* All other columns */
       width: 9%;
@@ -42,14 +45,33 @@
       align-items: center;
       justify-content: space-between;
       font-size: 16px;
+    
     }
     .list-item td {
-      padding: 0 10px;
-      text-align: center;
-      border: 1px solid #ccc; /* Add a border for better visibility */
-      max-width: 9%; /* Prevents exceeding 12% for other columns */
-      min-width: 9%;
-    }
+  empty-cells: show;
+  padding: 0 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  background-color: aqua;
+  max-width: 2%; /* Prevents exceeding 2% for other columns */
+  min-width: 2%;
+  overflow: hidden; /* Hide overflow content */
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
+}
+
+.list-item td:nth-child(n+2) {
+  empty-cells: show;
+  padding: 0 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  background-color: aqua;
+  max-width: 9%; /* Prevents exceeding 9% for other columns */
+  min-width: 9%;
+  overflow: hidden; /* Hide overflow content */
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
+}
     .sticky-header {
       position: sticky;
       top: 0;
