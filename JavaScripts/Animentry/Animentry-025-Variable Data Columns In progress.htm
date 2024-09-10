@@ -118,8 +118,8 @@
     <button id="insert-above-btn">Insert Above</button>
   </div>
   <script>
-    const columnHeaders = ['Sr No.', 'Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6'];
-    const columnWidths = [2, 9, 9, 9, 9, 9, 9]; // in percentages
+    const columnHeaders = ['Sr No.', 'Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8'];
+    const columnWidths = [2, 9, 9, 9, 9, 9, 9, 9, 9]; // in percentages
 
     // Add this line to call the function
     createTableHeader();
@@ -149,11 +149,7 @@
           cell.style.maxWidth = `${columnWidths[index]}%`;
           cell.style.minWidth = `${columnWidths[index]}%`;
           cell.innerHTML = ' ';
-          
-          if (index === 0) {
-            // Make serial number cell non-focusable
-            cell.setAttribute('tabindex', '-1');
-          } else if (i === 3) {
+          if (i === 3) {
             cell.setAttribute('contenteditable', 'true');
             cell.addEventListener('blur', (event) => {
               const rowOffset = (currentIndex + 3) % items.length; // Center row index is 3
@@ -169,17 +165,17 @@
           } else {
             cell.setAttribute('contenteditable', 'false');
           }
-          
           item.appendChild(cell);
         });
         
         listBody.appendChild(item);
       }
       updateListItems();
-      // Set focus on the first editable cell of the current row (center row)
-      const firstEditableCell = listBody.querySelectorAll('.list-item')[3].children[1];
-      firstEditableCell.focus();
-    }    function updateListItems() {
+      // Set focus on the first cell of the current row (center row)
+      const firstCell = listBody.querySelectorAll('.list-item')[3].firstChild; // 3 is the index for the center row
+      firstCell.focus();
+    }
+    function updateListItems() {
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         const cells = item.getElementsByTagName('td');
@@ -345,7 +341,7 @@
           let newIndex;
 
           if (event.key === 'ArrowLeft') {
-            newIndex = Math.max(1, currentIndex - 1); // Change 0 to 1 here
+            newIndex = Math.max(0, currentIndex - 1);
           } else {
             newIndex = Math.min(cells.length - 1, currentIndex + 1);
           }
