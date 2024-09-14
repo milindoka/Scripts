@@ -6,42 +6,45 @@
   <title>Animated Spreadsheet</title>
   <style>
     :root {
-      --item-height: 50px;
-      --item-width: 800px; /* Total item width */
+      --item-height: 30px;
       --animation-duration: 0.5s;
-      --column-spacing: 2px; /* Spacing between columns */
-    }
+      }
     .list-container {
       position: relative;
       height: calc(var(--item-height) * 7);
-      width: var(--item-width);
-      margin: 20px auto;
-      overflow: hidden;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+     }
+  
     .list-item {
       position: absolute;
       height: var(--item-height);
-      width: calc(var(--item-width)); /* Set to total item width */
       transition: all var(--animation-duration) ease;
       display: flex;
       align-items: center;
       justify-content: flex-start; /* Align items to start */
       font-size: 16px;
     }
-    .list-item td {
-      padding: 0 10px;
-      text-align: center;
-      border: 1px solid #ccc; /* Add a border for better visibility */
-      width: calc((var(--item-width) - (var(--column-spacing) * (var(--num-columns) - 1))) / var(--num-columns)); /* Adjust for spacing */
-      margin-right: var(--column-spacing); /* Add spacing between columns */
-    }
-    .list-item td:last-child {
-      margin-right: 0; /* Remove margin for the last column */
-    }
+    
+
+.list-item td, .header-row th {
+  empty-cells: show; 
+  padding: 0 20px;
+  text-align: center;
+  margin-right: 2px !important;
+  background-color: aqua !important; /* Ensure background color is applied */
+  border: 1px solid black; /* Add a border to make cells visible */
+}
+
+.list-item td {
+  empty-cells: show !important; /* This may not be necessary */
+  
+  background-color: aqua !important; /* Ensure background color is applied */
+}
+
+/* Ensure that all cells have a minimum height */
+.list-item td {
+  height: var(--item-height); /* Ensures consistent height */
+}
+
     .button-container {
       display: flex;
       justify-content: center; /* Center the buttons horizontally */
@@ -55,6 +58,9 @@
 <body>
   <div id="list-container" class="list-container">
     <table id="data-table">
+      <thead>
+        <tr class="header-row"></tr>
+      </thead>
       <tbody id="list-body"></tbody>
     </table>
   </div>
@@ -72,10 +78,12 @@
     const insertBelowBtn = document.getElementById('insert-below-btn');
     const insertAboveBtn = document.getElementById('insert-above-btn');
     const listBody = document.getElementById('list-body');
+    const headerRow = document.querySelector('.header-row');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [50, 50, 100, 100, 200,100,300]; // Adjust widths as needed
+    const columnWidths = [30, 50, 100,50,200,100,50,100]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6','7']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 
@@ -84,6 +92,15 @@
 
     let currentIndex = items.length - 3;
     let isAnimating = false;
+
+    // Create the header row
+    function createHeaderRow() {
+      headerArray.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+      });
+    }
 
     function createListItems() {
       for (let i = 0; i < 7; i++) {
@@ -123,6 +140,11 @@
       cells.forEach((cell, index) => {
         const columnIndex = index % numColumns;
         cell.style.width = `${columnWidths[columnIndex]}px`;
+      });
+      
+      const headerCells = headerRow.querySelectorAll('th');
+      headerCells.forEach((cell, index) => {
+        cell.style.width = `${columnWidths[index]}px`;
       });
     }
 
@@ -165,7 +187,7 @@
       listItems.forEach((item, index) => {
         item.style.top = `${(index - 1) * itemHeight}px`;
         item.style.opacity = index === 4 ? 1 : index === 3 || index === 5 ? 0.5 : index === 2 || index === 6 ? 0.25 : 0;
-      });
+    });
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateListItems();
@@ -278,6 +300,7 @@
       }
     });
 
+    createHeaderRow(); // Create the header row
     createListItems();
     animateBtn.addEventListener('mousedown', animateList);
     animateDownBtn.addEventListener('mousedown', animateListDown);

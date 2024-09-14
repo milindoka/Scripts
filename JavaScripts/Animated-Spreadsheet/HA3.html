@@ -6,17 +6,26 @@
   <title>Animated Spreadsheet</title>
   <style>
     :root {
-      --item-height: 40px;
+      --item-height: 50px;
+      --item-width: 800px; /* Total item width */
       --animation-duration: 0.5s;
-      }
+      --column-spacing: 2px; /* Spacing between columns */
+    }
     .list-container {
       position: relative;
       height: calc(var(--item-height) * 7);
-     }
-  
+      width: var(--item-width);
+      margin: 20px auto;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
     .list-item {
       position: absolute;
       height: var(--item-height);
+      width: calc(var(--item-width)); /* Set to total item width */
       transition: all var(--animation-duration) ease;
       display: flex;
       align-items: center;
@@ -24,14 +33,18 @@
       font-size: 16px;
     }
     .list-item td, .header-row th {
-      padding: 0 20px;
+      padding: 0 10px;
       text-align: center;
-      background-color: aqua;
+      border: 1px solid #ccc; /* Add a border for better visibility */
+      width: calc((var(--item-width) - (var(--column-spacing) * (var(--num-columns) - 1))) / var(--num-columns)); /* Adjust for spacing */
+      margin-right: var(--column-spacing); /* Add spacing between columns */
+    }
+    .list-item td:last-child, .header-row th:last-child {
+      margin-right: 0; /* Remove margin for the last column */
+    }
+    .header-row th {
+      background-color: #f2f2f2; /* Light gray background for header */
        }
-       .list-item td {
-       margin-right: 2px;
-       }
-
     .button-container {
       display: flex;
       justify-content: center; /* Center the buttons horizontally */
@@ -69,8 +82,8 @@
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [30, 50, 100,50,200,100,50]; // Adjust widths as needed
-    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6']; // Header array
+    const columnWidths = [50, 100, 70, 50, 100, 70, 100]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 

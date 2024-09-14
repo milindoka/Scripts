@@ -17,6 +17,7 @@
     .list-item {
       position: absolute;
       height: var(--item-height);
+      width: calc(var(--item-width)); /* Set to total item width */
       transition: all var(--animation-duration) ease;
       display: flex;
       align-items: center;
@@ -27,11 +28,12 @@
       padding: 0 20px;
       text-align: center;
       background-color: aqua;
+      width: calc((var(--item-width) - (var(--column-spacing) * (var(--num-columns) - 1))) / var(--num-columns)); /* Adjust for spacing */
+      }
+    .header-row th {
+    
+      background-color: aqua; /* Light gray background for header */
        }
-       .list-item td {
-       margin-right: 2px;
-       }
-
     .button-container {
       display: flex;
       justify-content: center; /* Center the buttons horizontally */
@@ -69,8 +71,8 @@
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [30, 50, 100,50,200,100,50]; // Adjust widths as needed
-    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6']; // Header array
+    const columnWidths = [30, 50, 100,50,200]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 

@@ -9,19 +9,15 @@
       --item-height: 50px;
       --item-width: 800px; /* Total item width */
       --animation-duration: 0.5s;
-      --column-spacing: 2px; /* Spacing between columns */
-    }
+      }
     .list-container {
       position: relative;
       height: calc(var(--item-height) * 7);
       width: var(--item-width);
-      margin: 20px auto;
+    
       overflow: hidden;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+  
     .list-item {
       position: absolute;
       height: var(--item-height);
@@ -32,21 +28,16 @@
       justify-content: flex-start; /* Align items to start */
       font-size: 16px;
     }
-    .list-item td {
-      padding: 0 10px;
+    .list-item td, .header-row th {
+      padding: 0 20px;
       text-align: center;
-      border: 1px solid #ccc; /* Add a border for better visibility */
+      background-color: aqua;
       width: calc((var(--item-width) - (var(--column-spacing) * (var(--num-columns) - 1))) / var(--num-columns)); /* Adjust for spacing */
-      margin-right: var(--column-spacing); /* Add spacing between columns */
-    }
-    .list-item td:last-child {
-      margin-right: 0; /* Remove margin for the last column */
-    }
+      }
     .header-row th {
-      background-color: #f2f2f2; /* Light gray background for header */
-      border: 1px solid #ccc; /* Add border for header */
-      padding: 10px; /* Padding for header cells */
-    }
+    
+      background-color: aqua; /* Light gray background for header */
+       }
     .button-container {
       display: flex;
       justify-content: center; /* Center the buttons horizontally */
@@ -84,8 +75,8 @@
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [50, 50, 100, 50, 100, 50, 50, 100]; // Adjust widths as needed
-    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7']; // Header array
+    const columnWidths = [50, 50, 60, 70, 80,90,200]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','c5','c6']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 
@@ -142,6 +133,11 @@
       cells.forEach((cell, index) => {
         const columnIndex = index % numColumns;
         cell.style.width = `${columnWidths[columnIndex]}px`;
+      });
+      
+      const headerCells = headerRow.querySelectorAll('th');
+      headerCells.forEach((cell, index) => {
+        cell.style.width = `${columnWidths[index]}px`;
       });
     }
 

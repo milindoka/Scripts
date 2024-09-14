@@ -6,7 +6,7 @@
   <title>Animated Spreadsheet</title>
   <style>
     :root {
-      --item-height: 40px;
+      --item-height: 30px;
       --animation-duration: 0.5s;
       }
     .list-container {
@@ -23,14 +23,27 @@
       justify-content: flex-start; /* Align items to start */
       font-size: 16px;
     }
-    .list-item td, .header-row th {
-      padding: 0 20px;
-      text-align: center;
-      background-color: aqua;
-       }
-       .list-item td {
-       margin-right: 2px;
-       }
+    
+
+.list-item td, .header-row th {
+  empty-cells: show; 
+  padding: 0 20px;
+  text-align: center;
+  margin-right: 2px !important;
+  background-color: aqua !important; /* Ensure background color is applied */
+  border: 1px solid black; /* Add a border to make cells visible */
+}
+
+.list-item td {
+  empty-cells: show !important; /* This may not be necessary */
+  
+  background-color: aqua !important; /* Ensure background color is applied */
+}
+
+/* Ensure that all cells have a minimum height */
+.list-item td {
+  height: var(--item-height); /* Ensures consistent height */
+}
 
     .button-container {
       display: flex;
@@ -69,8 +82,8 @@
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [30, 50, 100,50,200,100,50]; // Adjust widths as needed
-    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6']; // Header array
+    const columnWidths = [30, 50, 100,50,200,100,50,100]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6','7']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 
@@ -174,7 +187,7 @@
       listItems.forEach((item, index) => {
         item.style.top = `${(index - 1) * itemHeight}px`;
         item.style.opacity = index === 4 ? 1 : index === 3 || index === 5 ? 0.5 : index === 2 || index === 6 ? 0.25 : 0;
-      });
+    });
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateListItems();

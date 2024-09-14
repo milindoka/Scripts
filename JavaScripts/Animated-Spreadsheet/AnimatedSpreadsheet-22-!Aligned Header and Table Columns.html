@@ -69,8 +69,8 @@
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [30, 50, 100,50,200,100,50]; // Adjust widths as needed
-    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6']; // Header array
+    const columnWidths = [30, 50, 100,50,200]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 
