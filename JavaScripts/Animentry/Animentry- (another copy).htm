@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animated Spreadsheet</title>
+  <title>Animated Spreadsheet with Sticky Headers</title>
   <style>
     :root {
       --item-height: 50px;
@@ -51,6 +51,18 @@
       max-width: 9%;
       min-width: 9%;
     }
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 1; /* Ensure the header is above the items */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .header-row th {
+      font-weight: normal; 
+      background-color: transparent;
+      height: 50px;
+    }
     .button-container {
       display: flex;
       justify-content: center; /* Center the buttons horizontally */
@@ -59,29 +71,26 @@
     .button-container button {
       margin: 0 10px; /* Add space between buttons */
     }
-
-
-    span {    
-            background-color: aqua;
-            text-align: center;
-            /* ensure inline-block for width to take effect */
-            display: inline-block;
-        }
-
   </style>
 </head>
 <body>
-  <div>
-    <span style="width: 30%">    250px;</span>
- <span style="width: 20%">    60px;</span>
- <span style="width: 10%">   50px;</span>
- <span style="width: 20%">   width: 200px;</span>
-  </div>
   <div id="list-container" class="list-container">
     <table id="data-table">
+      <thead>
+        <tr class="sticky-header header-row">
+          <th>Sr No.</th>
+          <th>B</th>
+          <th>B</th>
+          <th>CDA</th>
+          <th>M</th>
+        </tr>
+      </thead>
       <tbody id="list-body"></tbody>
     </table>
-   </div>
+    <script>
+    // Removed createTableHeader function since headers are no longer needed
+    </script>
+  </div>
   <!-- Button Container -->
   <div class="button-container">
     <button id="animate-btn">Animate Up</button>
@@ -104,7 +113,6 @@
     );
     let currentIndex = items.length-3;
     let isAnimating = false;
-
     function createListItems() {
       for (let i = 0; i < 7; i++) {
         const item = document.createElement('tr');
@@ -145,7 +153,6 @@
       const firstEditableCell = listBody.querySelectorAll('.list-item')[3].children[1];
       firstEditableCell.focus();
     }
-
     function updateListItems() {
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
@@ -158,7 +165,6 @@
         }
       });
     }
-
     function animateList() {
       if (isAnimating) return;
       isAnimating = true;
@@ -205,7 +211,6 @@
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
-
     function animateListDown() {
       if (isAnimating) return;
       isAnimating = true;
@@ -252,7 +257,6 @@
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
-
     function insertRowBelow() {
       const listItems = document.querySelectorAll('.list-item');
       const currentRow = (currentIndex + 3) % items.length; // Center row index
@@ -262,7 +266,6 @@
       // Update the list items to reflect the new data
       updateListItems();
     }
-
     function insertRowAbove() {
       const listItems = document.querySelectorAll('.list-item');
       const currentRow = (currentIndex + 3) % items.length; // Center row index
@@ -272,7 +275,6 @@
       // Update the list items to reflect the new data
       updateListItems();
     }
-
     // Add event listener for keydown events to handle arrow keys
     document.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
@@ -321,7 +323,6 @@
         }
       }
     });
-
     createListItems();
     animateBtn.addEventListener('mousedown', animateList);
     animateDownBtn.addEventListener('mousedown', animateListDown);

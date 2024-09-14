@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animated Spreadsheet</title>
+  <title>Animated Spreadsheet with Sticky Headers</title>
   <style>
     :root {
       --item-height: 50px;
@@ -23,19 +23,17 @@
       white-space: nowrap;
       width: 100%;
     }
-    .list-item {
-      position: absolute;
+    .list-item, .header-row {
       height: var(--item-height);
       width: 100%;
-      transition: all var(--animation-duration) ease;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-size: 16px;
     }
-    .list-item td {
+    .list-item td, .header-row td {
       empty-cells: show;
-      padding: 0 10px;
+      padding: 0 10px; /* Uniform padding for both tables */
       text-align: center;
       border: 1px solid #ccc;
       background-color: aqua !important;
@@ -43,13 +41,20 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-    .list-item td:nth-child(1) {
+    .list-item td:nth-child(1), .header-row td:nth-child(1) {
       max-width: 2%;
       min-width: 2%;
     }
-    .list-item td:nth-child(n+2) {
+    .list-item td:nth-child(n+2), .header-row td:nth-child(n+2) {
       max-width: 9%;
       min-width: 9%;
+    }
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 1; /* Ensure the header is above the items */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
     .button-container {
       display: flex;
@@ -59,29 +64,38 @@
     .button-container button {
       margin: 0 10px; /* Add space between buttons */
     }
-
-
-    span {    
-            background-color: aqua;
-            text-align: center;
-            /* ensure inline-block for width to take effect */
-            display: inline-block;
-        }
-
   </style>
 </head>
 <body>
-  <div>
-    <span style="width: 30%">    250px;</span>
- <span style="width: 20%">    60px;</span>
- <span style="width: 10%">   50px;</span>
- <span style="width: 20%">   width: 200px;</span>
-  </div>
   <div id="list-container" class="list-container">
+    <!-- New Header Table -->
+    <table id="header-table">
+      <tbody>
+        <tr class="header-row">
+          <!-- Header cells will be populated here -->
+        </tr>
+      </tbody>
+    </table>
+
     <table id="data-table">
       <tbody id="list-body"></tbody>
     </table>
-   </div>
+    <script>
+      // Function to create the header row
+      function createHeaderRow() {
+        const headerRow = document.querySelector('.header-row');
+        headerRow.innerHTML = ''; // Clear existing headers
+        columnHeaders.forEach((header, index) => {
+          const td = document.createElement('td');
+          td.textContent = header;
+          td.style.width = `${columnWidths[index]}%`;
+          td.style.maxWidth = `${columnWidths[index]}%`;
+          td.style.minWidth = `${columnWidths[index]}%`;
+          headerRow.appendChild(td);
+        });
+      }
+    </script>
+  </div>
   <!-- Button Container -->
   <div class="button-container">
     <button id="animate-btn">Animate Up</button>
@@ -90,8 +104,9 @@
     <button id="insert-above-btn">Insert Above</button>
   </div>
   <script>
-    const columnHeaders = ['Sr No.', 'B', 'B', 'CDA','M'];
+    const columnHeaders = ['Sr No.', 'B', 'B', 'CDA', 'M'];
     const columnWidths = [2, 5, 10, 20, 40]; // in percentages
+    createHeaderRow(); // Call the function to create the header row
     const listContainer = document.getElementById('list-container');
     const animateBtn = document.getElementById('animate-btn');
     const animateDownBtn = document.getElementById('animate-down-btn');
@@ -99,10 +114,10 @@
     const insertAboveBtn = document.getElementById('insert-above-btn');
     const listBody = document.getElementById('list-body');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
-    const items = Array.from({length: 9}, (_, i) => 
-      Array.from({length: columnHeaders.length - 1}, (_, j) => `Num${(i+1)*10 + (j+1)}`)
+    const items = Array.from({ length: 9 }, (_, i) => 
+      Array.from({ length: columnHeaders.length - 1 }, (_, j) => `Num${(i + 1) * 10 + (j + 1)}`)
     );
-    let currentIndex = items.length-3;
+    let currentIndex = items.length - 3;
     let isAnimating = false;
 
     function createListItems() {
