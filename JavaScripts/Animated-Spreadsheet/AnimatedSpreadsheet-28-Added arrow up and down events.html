@@ -6,38 +6,47 @@
   <title>Animated Spreadsheet</title>
   <style>
     :root {
-      --item-height: 50px;
-      --item-width: 800px; /* Total item width */
+      --item-height: 30px;
       --animation-duration: 0.5s;
       }
     .list-container {
       position: relative;
       height: calc(var(--item-height) * 7);
-      width: var(--item-width);
-    
-      overflow: hidden;
-    }
-  
+     }
+  table {margin-left: auto;margin-right: auto;}
+
     .list-item {
       position: absolute;
       height: var(--item-height);
-      width: calc(var(--item-width)); /* Set to total item width */
       transition: all var(--animation-duration) ease;
       display: flex;
       align-items: center;
       justify-content: flex-start; /* Align items to start */
       font-size: 16px;
     }
-    .list-item td, .header-row th {
-      padding: 0 20px;
-      text-align: center;
-      background-color: aqua;
-      width: calc((var(--item-width) - (var(--column-spacing) * (var(--num-columns) - 1))) / var(--num-columns)); /* Adjust for spacing */
-      }
-    .header-row th {
     
-      background-color: aqua; /* Light gray background for header */
-       }
+.list-item td, .header-row th {
+  height: 10px;
+  empty-cells: show; 
+  padding: 0 20px;
+  text-align: center;
+  margin-right: 2px !important;
+  background-color: rgb(223, 188, 170) !important; /* Ensure background color is applied */
+  border: 1px solid black; /* Add a border to make cells visible */
+}
+
+.list-item td {
+  empty-cells: show !important; /* This may not be necessary */
+  text-align: left;
+  background-color: aqua !important; /* Ensure background color is applied */
+}
+
+/* Ensure that all cells have a minimum height */
+.list-item td {
+  height: 20px; /* Ensures consistent height */
+  border-spacing: 20px;
+}
+
     .button-container {
       display: flex;
       justify-content: center; /* Center the buttons horizontally */
@@ -75,8 +84,8 @@
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
 
     // Define column widths in an array (first element is for serial number column)
-    const columnWidths = [50, 50, 60, 70, 80,90,200]; // Adjust widths as needed
-    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','c5','c6']; // Header array
+    const columnWidths = [20, 50, 100,50,200,100,50,100]; // Adjust widths as needed
+    const headerArray = ['Sr', 'C1', 'C2', 'C3', 'C4','Col5','col6','7']; // Header array
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, (_, i) => 
@@ -180,7 +189,7 @@
       listItems.forEach((item, index) => {
         item.style.top = `${(index - 1) * itemHeight}px`;
         item.style.opacity = index === 4 ? 1 : index === 3 || index === 5 ? 0.5 : index === 2 || index === 6 ? 0.25 : 0;
-      });
+    });
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateListItems();
@@ -269,30 +278,40 @@
       updateListItems();
     }
     
-    // Add event listener for keydown events to handle arrow keys
-    document.addEventListener('keydown', (event) => {
-      const activeElement = document.activeElement;
-      // Check if the active element is a cell
-      if (activeElement.tagName === 'TD') {
-        const currentRow = activeElement.parentElement; // Get the current row
-        const cells = currentRow.getElementsByTagName('td'); // Get all cells in the current row
-        const cellIndex = Array.prototype.indexOf.call(cells, activeElement); // Get the index of the current cell
-        if (event.key === 'ArrowRight') {
-          // Move focus to the right cell
-          if (cellIndex < cells.length - 1) {
-            cells[cellIndex + 1].focus();
-          }
-          event.preventDefault(); // Prevent default scrolling behavior
-        } else if (event.key === 'ArrowLeft') {
-          // Move focus to the left cell
-          if (cellIndex > 0) {
-            cells[cellIndex - 1].focus();
-          }
-          event.preventDefault(); // Prevent default scrolling behavior
-        }
-      }
-    });
+/////////////// Add event listener for keydown events to handle arrow keys and Enter key
+document.addEventListener('keydown', (event) => {
+  const activeElement = document.activeElement;
+  // Check if the active element is a cell
+  if (activeElement.tagName === 'TD') {
+    const currentRow = activeElement.parentElement; // Get the current row
+    const cells = currentRow.getElementsByTagName('td'); // Get all cells in the current row
+    const cellIndex = Array.prototype.indexOf.call(cells, activeElement); // Get the index of the current cell
 
+    if (event.key === 'Enter' || event.key === 'ArrowDown') {
+      // Trigger animation up on Enter or Down Arrow key
+      animateList();
+      event.preventDefault(); // Prevent default behavior
+    } else if (event.key === 'ArrowUp') {
+      // Trigger animation down on Up Arrow key
+      animateListDown();
+      event.preventDefault(); // Prevent default behavior
+    } else if (event.key === 'ArrowRight') {
+      // Move focus to the right cell
+      if (cellIndex < cells.length - 1) {
+        cells[cellIndex + 1].focus();
+      }
+      event.preventDefault(); // Prevent default scrolling behavior
+    } else if (event.key === 'ArrowLeft') {
+      // Move focus to the left cell
+      if (cellIndex > 0) {
+        cells[cellIndex - 1].focus();
+      }
+      event.preventDefault(); // Prevent default scrolling behavior
+    }
+  }
+});
+
+/////////////////////////////
     createHeaderRow(); // Create the header row
     createListItems();
     animateBtn.addEventListener('mousedown', animateList);
