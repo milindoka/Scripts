@@ -83,9 +83,6 @@
     const animateDownBtn = document.getElementById('animate-down-btn');
     const insertBelowBtn = document.getElementById('insert-below-btn');
     const insertAboveBtn = document.getElementById('insert-above-btn');
-    const deleteRowBtn = document.getElementById('delete-row-btn');
-     
-
     const listBody = document.getElementById('list-body');
     const headerRow = document.querySelector('.header-row');
     const itemHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--item-height'));
@@ -340,19 +337,6 @@ document.addEventListener('keydown', (event) => {
     }
   }
 });
-//////////////////////////////////
-function deleteRow() {
-  if (items.length > 7) {
-    const centerRowIndex = (currentIndex + 3) % items.length;
-    items.splice(centerRowIndex, 1);
-    currentIndex = Math.min(currentIndex, items.length - 1);
-    updateListItems();
-   // animateList(); // Animate Up to show the next row
-   // animateListDown(); // Animate Dn to show the next row
-  } else {
-    alert("Cannot delete row. Minimum number of rows (7) reached.");
-  }
-}
 
 /////////////////////////////
     createHeaderRow(); // Create the header row
@@ -361,10 +345,6 @@ function deleteRow() {
     animateDownBtn.addEventListener('mousedown', animateListDown);
     insertBelowBtn.addEventListener('click', insertRowBelow);
     insertAboveBtn.addEventListener('click', insertRowAbove);
-    deleteRowBtn.addEventListener('click', deleteRow);
-
   </script>
 </body>
 </html>
-
-
