@@ -166,13 +166,14 @@
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
         const cells = item.getElementsByTagName('td');
-        const rowData = items[(currentIndex + index) % items.length];
+        const rowData = items[(currentIndex + index) % items.length]; // Get the correct row data
+        // Update the serial number cell
         cells[0].textContent = (currentIndex + index) % (items.length) + 1; // Update serial number
-        for (let i = 0; i < cells.length - 1; i++) {
-          cells[i + 1].textContent = rowData[i] || ''; // Set to empty string if no data
+        for (let i = 0; i < cells.length - 1; i++) { // Start from 1 to skip serial number cell
+          cells[i + 1].textContent = rowData[i]; // Update other cells
         }
       });
-      setColumnWidths();
+      setColumnWidths(); // Set column widths after updating items
     }
 //////////////////////////////////////////////////////////////////
 function animateList() {
@@ -288,16 +289,22 @@ function animateListDown() {
 }
 ////////////////////////////////////   
     function insertRowBelow() {
-      const currentRow = (currentIndex + 3) % items.length;
-      const newRow = Array(numColumns - 1).fill('');
-      items.splice(currentRow + 1, 0, newRow);
+      const listItems = document.querySelectorAll('.list-item');
+      const currentRow = (currentIndex + 3) % items.length; // Center row index
+      const newRow = Array.from({length: numColumns - 1}, (_, j) => `Num${(items.length + 1) * 10 + (j + 1)}`); // Create a new row with default values
+      // Insert the new row into the items array
+      items.splice(currentRow + 1, 0, newRow); // Insert after the current row
+      // Update the list items to reflect the new data
       updateListItems();
     }
 
     function insertRowAbove() {
-      const currentRow = (currentIndex + 3) % items.length;
-      const newRow = Array(numColumns - 1).fill('');
-      items.splice(currentRow, 0, newRow);
+      const listItems = document.querySelectorAll('.list-item');
+      const currentRow = (currentIndex + 3) % items.length; // Center row index
+      const newRow = Array.from({length: numColumns - 1}, (_, j) => `Num${(items.length + 1) * 10 + (j + 1)}`); // Create a new row with default values
+      // Insert the new row into the items array
+      items.splice(currentRow, 0, newRow); // Insert before the current row
+      // Update the list items to reflect the new data
       updateListItems();
     }
     
