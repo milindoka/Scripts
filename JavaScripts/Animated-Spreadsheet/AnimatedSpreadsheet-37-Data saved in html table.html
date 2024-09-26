@@ -378,8 +378,7 @@ function deleteRow() {
 
 const saveDataBtn = document.getElementById('save-data-btn');
  saveDataBtn.addEventListener('click', saveDataAsHTML);
- /////////////////////////////////
- function saveDataAsHTML() {
+function saveDataAsHTML() {
   // Create a new HTML document
   let htmlContent = `
 <!DOCTYPE html>
@@ -391,9 +390,6 @@ const saveDataBtn = document.getElementById('save-data-btn');
   <style>
     table { border-collapse: collapse; }
     th, td { border: 1px solid black; padding: 5px; }
-    ${columnWidths.map((width, index) => `
-      th:nth-child(${index + 1}), td:nth-child(${index + 1}) { width: ${width}px; }
-    `).join('')}
   </style>
 </head>
 <body>
@@ -429,7 +425,6 @@ const saveDataBtn = document.getElementById('save-data-btn');
   URL.revokeObjectURL(a.href);
 }
 
-//////////////////////////////////////
 // Add event listener for the Save Data button
   </script>
 </body>
