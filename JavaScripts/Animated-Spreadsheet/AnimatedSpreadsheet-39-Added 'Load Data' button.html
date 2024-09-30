@@ -375,91 +375,63 @@ function deleteRow() {
    
 
 
-  const saveDataBtn = document.getElementById('save-data-btn');
-  saveDataBtn.addEventListener('click', saveDataAsHTML);
-  /////////////////////////////////
-  function saveDataAsHTML() {
-    // Create a new HTML document
-    let htmlContent = `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saved Spreadsheet Data</title>
-    <style>
-      table { border-collapse: collapse; }
-      th, td { border: 1px solid black; padding: 5px; }
-      ${columnWidths.map((width, index) => `
-        th:nth-child(${index + 1}), td:nth-child(${index + 1}) { width: ${width}px; }
-      `).join('')}
-    </style>
-  </head>
-  <body>
-    <table>
-      <thead>
+
+
+const saveDataBtn = document.getElementById('save-data-btn');
+ saveDataBtn.addEventListener('click', saveDataAsHTML);
+ /////////////////////////////////
+ function saveDataAsHTML() {
+  // Create a new HTML document
+  let htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Spreadsheet Data</title>
+  <style>
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid black; padding: 5px; }
+    ${columnWidths.map((width, index) => `
+      th:nth-child(${index + 1}), td:nth-child(${index + 1}) { width: ${width}px; }
+    `).join('')}
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        ${headerArray.map(header => `<th>${header}</th>`).join('')}
+      </tr>
+    </thead>
+    <tbody>
+      ${items.map((row, index) => `
         <tr>
-          ${headerArray.map(header => `<th>${header}</th>`).join('')}
+          <td>${index + 1}</td>
+          ${row.map(cell => `<td>${cell}</td>`).join('')}
         </tr>
-      </thead>
-      <tbody>
-        ${items.map((row, index) => `
-          <tr>
-            <td>${index + 1}</td>
-            ${row.map(cell => `<td>${cell}</td>`).join('')}
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-  </body>
-  </html>
-    `;
+      `).join('')}
+    </tbody>
+  </table>
+</body>
+</html>
+  `;
 
-    // Create a Blob with the HTML content
-    const blob = new Blob([htmlContent], { type: 'text/html' });
+  // Create a Blob with the HTML content
+  const blob = new Blob([htmlContent], { type: 'text/html' });
 
-    // Create a download link and trigger the download
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'spreadsheet_data.html';
-    a.click();
+  // Create a download link and trigger the download
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'spreadsheet_data.html';
+  a.click();
 
-    // Clean up
-    URL.revokeObjectURL(a.href);
-  }
+  // Clean up
+  URL.revokeObjectURL(a.href);
+}
 
-  //////////////////////////////////////
-  // Add event listener for the Save Data button
-  const loadDataBtn = document.getElementById('load-data-btn');
-  loadDataBtn.addEventListener('click', loadDataFromHTML);
-
-  function loadDataFromHTML() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.html';
-    input.onchange = function(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const content = e.target.result;
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(content, 'text/html');
-        const rows = doc.querySelectorAll('table tbody tr');
-      
-        items.length = 0; // Clear existing data
-        rows.forEach(row => {
-          const cells = row.querySelectorAll('td');
-          const rowData = Array.from(cells).slice(1).map(cell => cell.textContent);
-          items.push(rowData);
-        });
-      
-        currentIndex = 0;
-        updateListItems();
-      };
-      reader.readAsText(file);
-    };
-    input.click();
-  }
+//////////////////////////////////////
+// Add event listener for the Save Data button
   </script>
 </body>
 </html>
