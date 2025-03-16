@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animated Spreadsheet</title>
+  <title>Fixed Deposit Manager</title>
   <style>
     :root {
       --item-height: 30px;
@@ -76,6 +76,7 @@
     <button id="insert-below-btn">Insert Below</button>
     <button id="insert-above-btn">Insert Above</button>
     <button id="delete-row-btn">Delete Row</button>
+    <button id="copy-upper-btn">Copy Upper</button>
     <button id="save-data-btn">Save Data</button>
     <button id="load-data-btn">Load Data</button>
   </div>
@@ -95,7 +96,7 @@
     // Define column widths in an array (first element is for serial number column)
     const columnWidths = [20, 100, 110, 110, 100, 200, 70, 70,50]; // Adjust widths as needed
     const MaxChars = [-1,         8,                 7,              7,                8,              20,              8, 8,8]; // Maximum characters for each column
-    const headerArray = ['Sr', 'Maturity Date', 'Maturity Amt', 'Principal Amt', 'Opening Date', 'FD Account No', 'Interest', 'Type','Name']; // Header array    
+    const headerArray = ['Sr', 'Maturity Date', 'Maturity Amt', 'Principal Amt', 'Opening Date', 'FD Account No', 'Interest', 'Banks','Name']; // Header array    
     const numColumns = columnWidths.length;
 
     const items = Array.from({length: 9}, () => 
@@ -363,6 +364,34 @@ function deleteRow() {
     alert("Cannot delete row. Minimum number of rows (7) reached.");
   }
 }
+///////////////////////////////
+// Get reference to the Copy Upper button
+const copyUpperBtn = document.getElementById('copy-upper-btn');
+
+// Function to copy data from upper row to center row
+function copyUpperRow() {
+  // Calculate the index of the center row and the row above it
+  const centerRowIndex = (currentIndex + 3) % items.length;
+  const upperRowIndex = (currentIndex + 2) % items.length;
+  
+  // Copy all cell values from the upper row to the center row
+  for (let i = 0; i < numColumns - 1; i++) {
+    items[centerRowIndex][i] = items[upperRowIndex][i];
+  }
+  
+  // Update the display to show the copied values
+  updateListItems();
+  
+  // Set focus to the first editable cell in the center row
+  const centerRow = listBody.querySelectorAll('.list-item')[3];
+  const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
+  if (firstEditableCell) {
+    firstEditableCell.focus();
+  }
+}
+
+// Add event listener for the Copy Upper button
+copyUpperBtn.addEventListener('click', copyUpperRow);
 
 /////////////////////////////
     createHeaderRow(); // Create the header row
