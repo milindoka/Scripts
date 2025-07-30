@@ -46,7 +46,7 @@ var lat= m.match(new RegExp(fv + "(.*)" + sv));
  //// clickable location      
  ////// <a href="https://www.w3schools.com" target="_blank">Visit W3Schools</a> 
 //////<a href="https://www.w3schools.com/">Visit W3Schools.com!</a>
-if (lat && lat.length > 1 && lon && lon.length>1)   return  '\<a href=\"'+'https://osmand.net/map?pin='+lat[1] +',' +lon[1]+'#22' +lat[1] +'/' +lon[1]"'+'target=\"\_blank\"'+ '\"'+'\>'+"Location"+"\<\/a\>";  
+if (lat && lat.length > 1 && lon && lon.length>1)   return  '\<a href=\"'+"https://osmand.net/go?"+ "lat="+lat[1] +'\&' +"lon="+lon[1]+'\&z=22 \"'+'target=\"\_blank\"'+ '\"'+'\>'+"Location"+"\<\/a\>";  
 
 //var m=' k="denotation" v="park" '
 var firstvariable='v="'; 
