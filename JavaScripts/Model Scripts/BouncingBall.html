@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bouncing Ball</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="400"></canvas>
+    <script>
+
+
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+const ballRadius = 10;
+let x = canvas.width / 2; // Initial x position (center of canvas)
+let y = canvas.height / 2; // Initial y position (center of canvas)
+let dx = 2; // Change in x-direction (speed)
+let dy = -2; // Change in y-direction (speed)
+
+function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI * 2); // Draw a circle
+    ctx.fillStyle = "#FF0000"; // Red color
+    ctx.fill();
+    ctx.closePath();
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas for each frame
+    drawBall();
+
+    // Collision detection with walls
+    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+        dx = -dx; // Reverse x-direction on horizontal wall collision
+    }
+    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+        dy = -dy; // Reverse y-direction on vertical wall collision
+    }
+
+    // Update ball position
+    x += dx;
+    y += dy;
+}
+
+// Start the animation loop
+setInterval(draw, 10); // Call draw function every 10 milliseconds
+
+
+
+    </script>
+
+
+
+
+
+</body>
+</html>

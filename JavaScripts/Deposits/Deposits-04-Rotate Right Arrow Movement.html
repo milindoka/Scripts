@@ -336,13 +336,20 @@ document.addEventListener('keydown', (event) => {
       // Trigger animation down on Up Arrow key
       animateListDown();
       event.preventDefault(); // Prevent default behavior
-    } else if (event.key === 'ArrowRight') {
+    } else if (event.key === 'ArrowRight') 
+    {
       // Move focus to the right cell
       if (cellIndex < cells.length - 1) {
         cells[cellIndex + 1].focus();
       }
+      else 
+      {  // If at the rightmost cell, rotate to the leftmost cell
+        cells[1].focus();
+        //alert(cellIndex);  // [1] because the first cell is the row number cell [0
+      }
       event.preventDefault(); // Prevent default scrolling behavior
-    } else if (event.key === 'ArrowLeft') {
+    } else if (event.key === 'ArrowLeft') 
+       {
       // Move focus to the left cell, or rotate to the rightmost cell if at the leftmost
       if (cellIndex > 1) 
       {
