@@ -75,7 +75,6 @@
     <button id="load-data-btn">Load Data</button>
     <button id="save-local-btn">SLS</button> <!-- Save to Local Storage -->
     <button id="load-local-btn">LLS</button> <!-- Load from Local Storage -->
-    <button id="jump-btn">Jump</button>
   </div>
   <script>
     const listContainer = document.getElementById('list-container');
@@ -175,8 +174,7 @@
       });
       setColumnWidths();
     }
-    function animateList() ////animateListUp  
-    {
+    function animateList() {
       if (isAnimating) return;
       isAnimating = true;
       const activeElement = document.activeElement;
@@ -329,25 +327,6 @@
         firstEditableCell.focus();
       }
     }
-    /////////////////////////////////////////////Jump Button/////
-    const jumpBtn = document.getElementById('jump-btn');
-    jumpBtn.addEventListener('click', () => {
-  const rowNumber = parseInt(prompt("Enter the row number to jump to (1 to 20):"), 10);
-  if (!isNaN(rowNumber) && rowNumber >= 1 && rowNumber <= 20) {
-    currentIndex = (rowNumber - 1) % items.length; // Adjust for zero-based index
-    updateListItems();
-    const listItems = document.querySelectorAll('.list-item');
-    const centerRow = listBody.querySelectorAll('.list-item')[3];
-      const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
-      if (firstEditableCell) {
-        firstEditableCell.focus();
-      }
-  } else {
-    alert("Invalid row number. Please enter a number between 1 and 20.");
-  }
-});
-
-    ////////////////////////////////////////////
     copyUpperBtn.addEventListener('click', copyUpperRow);
     createHeaderRow(); // Create the header row
     createListItems();
