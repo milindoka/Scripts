@@ -84,8 +84,7 @@
     <button id="insert-above-btn">Insert Above</button>
     <button id="delete-row-btn">Delete Row</button>
     <button id="copy-upper-btn">Copy Upper</button>
-  <button id="save-data-btn">Save Data</button>
-  <button id="sort-btn">Sort</button>
+    <button id="save-data-btn">Save Data</button>
     <button id="load-data-btn">Load Data</button>
     <button id="save-local-btn">SLS</button> <!-- Save to Local Storage -->
     <button id="load-local-btn">LLS</button> <!-- Load from Local Storage -->
@@ -306,16 +305,12 @@
       const newRow = Array(numColumns - 1).fill('');
       items.splice(currentRow + 1, 0, newRow);
       updateListItems();
-    // Increase slider max by 1
-    slider.max = items.length;
     }
     function insertRowAbove() {
       const currentRow = (currentIndex + 3) % items.length;
       const newRow = Array(numColumns - 1).fill('');
       items.splice(currentRow, 0, newRow);
       updateListItems();
-    // Increase slider max by 1
-    slider.max = items.length;
     }
     document.addEventListener('keydown', (event) => {
       const activeElement = document.activeElement;
@@ -530,21 +525,6 @@
         }
       }
     });
-
-// Sort on maturity date
-const sortBtn = document.getElementById('sort-btn');
-sortBtn.addEventListener('click', function() {
-    // Sorting function
-    items.sort((a, b) => {
-        // Assuming maturity date is in the second column (index 1)
-        const dateA = new Date(a[1]);
-        const dateB = new Date(b[1]);
-        return dateA - dateB; // Ascending order
-    });
-    
-    // Update the display after sorting
-    updateListItems();
-});
   </script>
 </body>
 </html>
