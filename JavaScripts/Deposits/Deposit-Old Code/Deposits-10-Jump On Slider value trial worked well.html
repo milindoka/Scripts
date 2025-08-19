@@ -92,7 +92,7 @@
   </div>
   <!-- Slider Container -->
   <div class="slider-container">
-    <input type="range" id="slider" min="1" max="9" value="5" />
+    <input type="range" id="slider" min="0" max="50" value="25" />
     <div id="slider-value" style="margin-left: 15px; min-width: 40px; display: inline-block; font-weight: bold;">25</div>
   </div>
   <div id="list-container">
@@ -460,10 +460,6 @@
           });
           currentIndex = 0;
           updateListItems();
-            // Update slider range and value
-            slider.max = items.length;
-            slider.value = 1;
-            sliderValueDiv.textContent = slider.value;
         };
         reader.readAsText(file);
       };
@@ -485,10 +481,6 @@
         });
         currentIndex = 0;
         updateListItems();
-    // Update slider range and value
-    slider.max = items.length;
-    slider.value = 1;
-    sliderValueDiv.textContent = slider.value;
         //alert('Data loaded from local storage.');
       } else {
         //alert('No data found in local storage.');
@@ -506,11 +498,8 @@
     slider.addEventListener('change', function() {
       const rowNumber = parseInt(slider.value, 10);
       // Only jump if within valid range (1 to items.length)
-      if (!isNaN(rowNumber) && rowNumber >= 1 && rowNumber <= items.length) 
-      { currentIndex = (rowNumber - 1) % items.length;
-        currentIndex=rowNumber-4;
-        if(currentIndex<1) currentIndex=currentIndex+items.length
-        
+      if (!isNaN(rowNumber) && rowNumber >= 1 && rowNumber <= items.length) {
+        currentIndex = (rowNumber - 1) % items.length;
         updateListItems();
         const centerRow = listBody.querySelectorAll('.list-item')[3];
         const firstEditableCell = centerRow.querySelector('td:nth-child(2)');

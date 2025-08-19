@@ -506,11 +506,8 @@
     slider.addEventListener('change', function() {
       const rowNumber = parseInt(slider.value, 10);
       // Only jump if within valid range (1 to items.length)
-      if (!isNaN(rowNumber) && rowNumber >= 1 && rowNumber <= items.length) 
-      { currentIndex = (rowNumber - 1) % items.length;
-        currentIndex=rowNumber-4;
-        if(currentIndex<1) currentIndex=currentIndex+items.length
-        
+      if (!isNaN(rowNumber) && rowNumber >= 1 && rowNumber <= items.length) {
+        currentIndex = (rowNumber - 1) % items.length;
         updateListItems();
         const centerRow = listBody.querySelectorAll('.list-item')[3];
         const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
