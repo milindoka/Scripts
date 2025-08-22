@@ -205,10 +205,7 @@
         fyMap[fy].push({ idx: idx + 1, row });
       });
 
-      // Build HTML report with total income per FY
-      function formatINR(num) {
-        return num.toLocaleString('en-IN');
-      }
+      // Build HTML report
       let reportHtml = `<!DOCTYPE html><html lang="en"><head><meta charset='UTF-8'><title>FD Report by Financial Year</title><style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         h2 { color: #2a4d7a; }
@@ -216,26 +213,18 @@
         th, td { border: 1px solid #888; padding: 6px 10px; text-align: center; }
         th { background: #e0e7ef; }
         .fy-section { margin-bottom: 40px; }
-        .fy-income { font-size: 1.1em; color: #155724; background: #e6f4ea; font-weight: bold; padding: 8px 0; }
       </style></head><body><h1>Fixed Deposit Report by Financial Year (Maturity Date)</h1>`;
       for (const fy of Object.keys(fyMap).sort()) {
-        let totalIncome = 0;
         reportHtml += `<div class='fy-section'><h2>${fy}</h2><table><thead><tr>`;
         reportHtml += '<th>Sr</th>';
         for (let i = 0; i < headerArray.length - 1; ++i) reportHtml += `<th>${headerArray[i + 1]}</th>`;
-        reportHtml += '<th>Income</th>';
         reportHtml += '</tr></thead><tbody>';
         fyMap[fy].forEach(({ idx, row }) => {
-          // Income = Maturity Amt (index 1) - Principal Amt (index 2)
-          const maturity = parseFloat(row[1]) || 0;
-          const principal = parseFloat(row[2]) || 0;
-          const income = maturity - principal;
-          totalIncome += income;
           reportHtml += `<tr><td>${idx}</td>`;
           for (let i = 0; i < row.length; ++i) reportHtml += `<td>${row[i]}</td>`;
-          reportHtml += `<td>${formatINR(Math.round(income))}</td></tr>`;
+          reportHtml += '</tr>';
         });
-        reportHtml += `</tbody></table><div class='fy-income'>Total Income for ${fy}: ₹ ${formatINR(Math.round(totalIncome))}</div></div>`;
+        reportHtml += '</tbody></table></div>';
       }
       reportHtml += '</body></html>';
 
