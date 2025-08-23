@@ -155,6 +155,7 @@
     <button id="load-local-btn">LLS</button> <!-- Load from Local Storage -->
   <button id="jump-btn">Jump</button>
   <button id="report-btn">Report</button>
+  <button id="individual-report-btn">Individual Report</button>
   </div>
   <!-- Slider Container -->
   <div class="slider-container">
@@ -247,6 +248,83 @@
       } else {
         alert('Unable to open report window. Please allow pop-ups.');
       }
+    });
+    
+    // Individual Report: prompt for a name and generate report for that person only
+    document.getElementById('individual-report-btn').addEventListener('click', function() {
+      const person = prompt('Enter exact name to generate Individual Report for:');
+      if (!person) return;
+
+      // Reuse parseDate and getFinancialYear from above by redefining here (scoped)
+      function parseDate(dateStr) {
+        if (!dateStr || dateStr.trim() === '') return null;
+        let d, m, y;
+        if (dateStr.includes('/')) {
+          [d, m, y] = dateStr.split('/').map(x => parseInt(x, 10));
+        } else if (dateStr.includes('-')) {
+          [d, m, y] = dateStr.split('-').map(x => parseInt(x, 10));
+        } else {
+          return null;
+        }
+        if (y < 100) y += 2000;
+        return new Date(y, m - 1, d);
+      }
+      function getFinancialYear(date) {
+        if (!date) return 'Unknown';
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        let fyStart, fyEnd;
+        if (month >= 4) { fyStart = year; fyEnd = year + 1; } else { fyStart = year - 1; fyEnd = year; }
+        return `FY-${String(fyStart).slice(-2)}-${String(fyEnd).slice(-2)}`;
+      }
+
+      // Filter items by name (Name column is last column in row)
+      const matched = items.map((row, idx) => ({ idx: idx + 1, row })).filter(obj => {
+        const name = (obj.row[obj.row.length - 1] || '').toString().trim();
+        return name === person;
+      });
+
+      if (matched.length === 0) {
+        alert('No records found for: ' + person);
+        return;
+      }
+
+      // Group by FY
+      const fyMapInd = {};
+      matched.forEach(({ idx, row }) => {
+        const date = parseDate(row[0]);
+        const fy = getFinancialYear(date);
+        if (!fyMapInd[fy]) fyMapInd[fy] = [];
+        fyMapInd[fy].push({ idx, row });
+      });
+
+      // Build report HTML
+      function formatINR(num) { return num.toLocaleString('en-IN'); }
+      let reportHtml = `<!DOCTYPE html><html lang="en"><head><meta charset='utf-8'><title>Individual Report - ${person}</title><style>
+        body{font-family:Arial;margin:20px} table{border-collapse:collapse;width:100%;margin-bottom:24px} th,td{border:1px solid #888;padding:6px 10px;text-align:center} th{background:#e0e7ef}
+        .total{font-weight:bold;background:#e6f4ea;padding:8px}
+      </style></head><body><h1>Individual Report for ${person}</h1>`;
+
+      for (const fy of Object.keys(fyMapInd).sort()) {
+        let totalIncome = 0;
+        reportHtml += `<h2>${fy}</h2><table><thead><tr><th>Sr</th>`;
+        for (let i = 0; i < headerArray.length - 1; ++i) reportHtml += `<th>${headerArray[i + 1]}</th>`;
+        reportHtml += '<th>Income</th></tr></thead><tbody>';
+        fyMapInd[fy].forEach(({ idx, row }) => {
+          const maturity = parseFloat(row[1]) || 0;
+          const principal = parseFloat(row[2]) || 0;
+          const income = maturity - principal;
+          totalIncome += income;
+          reportHtml += `<tr><td>${idx}</td>`;
+          for (let i = 0; i < row.length; ++i) reportHtml += `<td>${row[i]}</td>`;
+          reportHtml += `<td>₹ ${formatINR(Math.round(income))}</td></tr>`;
+        });
+        reportHtml += `</tbody></table><div class='total'>Total Income for ${fy}: ₹ ${formatINR(Math.round(totalIncome))}</div>`;
+      }
+      reportHtml += '</body></html>';
+
+      const win = window.open('', '_blank');
+      if (win) { win.document.write(reportHtml); win.document.close(); } else { alert('Allow pop-ups to open the report.'); }
     });
     // ...existing code...
     const listContainer = document.getElementById('list-container');
