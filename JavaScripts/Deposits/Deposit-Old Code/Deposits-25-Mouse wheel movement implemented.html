@@ -412,13 +412,6 @@
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
             newCell.focus();
           }
-          // Update slider to reflect current center record
-          if (typeof slider !== 'undefined') {
-            slider.max = items.length;
-            const centerSerial = ((currentIndex + 3) % items.length) + 1;
-            slider.value = centerSerial;
-            if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
-          }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
@@ -462,13 +455,6 @@
             const newRow = listItems[3];
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
             newCell.focus();
-          }
-          // Update slider to reflect current center record
-          if (typeof slider !== 'undefined') {
-            slider.max = items.length;
-            const centerSerial = ((currentIndex + 3) % items.length) + 1;
-            slider.value = centerSerial;
-            if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
           }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
