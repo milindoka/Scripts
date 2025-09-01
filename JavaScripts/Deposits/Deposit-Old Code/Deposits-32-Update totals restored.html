@@ -231,11 +231,8 @@
       for (const fy of Object.keys(fyMap).sort()) {
         let totalIncome = 0;
         let totalMaturity = 0;
-        let totalPrincipal = 0;
-        // per-person aggregates
-        const personIncome = {};   // name -> total income
-        const personPrincipal = {}; // name -> total principal
-
+        // Build per-person totals for this FY
+        const personTotals = {}; // name -> total income
         reportHtml += `<div class='fy-section'><h2>${fy}</h2><table><thead><tr>`;
         reportHtml += '<th>Sr</th>';
         for (let i = 0; i < headerArray.length - 1; ++i) reportHtml += `<th>${headerArray[i + 1]}</th>`;
@@ -248,30 +245,22 @@
           const income = maturity - principal;
           totalIncome += income;
           totalMaturity += maturity;
-          totalPrincipal += principal;
           // accumulate per person (Name is last column)
           const name = (row[row.length - 1] || '').toString().trim() || 'Unknown';
-          personIncome[name] = (personIncome[name] || 0) + income;
-          personPrincipal[name] = (personPrincipal[name] || 0) + principal;
+          personTotals[name] = (personTotals[name] || 0) + income;
           reportHtml += `<tr><td>${idx}</td>`;
           for (let i = 0; i < row.length; ++i) reportHtml += `<td>${row[i]}</td>`;
           reportHtml += `<td>${formatINR(Math.round(income))}</td></tr>`;
         });
         reportHtml += `</tbody></table>`;
-
-        // Per-person summary table: Name | Total Principal | Total Income | Total Maturity (Principal + Income)
+        // Add per-person summary table for this FY
         reportHtml += `<div style="margin-top:8px;"><strong>Income by Individual for ${fy}:</strong>`;
-        reportHtml += `<table><thead><tr><th>Name</th><th style="text-align:right">Total Principal (₹)</th><th style="text-align:right">Total Income (₹)</th><th style="text-align:right">Total Maturity (₹)</th></tr></thead><tbody>`;
-        Object.keys(personIncome)
-          .sort((a, b) => (personIncome[b] - personIncome[a])) // sort by income desc
-          .forEach(name => {
-            const p = Math.round(personPrincipal[name] || 0);
-            const inc = Math.round(personIncome[name] || 0);
-            const mat = p + inc;
-            reportHtml += `<tr><td style="text-align:left;padding-left:10px">${name}</td><td style="text-align:right">₹ ${formatINR(p)}</td><td style="text-align:right">₹ ${formatINR(inc)}</td><td style="text-align:right">₹ ${formatINR(mat)}</td></tr>`;
-          });
+        reportHtml += `<table><thead><tr><th>Name</th><th>Total Income</th></tr></thead><tbody>`;
+        // sort persons by descending income
+        Object.keys(personTotals).sort((a,b) => personTotals[b] - personTotals[a]).forEach(name => {
+          reportHtml += `<tr><td style="text-align:left;padding-left:10px">${name}</td><td>₹ ${formatINR(Math.round(personTotals[name]))}</td></tr>`;
+        });
         reportHtml += `</tbody></table></div>`;
-
         reportHtml += `<div class='fy-income'>Total Maturity for ${fy}: ₹ ${formatINR(Math.round(totalMaturity))} &nbsp;&nbsp;|&nbsp;&nbsp; Total Income for ${fy}: ₹ ${formatINR(Math.round(totalIncome))}</div></div>`;
       }
       reportHtml += '</body></html>';
