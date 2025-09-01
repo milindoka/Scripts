@@ -153,8 +153,15 @@
     <button id="load-data-btn">Load Data</button>
     <button id="save-local-btn">SLS</button> <!-- Save to Local Storage -->
     <button id="load-local-btn">LLS</button> <!-- Load from Local Storage -->
-  <button id="jump-btn">Jump</button>
-  <button id="report-btn">Report</button>
+    <button id="jump-btn">Jump</button>
+    <button id="report-btn">Report</button>
+  </div>
+  <!-- Add search UI (lens icon) next to buttons -->
+  <div style="text-align:center; margin:10px 0;">
+    <div class="search-wrapper" style="display:inline-flex;align-items:center;gap:6px;">
+      <input id="search-input" type="search" placeholder="Search..." style="padding:6px 8px;font-size:14px;width:240px;border:1px solid #888;border-radius:4px;" />
+      <button id="search-btn" title="Search" style="padding:6px 8px;font-size:14px;cursor:pointer;">🔍</button>
+    </div>
   </div>
   <div style="text-align:center; margin-bottom:12px;">
     <button id="accrued-btn">Accrued Interest</button>
@@ -269,7 +276,6 @@
     });
     
     
-    // ...existing code...
     const listContainer = document.getElementById('list-container');
     const slider = document.getElementById('slider');
     const sliderValueDiv = document.getElementById('slider-value');
@@ -288,6 +294,12 @@
     const items = Array.from({length: 9}, () => Array.from({length: numColumns - 1}, () => ''));
     let currentIndex = items.length - 3;
     let isAnimating = false;
+
+    // --- search state for cycling through matches ---
+    let _searchLastQuery = '';
+    let _searchMatches = []; // array of matched row indices
+    let _searchPos = -1;
+    let _searchItemsVersion = 0; // increment when items change to invalidate cache
     function createHeaderRow() {
       headerArray.forEach(header => {
         const th = document.createElement('th');
@@ -525,8 +537,17 @@
       if (items.length > 7) {
         const centerRowIndex = (currentIndex + 3) % items.length;
         items.splice(centerRowIndex, 1);
+        // Ensure currentIndex stays valid
         currentIndex = Math.min(currentIndex, items.length - 1);
         updateListItems();
+        // Update slider range and position to reflect deletion
+        if (typeof slider !== 'undefined') {
+          slider.max = items.length;
+          // set slider to the new center record (1-based)
+          const centerSerial = ((currentIndex + 3) % items.length) + 1;
+          slider.value = Math.min(Math.max(1, centerSerial), items.length);
+          if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
+        }
       } else {
         alert("Cannot delete row. Minimum number of rows (7) reached.");
       }
@@ -886,28 +907,76 @@
       }
       alert('Data sorted by Maturity Date in ascending order.');
     });
-    // Function to calculate and update totals
-    function formatINR(num) {
-      return num.toLocaleString('en-IN');
+    // ---------- Search functionality ----------
+  function doSearch() {
+    const qEl = document.getElementById('search-input');
+    if (!qEl) return;
+    const q = qEl.value.trim().toLowerCase();
+    if (!q) { alert('Enter search text'); return; }
+    if (!items || items.length === 0) { alert('No data to search'); return; }
+
+    // Rebuild matches if query changed or items modified (simple version: compare length)
+    if (q !== _searchLastQuery || _searchItemsVersion !== items.length) {
+      _searchLastQuery = q;
+      _searchMatches = [];
+      _searchPos = -1;
+      for (let i = 0; i < items.length; i++) {
+        const row = items[i];
+        for (let j = 0; j < row.length; j++) {
+          const cellText = (row[j] || '').toString().toLowerCase();
+          if (cellText.indexOf(q) !== -1) { _searchMatches.push(i); break; }
+        }
+      }
+      _searchItemsVersion = items.length;
     }
-    function updateTotals() {
-      let totalMaturity = 0;
-      let totalPrincipal = 0;
-      // Sum up all values in the items array
-      items.forEach(row => {
-        // Parse maturity amount (index 1)
-        const maturityValue = parseFloat(row[1]) || 0;
-        totalMaturity += maturityValue;
-        // Parse principal amount (index 2)
-        const principalValue = parseFloat(row[2]) || 0;
-        totalPrincipal += principalValue;
-      });
-      // Update only the footer totals as integers in INR format
-      document.getElementById('footer-principal-total').textContent = formatINR(Math.round(totalPrincipal));
-      document.getElementById('footer-maturity-total').textContent = formatINR(Math.round(totalMaturity));
+
+    if (!_searchMatches || _searchMatches.length === 0) {
+      alert('No match found.');
+      return;
     }
-    // Add event listener for the update totals button
-    document.getElementById('update-totals-btn').addEventListener('click', updateTotals);
-  </script>
+
+    // advance to next match on successive clicks
+    _searchPos = (_searchPos + 1) % _searchMatches.length;
+    const foundIndex = _searchMatches[_searchPos];
+
+    // Center the found row in the visible list (center position is index 3)
+    currentIndex = foundIndex - 3;
+    // normalize currentIndex into valid range
+    if (items.length > 0) {
+      currentIndex = ((currentIndex % items.length) + items.length) % items.length;
+    } else {
+      currentIndex = 0;
+    }
+
+    updateListItems();
+
+    // Update slider to reflect found row (1-based)
+    if (typeof slider !== 'undefined') {
+      slider.max = items.length || 1;
+      slider.value = Math.min(Math.max(1, foundIndex + 1), slider.max);
+      if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
+    }
+
+    // Focus first editable cell of center row
+    const centerRow = listBody.querySelectorAll('.list-item')[3];
+    if (centerRow) {
+      const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
+      if (firstEditableCell) firstEditableCell.focus();
+    }
+  }
+
+  // Attach search button and Enter-key handler
+  const searchBtn = document.getElementById('search-btn');
+  if (searchBtn) searchBtn.addEventListener('click', doSearch);
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      doSearch();
+    }
+  });
+
+  // ...existing code...
+</script>
 </body>
 </html>

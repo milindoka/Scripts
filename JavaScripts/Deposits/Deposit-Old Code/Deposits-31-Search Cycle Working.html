@@ -153,8 +153,18 @@
     <button id="load-data-btn">Load Data</button>
     <button id="save-local-btn">SLS</button> <!-- Save to Local Storage -->
     <button id="load-local-btn">LLS</button> <!-- Load from Local Storage -->
-  <button id="jump-btn">Jump</button>
-  <button id="report-btn">Report</button>
+    <button id="jump-btn">Jump</button>
+    <button id="report-btn">Report</button>
+  </div>
+  <!-- Add search UI (lens icon) next to buttons -->
+  <div style="text-align:center; margin:10px 0;">
+    <div class="search-wrapper" style="display:inline-flex;align-items:center;gap:6px;">
+      <input id="search-input" type="search" placeholder="Search..." style="padding:6px 8px;font-size:14px;width:240px;border:1px solid #888;border-radius:4px;" />
+      <button id="search-btn" title="Search" style="padding:6px 8px;font-size:14px;cursor:pointer;">🔍</button>
+    </div>
+  </div>
+  <div style="text-align:center; margin-bottom:12px;">
+    <button id="accrued-btn">Accrued Interest</button>
   </div>
   <!-- Slider Container -->
   <div class="slider-container">
@@ -266,7 +276,6 @@
     });
     
     
-    // ...existing code...
     const listContainer = document.getElementById('list-container');
     const slider = document.getElementById('slider');
     const sliderValueDiv = document.getElementById('slider-value');
@@ -285,6 +294,12 @@
     const items = Array.from({length: 9}, () => Array.from({length: numColumns - 1}, () => ''));
     let currentIndex = items.length - 3;
     let isAnimating = false;
+
+    // --- search state for cycling through matches ---
+    let _searchLastQuery = '';
+    let _searchMatches = []; // array of matched row indices
+    let _searchPos = -1;
+    let _searchItemsVersion = 0; // increment when items change to invalidate cache
     function createHeaderRow() {
       headerArray.forEach(header => {
         const th = document.createElement('th');
@@ -412,6 +427,13 @@
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
             newCell.focus();
           }
+          // Update slider to reflect current center record
+          if (typeof slider !== 'undefined') {
+            slider.max = items.length;
+            const centerSerial = ((currentIndex + 3) % items.length) + 1;
+            slider.value = centerSerial;
+            if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
+          }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
@@ -455,6 +477,13 @@
             const newRow = listItems[3];
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
             newCell.focus();
+          }
+          // Update slider to reflect current center record
+          if (typeof slider !== 'undefined') {
+            slider.max = items.length;
+            const centerSerial = ((currentIndex + 3) % items.length) + 1;
+            slider.value = centerSerial;
+            if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
           }
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
@@ -508,8 +537,17 @@
       if (items.length > 7) {
         const centerRowIndex = (currentIndex + 3) % items.length;
         items.splice(centerRowIndex, 1);
+        // Ensure currentIndex stays valid
         currentIndex = Math.min(currentIndex, items.length - 1);
         updateListItems();
+        // Update slider range and position to reflect deletion
+        if (typeof slider !== 'undefined') {
+          slider.max = items.length;
+          // set slider to the new center record (1-based)
+          const centerSerial = ((currentIndex + 3) % items.length) + 1;
+          slider.value = Math.min(Math.max(1, centerSerial), items.length);
+          if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
+        }
       } else {
         alert("Cannot delete row. Minimum number of rows (7) reached.");
       }
@@ -556,6 +594,9 @@
     deleteRowBtn.addEventListener('click', deleteRow);
     // Initialize slider value display
     sliderValueDiv.textContent = slider.value;
+  // Throttle for wheel->slider mapping
+  let _lastWheelAt = 0;
+  const _wheelThrottleMs = 80; // minimum ms between handled wheel events
     const saveDataBtn = document.getElementById('save-data-btn');
     saveDataBtn.addEventListener('click', saveDataAsHTML);
     function saveDataAsHTML() {
@@ -662,6 +703,107 @@
     const loadLocalBtn = document.getElementById('load-local-btn');
     saveLocalBtn.addEventListener('click', saveDataToLocalStorage);
     loadLocalBtn.addEventListener('click', loadDataFromLocalStorage);
+    // Accrued Interest button handler
+    document.getElementById('accrued-btn').addEventListener('click', function() {
+      const fyInput = prompt('Enter financial year to report (format: FY-YY-YY, e.g. FY-21-22):');
+      if (!fyInput) return;
+      const m = fyInput.match(/FY-(\d{2})-(\d{2})/i);
+      if (!m) { alert('Invalid FY format. Expected FY-YY-YY'); return; }
+      const startYear = 2000 + parseInt(m[1], 10);
+      const endYear = 2000 + parseInt(m[2], 10);
+      const fyStart = new Date(startYear, 3, 1); // 1 April
+      const fyEnd = new Date(endYear, 2, 31, 23, 59, 59, 999); // 31 March
+
+      function parseDateLocal(dateStr) {
+        if (!dateStr || dateStr.trim() === '') return null;
+        let d, mo, y;
+        if (dateStr.includes('/')) [d, mo, y] = dateStr.split('/').map(x => parseInt(x,10));
+        else if (dateStr.includes('-')) [d, mo, y] = dateStr.split('-').map(x => parseInt(x,10));
+        else return null;
+        if (y < 100) y += 2000;
+        return new Date(y, mo - 1, d);
+      }
+      function yearsBetween(d1, d2) {
+        return (d2 - d1) / (1000 * 60 * 60 * 24 * 365.2425);
+      }
+
+      const rowsToReport = [];
+      let totalAccrued = 0;
+
+      items.forEach((row, idx) => {
+        const maturityDate = parseDateLocal(row[0]);
+        const maturityAmt = parseFloat(row[1]) || 0;
+        const principal = parseFloat(row[2]) || 0;
+        if (!maturityDate || principal === 0) return;
+        const openingDate = parseDateLocal(row[3]);
+        let rate = 0;
+        const rateCol = parseFloat((row[5] || '').toString().trim());
+        let termYears = 1;
+        if (!isNaN(rateCol) && rateCol !== 0) {
+          rate = rateCol > 1 ? rateCol / 100 : rateCol;
+        }
+        if (openingDate) {
+          termYears = Math.max(0.0001, yearsBetween(openingDate, maturityDate));
+          if (!rate && principal > 0 && maturityAmt > 0) {
+            rate = Math.pow(maturityAmt / principal, 1 / termYears) - 1;
+          }
+        } else {
+          if (rate && principal > 0 && maturityAmt > 0 && (1 + rate) > 0) {
+            termYears = Math.max(0.0001, Math.log(maturityAmt / principal) / Math.log(1 + rate));
+          } else if (principal > 0 && maturityAmt > 0) {
+            termYears = 1;
+            rate = Math.pow(maturityAmt / principal, 1 / termYears) - 1;
+          }
+        }
+
+        const lifeStart = openingDate || new Date(maturityDate.getTime() - termYears * 365.2425 * 24 * 3600 * 1000);
+        const lifeEnd = maturityDate;
+        const overlapStart = (lifeStart > fyStart) ? lifeStart : fyStart;
+        const overlapEnd = (lifeEnd < fyEnd) ? lifeEnd : fyEnd;
+        if (overlapEnd < overlapStart) return;
+
+        const tStart = yearsBetween(lifeStart, overlapStart);
+        const tEnd = yearsBetween(lifeStart, overlapEnd);
+        const valueAtStart = principal * Math.pow(1 + rate, tStart);
+        const valueAtEnd = principal * Math.pow(1 + rate, tEnd);
+        const accrued = valueAtEnd - valueAtStart;
+        totalAccrued += accrued;
+        rowsToReport.push({ idx: idx + 1, row, maturityDate, principal, maturityAmt, rate, accrued });
+      });
+
+      // Aggregate accrued by individual
+      const personTotals = {}; // name -> accrued sum (raw)
+      rowsToReport.forEach(item => {
+        const name = (item.row[item.row.length - 1] || '').toString().trim() || 'Unknown';
+        personTotals[name] = (personTotals[name] || 0) + item.accrued;
+      });
+
+      function formatINR(num) { return num.toLocaleString('en-IN'); }
+      let html = `<!doctype html><html><head><meta charset='utf-8'><title>Accrued Interest ${fyInput}</title><style>body{font-family:Arial;margin:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #888;padding:6px;text-align:center}th{background:#e8eef6} .right{text-align:right}</style></head><body><h1>Accrued Interest Report for ${fyInput}</h1>`;
+      html += `<p>Total deposits listed: ${rowsToReport.length}</p>`;
+      html += '<table><thead><tr><th>Sr</th>';
+      for (let i=0;i<headerArray.length-1;i++) html += `<th>${headerArray[i+1]}</th>`;
+      html += '<th>Rate(%)</th><th>Accrued (₹)</th></tr></thead><tbody>';
+      rowsToReport.forEach(item => {
+        html += `<tr><td>${item.idx}</td>`;
+        for (let i=0;i<item.row.length;i++) html += `<td>${item.row[i]}</td>`;
+        html += `<td>${(item.rate*100).toFixed(3)}</td><td class="right">₹ ${formatINR(Math.round(item.accrued))}</td></tr>`;
+      });
+      html += `</tbody></table>`;
+
+      // Per-person totals table
+      html += `<h2>Accrued Interest by Individual for ${fyInput}</h2>`;
+      html += `<table><thead><tr><th>Name</th><th class="right">Total Accrued (₹)</th></tr></thead><tbody>`;
+      Object.keys(personTotals).sort((a,b) => personTotals[b] - personTotals[a]).forEach(name => {
+        html += `<tr><td style="text-align:left;padding-left:10px">${name}</td><td class="right">₹ ${formatINR(Math.round(personTotals[name]))}</td></tr>`;
+      });
+      html += `</tbody></table>`;
+
+      html += `<h3>Total Accrued Interest for ${fyInput}: ₹ ${formatINR(Math.round(totalAccrued))}</h3></body></html>`;
+
+      const win = window.open('', '_blank');
+      if (win) { win.document.write(html); win.document.close(); } else { alert('Allow pop-ups to view report.'); }
+    });
     // When the user releases the mouse button after moving the slider, jump to the record number
     slider.addEventListener('change', function() {
       const rowNumber = parseInt(slider.value, 10);
@@ -678,6 +820,31 @@
         }
       }
     });
+
+    // Map mouse wheel (over the list container) to slider movement and record jump
+    listContainer.addEventListener('wheel', function(e) {
+      // Only handle when enough time has passed to avoid excessive jumps
+      const now = Date.now();
+      if (now - _lastWheelAt < _wheelThrottleMs) {
+        e.preventDefault();
+        return;
+      }
+      _lastWheelAt = now;
+      e.preventDefault();
+      const delta = Math.sign(e.deltaY); // 1 => wheel down, -1 => wheel up
+      const min = parseInt(slider.min, 10) || 1;
+      const max = parseInt(slider.max, 10) || items.length || 1;
+      let newVal = parseInt(slider.value, 10) + delta;
+      if (newVal < min) newVal = min;
+      if (newVal > max) newVal = max;
+      if (newVal !== parseInt(slider.value, 10)) {
+        slider.value = newVal;
+        // update visible slider value immediately
+        sliderValueDiv.textContent = slider.value;
+        // Trigger the same logic as when the user releases the slider
+        slider.dispatchEvent(new Event('change'));
+      }
+    }, { passive: false });
     // Sort on maturity date
     const sortBtn = document.getElementById('sort-btn');
     sortBtn.addEventListener('click', function() {
@@ -740,28 +907,76 @@
       }
       alert('Data sorted by Maturity Date in ascending order.');
     });
-    // Function to calculate and update totals
-    function formatINR(num) {
-      return num.toLocaleString('en-IN');
+    // ---------- Search functionality ----------
+  function doSearch() {
+    const qEl = document.getElementById('search-input');
+    if (!qEl) return;
+    const q = qEl.value.trim().toLowerCase();
+    if (!q) { alert('Enter search text'); return; }
+    if (!items || items.length === 0) { alert('No data to search'); return; }
+
+    // Rebuild matches if query changed or items modified (simple version: compare length)
+    if (q !== _searchLastQuery || _searchItemsVersion !== items.length) {
+      _searchLastQuery = q;
+      _searchMatches = [];
+      _searchPos = -1;
+      for (let i = 0; i < items.length; i++) {
+        const row = items[i];
+        for (let j = 0; j < row.length; j++) {
+          const cellText = (row[j] || '').toString().toLowerCase();
+          if (cellText.indexOf(q) !== -1) { _searchMatches.push(i); break; }
+        }
+      }
+      _searchItemsVersion = items.length;
     }
-    function updateTotals() {
-      let totalMaturity = 0;
-      let totalPrincipal = 0;
-      // Sum up all values in the items array
-      items.forEach(row => {
-        // Parse maturity amount (index 1)
-        const maturityValue = parseFloat(row[1]) || 0;
-        totalMaturity += maturityValue;
-        // Parse principal amount (index 2)
-        const principalValue = parseFloat(row[2]) || 0;
-        totalPrincipal += principalValue;
-      });
-      // Update only the footer totals as integers in INR format
-      document.getElementById('footer-principal-total').textContent = formatINR(Math.round(totalPrincipal));
-      document.getElementById('footer-maturity-total').textContent = formatINR(Math.round(totalMaturity));
+
+    if (!_searchMatches || _searchMatches.length === 0) {
+      alert('No match found.');
+      return;
     }
-    // Add event listener for the update totals button
-    document.getElementById('update-totals-btn').addEventListener('click', updateTotals);
-  </script>
+
+    // advance to next match on successive clicks
+    _searchPos = (_searchPos + 1) % _searchMatches.length;
+    const foundIndex = _searchMatches[_searchPos];
+
+    // Center the found row in the visible list (center position is index 3)
+    currentIndex = foundIndex - 3;
+    // normalize currentIndex into valid range
+    if (items.length > 0) {
+      currentIndex = ((currentIndex % items.length) + items.length) % items.length;
+    } else {
+      currentIndex = 0;
+    }
+
+    updateListItems();
+
+    // Update slider to reflect found row (1-based)
+    if (typeof slider !== 'undefined') {
+      slider.max = items.length || 1;
+      slider.value = Math.min(Math.max(1, foundIndex + 1), slider.max);
+      if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
+    }
+
+    // Focus first editable cell of center row
+    const centerRow = listBody.querySelectorAll('.list-item')[3];
+    if (centerRow) {
+      const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
+      if (firstEditableCell) firstEditableCell.focus();
+    }
+  }
+
+  // Attach search button and Enter-key handler
+  const searchBtn = document.getElementById('search-btn');
+  if (searchBtn) searchBtn.addEventListener('click', doSearch);
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      doSearch();
+    }
+  });
+
+  // ...existing code...
+</script>
 </body>
 </html>
