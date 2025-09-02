@@ -280,8 +280,7 @@
         reportHtml += `<tr style="font-weight:bold;background:#e0e7ef"><td style="text-align:left;padding-left:10px">Total</td><td style="text-align:right">₹ ${formatINR(totalPrincipalFY)}</td><td style="text-align:right">₹ ${formatINR(totalIncomeFY)}</td><td style="text-align:right">₹ ${formatINR(totalMaturityFY)}</td></tr>`;
         reportHtml += `</tbody></table></div>`;
 
-        // removed duplicate FY totals line (total maturity / total income) because
-        // these totals are already shown in the "Income by Individual" table above
+        reportHtml += `<div class='fy-income'>Total Maturity for ${fy}: ₹ ${formatINR(Math.round(totalMaturity))} &nbsp;&nbsp;|&nbsp;&nbsp; Total Income for ${fy}: ₹ ${formatINR(Math.round(totalIncome))}</div></div>`;
       }
       reportHtml += '</body></html>';
 
@@ -1006,12 +1005,12 @@
     let totalPrincipal = 0;
     // items is an array of rows where:
     // row[0] = Maturity Date, row[1] = Maturity Amt, row[2] = Principal Amt
-    items.forEach((row) => {
+    items.forEach(row => {
       // remove commas if any, then parse
-      const m = parseFloat(String(row[1] || '').replace(/,/g, '')) || 0;
-      const p = parseFloat(String(row[2] || '').replace(/,/g, '')) || 0;
-      totalMaturity += m;
-      totalPrincipal  += p;
+      const m = parseFloat(String(row[1] || '').replace(/,/g, ''));
+      const p = parseFloat(String(row[2] || '').replace(/,/g, ''));
+      if (!isNaN(m)) totalMaturity += m;
+      if (!isNaN(p)) totalPrincipal  += p;
     });
 
     // Round to nearest integer
