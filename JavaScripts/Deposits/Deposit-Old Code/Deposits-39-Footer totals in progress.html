@@ -445,15 +445,7 @@
         ' '       // col 9: blank
       ];
       footerCells.forEach((cell, index) => {
-        // For the second column (index 1) place a "Sum" button instead of plain text
-        if (index === 1) {
-          cell.innerHTML = `<button id="footer-sum-btn" type="button">Sum</button>`;
-        } else {
-          if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
-        }
-        // add data attributes / ids for the tot cells so they can be updated later
-        if (index === 2) cell.id = 'data-footer-tot1'; // Maturity Amt place
-        if (index === 3) cell.id = 'data-footer-tot2'; // Principal Amt place
+        if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
         cell.style.width = `${columnWidths[index]}px`;
       });
     }
@@ -569,15 +561,7 @@
         ' '       // col 9: blank
       ];
       footerCells.forEach((cell, index) => {
-        // For the second column (index 1) place a "Sum" button instead of plain text
-        if (index === 1) {
-          cell.innerHTML = `<button id="footer-sum-btn" type="button">Sum</button>`;
-        } else {
-          if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
-        }
-        // add data attributes / ids for the tot cells so they can be updated later
-        if (index === 2) cell.id = 'data-footer-tot1'; // Maturity Amt place
-        if (index === 3) cell.id = 'data-footer-tot2'; // Principal Amt place
+        if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
         cell.style.width = `${columnWidths[index]}px`;
       });
     }
@@ -781,14 +765,6 @@
     copyUpperBtn.addEventListener('click', copyUpperRow);
     createHeaderRow(); // Create the header row
     createFooterRow(); // Create footer identical to header to keep alignment
-    // Wire Sum button to trigger the same action as Update Totals button
-    const footerSumBtn = document.getElementById('footer-sum-btn');
-    if (footerSumBtn) {
-      footerSumBtn.addEventListener('click', () => {
-        const upd = document.getElementById('update-totals-btn');
-        if (upd) upd.click();
-      });
-    }
     createListItems();
     animateBtn.addEventListener('mousedown', animateList);
     animateDownBtn.addEventListener('mousedown', animateListDown);
@@ -1249,8 +1225,8 @@
 
   // ---------- Update Totals button handler ----------
   document.getElementById('update-totals-btn').addEventListener('click', function() {
-    const footerMtd = document.getElementById('footer-maturity-total'); // footer-table (separate) cell
-    const footerPr  = document.getElementById('footer-principal-total'); // footer-table (separate) cell
+    const footerMtd = document.getElementById('footer-maturity-total');
+    const footerPr  = document.getElementById('footer-principal-total');
     if (!footerMtd || !footerPr) return;
 
     let totalMaturity = 0;
@@ -1269,15 +1245,9 @@
     const mInt = Math.round(totalMaturity);
     const pInt = Math.round(totalPrincipal);
 
-    // Format in Indian Rupee style and set cell text for existing footer-table
+    // Format in Indian Rupee style and set cell text
     footerMtd.textContent = '₹ ' + mInt.toLocaleString('en-IN');
     footerPr.textContent  = '₹ ' + pInt.toLocaleString('en-IN');
-
-    // Also update the data-table footer (tfoot) tot1 / tot2 cells
-    const dataTot1 = document.getElementById('data-footer-tot1');
-    const dataTot2 = document.getElementById('data-footer-tot2');
-    if (dataTot1) dataTot1.textContent = '₹ ' + mInt.toLocaleString('en-IN');
-    if (dataTot2) dataTot2.textContent = '₹ ' + pInt.toLocaleString('en-IN');
   });
   </script>
 </body>

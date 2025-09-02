@@ -445,12 +445,7 @@
         ' '       // col 9: blank
       ];
       footerCells.forEach((cell, index) => {
-        // For the second column (index 1) place a "Sum" button instead of plain text
-        if (index === 1) {
-          cell.innerHTML = `<button id="footer-sum-btn" type="button">Sum</button>`;
-        } else {
-          if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
-        }
+        if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
         // add data attributes / ids for the tot cells so they can be updated later
         if (index === 2) cell.id = 'data-footer-tot1'; // Maturity Amt place
         if (index === 3) cell.id = 'data-footer-tot2'; // Principal Amt place
@@ -569,12 +564,7 @@
         ' '       // col 9: blank
       ];
       footerCells.forEach((cell, index) => {
-        // For the second column (index 1) place a "Sum" button instead of plain text
-        if (index === 1) {
-          cell.innerHTML = `<button id="footer-sum-btn" type="button">Sum</button>`;
-        } else {
-          if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
-        }
+        if (footerTexts[index] !== undefined) cell.textContent = footerTexts[index];
         // add data attributes / ids for the tot cells so they can be updated later
         if (index === 2) cell.id = 'data-footer-tot1'; // Maturity Amt place
         if (index === 3) cell.id = 'data-footer-tot2'; // Principal Amt place
@@ -781,14 +771,6 @@
     copyUpperBtn.addEventListener('click', copyUpperRow);
     createHeaderRow(); // Create the header row
     createFooterRow(); // Create footer identical to header to keep alignment
-    // Wire Sum button to trigger the same action as Update Totals button
-    const footerSumBtn = document.getElementById('footer-sum-btn');
-    if (footerSumBtn) {
-      footerSumBtn.addEventListener('click', () => {
-        const upd = document.getElementById('update-totals-btn');
-        if (upd) upd.click();
-      });
-    }
     createListItems();
     animateBtn.addEventListener('mousedown', animateList);
     animateDownBtn.addEventListener('mousedown', animateListDown);
