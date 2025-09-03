@@ -131,7 +131,31 @@
       </tfoot>
     </table>
   </div>
-  
+  <!-- Table footer for totals, perfectly aligned below the animated table -->
+  <table id="footer-table" style="margin-left:auto; margin-right:auto; border-collapse:collapse; table-layout:fixed; width:auto;">
+    <colgroup>
+      <col style="width:20px">
+      <col style="width:100px">
+      <col style="width:110px">
+      <col style="width:110px">
+      <col style="width:100px">
+      <col style="width:200px">
+      <col style="width:70px">
+      <col style="width:70px">
+      <col style="width:50px">
+    </colgroup>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td style="font-weight:bold; text-align:right;">Totals</td>
+        <td id="footer-maturity-total" style="font-weight:bold; text-align:right;">0.00</td>
+        <td id="footer-principal-total" style="font-weight:bold; text-align:right;">0.00</td>
+        <td colspan="5">
+          <!-- SUM button moved into data-table footer -->
+        </td>
+      </tr>
+    </tfoot>
+  </table>
   </div>
 
   <!-- Search UI (moved here): placed above button row, immediately after Update Totals -->
@@ -1064,7 +1088,7 @@
     const tablePr  = document.getElementById('table-principal-total');
     const footerMtd = document.getElementById('footer-maturity-total');
     const footerPr  = document.getElementById('footer-principal-total');
-  
+    alert('clicked');
     // If none of the target cells exist, nothing to do
     if ((!tableMtd || !tablePr) && (!footerMtd || !footerPr)) return;
 
