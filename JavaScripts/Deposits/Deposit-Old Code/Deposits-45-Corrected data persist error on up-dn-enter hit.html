@@ -434,38 +434,25 @@
       setColumnWidths();
     }
     /////////////////////////////////
-    // --- preserved focus storage for keyboard-triggered animations ---
-    window._preservedFocus = null;
-
     function animateList() {
       if (isAnimating) return;
       isAnimating = true;
-      // Use preserved focus info if provided (keyboard case), otherwise read activeElement
+      const activeElement = document.activeElement;
       let focusedCellIndex = -1;
       let focusedRowIndex = -1;
-      if (window._preservedFocus) {
-        focusedCellIndex = window._preservedFocus.cellIndex;
-        focusedRowIndex = window._preservedFocus.rowIndex;
-        // commit text saved earlier
+      if (activeElement.tagName === 'TD') {
+        const currentRow = activeElement.parentElement;
+        const cells = currentRow.getElementsByTagName('td');
+        focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement);
+        focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow);
         const rowOffset = (currentIndex + focusedRowIndex) % items.length;
-        items[rowOffset][focusedCellIndex - 1] = window._preservedFocus.text;
-        window._preservedFocus = null;
+        items[rowOffset][focusedCellIndex - 1] = activeElement.textContent;
       } else {
-        const activeElement = document.activeElement;
-        if (activeElement && activeElement.tagName === 'TD') {
-          const currentRow = activeElement.parentElement;
-          const cells = currentRow.getElementsByTagName('td');
-          focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement);
-          focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow);
-          const rowOffset = (currentIndex + focusedRowIndex) % items.length;
-          items[rowOffset][focusedCellIndex - 1] = activeElement.textContent;
-        } else {
-          const centerRow = listBody.querySelectorAll('.list-item')[3];
-          const firstCell = centerRow.firstChild;
-          if (firstCell) firstCell.focus();
-          focusedCellIndex = 0;
-          focusedRowIndex = 3;
-        }
+        const centerRow = listBody.querySelectorAll('.list-item')[3];
+        const firstCell = centerRow.firstChild;
+        firstCell.focus();
+        focusedCellIndex = 0;
+        focusedRowIndex = 3;
       }
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
@@ -486,7 +473,7 @@
           if (focusedCellIndex !== -1 && focusedRowIndex !== -1) {
             const newRow = listItems[3];
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
-            if (newCell) newCell.focus();
+            newCell.focus();
           }
           // Update slider to reflect current center record
           if (typeof slider !== 'undefined') {
@@ -498,35 +485,25 @@
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
-
     function animateListDown() {
       if (isAnimating) return;
       isAnimating = true;
-      // Use preserved focus info if provided (keyboard case), otherwise read activeElement
+      const activeElement = document.activeElement;
       let focusedCellIndex = -1;
       let focusedRowIndex = -1;
-      if (window._preservedFocus) {
-        focusedCellIndex = window._preservedFocus.cellIndex;
-        focusedRowIndex = window._preservedFocus.rowIndex;
+      if (activeElement.tagName === 'TD') {
+        const currentRow = activeElement.parentElement;
+        const cells = currentRow.getElementsByTagName('td');
+        focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement);
+        focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow);
         const rowOffset = (currentIndex + focusedRowIndex) % items.length;
-        items[rowOffset][focusedCellIndex - 1] = window._preservedFocus.text;
-        window._preservedFocus = null;
+        items[rowOffset][focusedCellIndex - 1] = activeElement.textContent;
       } else {
-        const activeElement = document.activeElement;
-        if (activeElement && activeElement.tagName === 'TD') {
-          const currentRow = activeElement.parentElement;
-          const cells = currentRow.getElementsByTagName('td');
-          focusedCellIndex = Array.prototype.indexOf.call(cells, activeElement);
-          focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow);
-          const rowOffset = (currentIndex + focusedRowIndex) % items.length;
-          items[rowOffset][focusedCellIndex - 1] = activeElement.textContent;
-        } else {
-          const centerRow = listBody.querySelectorAll('.list-item')[3];
-          const firstCell = centerRow.firstChild;
-          if (firstCell) firstCell.focus();
-          focusedCellIndex = 0;
-          focusedRowIndex = 3;
-        }
+        const centerRow = listBody.querySelectorAll('.list-item')[3];
+        const firstCell = centerRow.firstChild;
+        firstCell.focus();
+        focusedCellIndex = 0;
+        focusedRowIndex = 3;
       }
       const listItems = document.querySelectorAll('.list-item');
       listItems.forEach((item, index) => {
@@ -547,7 +524,7 @@
           if (focusedCellIndex !== -1 && focusedRowIndex !== -1) {
             const newRow = listItems[3];
             const newCell = newRow.getElementsByTagName('td')[focusedCellIndex];
-            if (newCell) newCell.focus();
+            newCell.focus();
           }
           // Update slider to reflect current center record
           if (typeof slider !== 'undefined') {
@@ -559,22 +536,35 @@
         }, 50);
       }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--animation-duration')) * 1000);
     }
-
-    // Replace blur-based commit in keydown: save focus info then call animate functions
+    function insertRowBelow() {
+      const currentRow = (currentIndex + 3) % items.length;
+      const newRow = Array(numColumns - 1).fill('');
+      items.splice(currentRow + 1, 0, newRow);
+      updateListItems();
+      // Increase slider max by 1
+      slider.max = items.length;
+    }
+    function insertRowAbove() {
+      const currentRow = (currentIndex + 3) % items.length;
+      const newRow = Array(numColumns - 1).fill('');
+      items.splice(currentRow, 0, newRow);
+      updateListItems();
+      // Increase slider max by 1
+      slider.max = items.length;
+    }
     document.addEventListener('keydown', (event) => {
       const activeElement = document.activeElement;
-      if (activeElement && activeElement.tagName === 'TD') {
+      if (activeElement.tagName === 'TD') {
         const currentRow = activeElement.parentElement;
         const cells = currentRow.getElementsByTagName('td');
         const cellIndex = Array.prototype.indexOf.call(cells, activeElement);
-        const focusedRowIndex = Array.prototype.indexOf.call(listBody.children, currentRow);
         if (event.key === 'Enter' || event.key === 'ArrowDown') {
-          // save edited text and focus coordinates, do NOT blur (preserve keyboard editing UX)
-          window._preservedFocus = { cellIndex: cellIndex, rowIndex: focusedRowIndex, text: activeElement.textContent };
+          // ensure current edit is committed before animating
+          try { activeElement.blur(); } catch (e) {}
           animateList();
           event.preventDefault();
         } else if (event.key === 'ArrowUp') {
-          window._preservedFocus = { cellIndex: cellIndex, rowIndex: focusedRowIndex, text: activeElement.textContent };
+          try { activeElement.blur(); } catch (e) {}
           animateListDown();
           event.preventDefault();
         } else if (event.key === 'ArrowRight') {
@@ -625,60 +615,6 @@
       const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
       if (firstEditableCell) {
         firstEditableCell.focus();
-      }
-    }
-
-    // Insert a blank row below the center row
-    function insertRowBelow() {
-      const centerRowIndex = (currentIndex + 3) % items.length;
-      const newRow = Array.from({ length: numColumns - 1 }, () => '');
-      items.splice(centerRowIndex + 1, 0, newRow);
-      // Keep currentIndex valid
-      if (currentIndex > items.length - 1) currentIndex = items.length - 1;
-      // Invalidate search cache
-      _searchItemsVersion = items.length;
-      _searchMatches = [];
-      _searchPos = -1;
-      updateListItems();
-      // Update slider range and position
-      if (typeof slider !== 'undefined') {
-        slider.max = items.length;
-        const centerSerial = ((currentIndex + 3) % items.length) + 1;
-        slider.value = Math.min(Math.max(1, centerSerial), items.length);
-        if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
-      }
-      // Focus editable cell in center row
-      const centerRow = listBody.querySelectorAll('.list-item')[3];
-      if (centerRow) {
-        const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
-        if (firstEditableCell) firstEditableCell.focus();
-      }
-    }
-
-    // Insert a blank row above the center row
-    function insertRowAbove() {
-      const centerRowIndex = (currentIndex + 3) % items.length;
-      const newRow = Array.from({ length: numColumns - 1 }, () => '');
-      items.splice(centerRowIndex, 0, newRow);
-      // After inserting above, make the inserted row the new center by advancing currentIndex
-      currentIndex = (currentIndex + 1) % items.length;
-      // Invalidate search cache
-      _searchItemsVersion = items.length;
-      _searchMatches = [];
-      _searchPos = -1;
-      updateListItems();
-      // Update slider range and position
-      if (typeof slider !== 'undefined') {
-        slider.max = items.length;
-        const centerSerial = ((currentIndex + 3) % items.length) + 1;
-        slider.value = Math.min(Math.max(1, centerSerial), items.length);
-        if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
-      }
-      // Focus editable cell in center row
-      const centerRow = listBody.querySelectorAll('.list-item')[3];
-      if (centerRow) {
-        const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
-        if (firstEditableCell) firstEditableCell.focus();
       }
     }
     /////////////////////////////////////////////
