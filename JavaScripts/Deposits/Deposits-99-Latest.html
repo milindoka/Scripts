@@ -157,6 +157,7 @@
     <button id="load-local-btn">LLS</button> <!-- Load from Local Storage -->
     <button id="report-btn">Report</button>
     <button id="sample-data-btn">Sample Data</button> <!-- ADDED -->
+    <button id="load-csv-btn">Load CSV</button> <!-- NEW -->
   </div>
   <div style="text-align:center; margin-bottom:12px;">
     <button id="accrued-btn">Accrued Interest</button>
@@ -803,73 +804,133 @@
     const loadLocalBtn = document.getElementById('load-local-btn');
     saveLocalBtn.addEventListener('click', saveDataToLocalStorage);
     loadLocalBtn.addEventListener('click', loadDataFromLocalStorage);
+    
+    // --- Load CSV button handler (fixed: trigger file picker) ---
+    const loadCsvBtn = document.getElementById('load-csv-btn');
+    loadCsvBtn.addEventListener('click', function() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.csv,text/csv';
+      input.onchange = function (e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const text = evt.target.result;
+          // Simple robust CSV parser (handles quotes and double quotes)
+          function parseCSV(src) {
+            const rows = [];
+            let cur = [];
+            let field = '';
+            let inQuotes = false;
+            for (let i = 0; i < src.length; i++) {
+              const ch = src[i];
+              const next = src[i+1];
+              if (inQuotes) {
+                if (ch === '"') {
+                  if (next === '"') { field += '"'; i++; } else { inQuotes = false; }
+                } else {
+                  field += ch;
+                }
+              } else {
+                if (ch === '"') {
+                  inQuotes = true;
+                } else if (ch === ',') {
+                  cur.push(field); field = '';
+                } else if (ch === '\r') {
+                  // ignore
+                } else if (ch === '\n') {
+                  cur.push(field); rows.push(cur); cur = []; field = '';
+                } else {
+                  field += ch;
+                }
+              }
+            }
+            // push last
+            if (field !== '' || cur.length > 0) { cur.push(field); rows.push(cur); }
+            return rows;
+          }
 
-    // --- Sample Data generator button handler (ADDED) ---
-    const sampleDataBtn = document.getElementById('sample-data-btn');
-    sampleDataBtn.addEventListener('click', function() {
-      if (!confirm('Generate 50 sample deposits? This will replace current data in memory.')) return;
+          const csvRows = parseCSV(text).filter(r => r.length > 0 && r.some(c => c.trim() !== ''));
+          if (csvRows.length === 0) { alert('CSV empty or not parseable'); return; }
 
-      function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-      function pad(n){ return n < 10 ? '0' + n : n; }
-      function formatDate(d){ return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`; }
-      const banks = ['SBI','HDFC','ICICI','AXIS','PNB','BOI','Canara Bank','Kotak'];
-      const names = ['Ramesh','Suresh','Anita','Priya','Amit','Vijay','Sunita','Rita','Kumar','Rahul','Neha','Manish','Pooja','Deepak','Sanjay'];
+          // Attempt to detect header row mapping to app headers (exclude 'Sr')
+          function normalize(s){ return (s||'').toString().toLowerCase().replace(/[^a-z0-9]/g,''); }
+          const targetHeaders = headerArray.slice(1).map(h => normalize(h)); // expected columns (without Sr)
+          let dataStart = 0;
+          let mapping = null; // maps target index -> csv column index
+          const firstRow = csvRows[0];
+          // try header detection
+          const firstNorm = firstRow.map(c => normalize(c));
+          let hits = 0;
+          const tryMap = targetHeaders.map(() => -1);
+          firstNorm.forEach((fn, ci) => {
+            targetHeaders.forEach((th, ti) => {
+              if (fn === th || fn.indexOf(th) !== -1 || th.indexOf(fn) !== -1) {
+                if (tryMap[ti] === -1) { tryMap[ti] = ci; hits++; }
+              }
+            });
+          });
+          // if at least 3 matches, accept header
+          if (hits >= 3) { mapping = tryMap; dataStart = 1; }
+          else {
+            // no header: assume CSV columns already match expected order
+            mapping = null;
+            dataStart = 0;
+          }
 
-      const newRows = [];
-      for (let i = 0; i < 50; i++) {
-        const principal = randomInt(5000, 500000);
-        // interest between 5.00 and 9.00 (two decimals)
-        const rate = (randomInt(500, 900) / 100);
-        const termYears = randomInt(1, 5);
-        // opening date between 2017-01-01 and 2023-12-31
-        const startYear = randomInt(2017, 2023);
-        const openMonth = randomInt(0, 11);
-        const openDay = randomInt(1, 28);
-        const opening = new Date(startYear, openMonth, openDay);
-        const maturity = new Date(opening.getTime());
-        maturity.setFullYear(opening.getFullYear() + termYears);
-        // compute maturity amount using annual compounding
-        const maturityAmt = +(principal * Math.pow(1 + rate / 100, termYears)).toFixed(2);
-        const fdAcc = String(randomInt(10000000, 99999999));
-        const bank = banks[randomInt(0, banks.length - 1)];
-        const name = names[randomInt(0, names.length - 1)];
-        // Row order: Maturity Date, Maturity Amt, Principal Amt, Opening Date, FD Account No, Interest, Banks, Name
-        newRows.push([
-          formatDate(maturity),
-          maturityAmt.toString(),
-          principal.toString(),
-          formatDate(opening),
-          fdAcc,
-          rate.toFixed(2),
-          bank,
-          name
-        ]);
-      }
+          // Build rows in app format: [Maturity Date, Maturity Amt, Principal Amt, Opening Date, FD Account No, Interest, Banks, Name]
+          const expectedCols = headerArray.length - 1;
+          const newRows = [];
+          for (let r = dataStart; r < csvRows.length; r++) {
+            const csvRow = csvRows[r];
+            const out = new Array(expectedCols).fill('');
+            if (mapping) {
+              for (let ti = 0; ti < expectedCols; ti++) {
+                const ci = mapping[ti];
+                if (ci >= 0 && ci < csvRow.length) out[ti] = (csvRow[ci] || '').toString().trim();
+              }
+            } else {
+              // take first expectedCols columns from CSV row
+              for (let ci = 0; ci < expectedCols && ci < csvRow.length; ci++) out[ci] = (csvRow[ci] || '').toString().trim();
+            }
+            // skip empty rows (all empty)
+            if (out.every(c => c === '')) continue;
+            newRows.push(out);
+          }
 
-      // Replace items with newRows and update UI
-      items.length = 0;
-      newRows.forEach(r => items.push(r));
-      currentIndex = 0;
-      updateListItems();
-      // Update slider range and set to first record
-      if (typeof slider !== 'undefined') {
-        slider.max = items.length;
-        slider.value = 1;
-        if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
-      }
-      // Invalidate search cache
-      _searchItemsVersion = items.length;
-      _searchLastQuery = '';
-      _searchMatches = [];
-      _searchPos = -1;
+          if (newRows.length === 0) { alert('No data rows found in CSV'); return; }
 
-      // Focus first editable cell of center row
-      const centerRow = listBody.querySelectorAll('.list-item')[3];
-      if (centerRow) {
-        const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
-        if (firstEditableCell) firstEditableCell.focus();
-      }
-      alert('Sample data (50 deposits) generated.');
+          // Replace items with loaded rows
+          items.length = 0;
+          newRows.forEach(rw => items.push(rw));
+          // reset currentIndex so center is first page
+          currentIndex = 0;
+          updateListItems();
+          // update slider
+          if (typeof slider !== 'undefined') {
+            slider.max = items.length;
+            slider.value = 1;
+            sliderValueDiv.textContent = slider.value;
+          }
+          // invalidate search cache
+          _searchItemsVersion = items.length;
+          _searchMatches = [];
+          _searchPos = -1;
+          // focus center editable cell
+          setTimeout(() => {
+            const centerRow = listBody.querySelectorAll('.list-item')[3];
+            if (centerRow) {
+              const firstEditableCell = centerRow.querySelector('td:nth-child(2)');
+              if (firstEditableCell) firstEditableCell.focus();
+            }
+          }, 10);
+          alert(`Loaded ${newRows.length} rows from CSV`);
+        };
+        reader.readAsText(file, 'utf-8');
+      };
+      // trigger file picker
+      input.click();
     });
     // Accrued Interest button handler
     document.getElementById('accrued-btn').addEventListener('click', function() {
