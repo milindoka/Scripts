@@ -1,0 +1,34 @@
+Github Script to run from Desktop Shortcut for quick push
+
+#!/bin/bash
+
+gnome-terminal -- /bin/sh -c 'echo Git Upload Session;
+echo
+sleep 1;
+echo moving to my page..; 
+echo ;
+sleep 1;
+ cd /home/milind/Data/Projects/milindoka.github.io ; 
+echo uploading changes; 
+echo
+sleep 1;
+make git m="Anvil - Fixed-Deposits-Mob- Minor Edits"
+sleep 1;
+echo ;
+echo Quit Terminal;
+echo ;
+sleep 3
+# exec bash'   # Keep terminal window open
+'
+----------------------------------------
+
+    [Desktop Entry]
+    Name=Update My Home Page On Git
+    Comment=Runs a custom Bash script For Minor Edits
+    Exec=/home/milind/Update_My_Page.sh
+    #Icon=/path/to/an/icon.png  # Optional: specify an icon file
+    Terminal=true             # Set to true if the script needs a terminal window
+    Type=Application
+    Categories=Utility;
+
+
