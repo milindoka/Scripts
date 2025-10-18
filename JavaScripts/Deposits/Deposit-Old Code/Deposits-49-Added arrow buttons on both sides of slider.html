@@ -108,10 +108,6 @@
     #update-totals-btn:hover {
       background-color: #45a049;
     }
-    /* Slider button styles */
-    #slider-up-btn, #slider-down-btn {
-      width: 40px;
-    }
   </style>
 </head>
 <body>
@@ -148,6 +144,8 @@
 
   <!-- Button Container -->
   <div class="button-container">
+    <button id="animate-btn">Animate Up</button>
+    <button id="animate-down-btn">Animate Down</button>
     <button id="insert-below-btn">Insert Below</button>
     <button id="insert-above-btn">Insert Above</button>
     <button id="delete-row-btn">Delete Row</button>
@@ -254,14 +252,9 @@
       });
 
       // Build report HTML
-      const now = new Date();
-      const dd = String(now.getDate()).padStart(2, '0');
-      const mm = String(now.getMonth() + 1).padStart(2, '0');
-      const yy = String(now.getFullYear()).slice(-2);
-      const reportTitle = `FD-Report-Generated-On-${dd}-${mm}-${yy}`;
-      let reportHtml = `<!DOCTYPE html><html lang="en"><head><meta charset='UTF-8'><title>${reportTitle}</title><style>
+      let reportHtml = `<!DOCTYPE html><html lang="en"><head><meta charset='UTF-8'><title>FD Report by Financial Year</title><style>
         body{font-family:Arial;margin:20px} h2{color:#2a4d7a} table{border-collapse:collapse;margin-bottom:30px;width:100%} th,td{border:1px solid #888;padding:6px 10px;text-align:center} th{background:#e0e7ef} .right{text-align:right}
-      </style></head><body><h1>${reportTitle}</h1>`;
+      </style></head><body><h1>Fixed Deposit Report by Financial Year (Maturity Date)</h1>`;
 
       Object.keys(fyMap).sort().forEach(fy => {
         const entries = fyMap[fy];
@@ -315,6 +308,8 @@
     const listContainer = document.getElementById('list-container');
     const slider = document.getElementById('slider');
     const sliderValueDiv = document.getElementById('slider-value');
+    const animateBtn = document.getElementById('animate-btn');
+    const animateDownBtn = document.getElementById('animate-down-btn');
     const insertBelowBtn = document.getElementById('insert-below-btn');
     const insertAboveBtn = document.getElementById('insert-above-btn');
     const deleteRowBtn = document.getElementById('delete-row-btn');
@@ -695,6 +690,8 @@
     copyUpperBtn.addEventListener('click', copyUpperRow);
     createHeaderRow(); // Create the header row
     createListItems();
+    animateBtn.addEventListener('mousedown', animateList);
+    animateDownBtn.addEventListener('mousedown', animateListDown);
     insertBelowBtn.addEventListener('click', insertRowBelow);
     insertAboveBtn.addEventListener('click', insertRowAbove);
     deleteRowBtn.addEventListener('click', deleteRow);
@@ -703,8 +700,8 @@
     // Add event listeners for slider buttons
     const sliderUpBtn = document.getElementById('slider-up-btn');
     const sliderDownBtn = document.getElementById('slider-down-btn');
-    sliderUpBtn.addEventListener('click', animateListDown);
-    sliderDownBtn.addEventListener('click', animateList);
+    sliderUpBtn.addEventListener('click', animateList);
+    sliderDownBtn.addEventListener('click', animateListDown);
   // Throttle for wheel->slider mapping
   let _lastWheelAt = 0;
   const _wheelThrottleMs = 80; // minimum ms between handled wheel events

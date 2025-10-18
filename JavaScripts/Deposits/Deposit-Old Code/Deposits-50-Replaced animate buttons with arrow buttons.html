@@ -108,10 +108,6 @@
     #update-totals-btn:hover {
       background-color: #45a049;
     }
-    /* Slider button styles */
-    #slider-up-btn, #slider-down-btn {
-      width: 40px;
-    }
   </style>
 </head>
 <body>
@@ -254,14 +250,9 @@
       });
 
       // Build report HTML
-      const now = new Date();
-      const dd = String(now.getDate()).padStart(2, '0');
-      const mm = String(now.getMonth() + 1).padStart(2, '0');
-      const yy = String(now.getFullYear()).slice(-2);
-      const reportTitle = `FD-Report-Generated-On-${dd}-${mm}-${yy}`;
-      let reportHtml = `<!DOCTYPE html><html lang="en"><head><meta charset='UTF-8'><title>${reportTitle}</title><style>
+      let reportHtml = `<!DOCTYPE html><html lang="en"><head><meta charset='UTF-8'><title>FD Report by Financial Year</title><style>
         body{font-family:Arial;margin:20px} h2{color:#2a4d7a} table{border-collapse:collapse;margin-bottom:30px;width:100%} th,td{border:1px solid #888;padding:6px 10px;text-align:center} th{background:#e0e7ef} .right{text-align:right}
-      </style></head><body><h1>${reportTitle}</h1>`;
+      </style></head><body><h1>Fixed Deposit Report by Financial Year (Maturity Date)</h1>`;
 
       Object.keys(fyMap).sort().forEach(fy => {
         const entries = fyMap[fy];
