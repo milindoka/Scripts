@@ -143,10 +143,6 @@
     <div class="search-wrapper" style="display:inline-flex;align-items:center;gap:6px;">
       <input id="search-input" type="search" placeholder="Search..." style="padding:6px 8px;font-size:14px;width:240px;border:1px solid #888;border-radius:4px;" />
       <button id="search-btn" title="Search" style="padding:6px 8px;font-size:14px;cursor:pointer;">🔍</button>
-      <!-- User notification area (inline with search) -->
-      <div id="user-alert" style="display:inline-block; margin-left:12px; padding:6px 8px; min-width:200px; text-align:left; color:#b22222; font-weight:600;">
-        User alert Message..
-      </div>
     </div>
   </div>
 
@@ -312,7 +308,7 @@
       reportHtml += `</body></html>`;
 
       const reportWin = window.open('', '_blank');
-      if (reportWin) { reportWin.document.write(reportHtml); reportWin.document.close(); } else { showMessage('Unable to open report window. Please allow pop-ups.'); }
+      if (reportWin) { reportWin.document.write(reportHtml); reportWin.document.close(); } else { alert('Unable to open report window. Please allow pop-ups.'); }
     });
     
     
@@ -622,7 +618,7 @@
           if (typeof sliderValueDiv !== 'undefined') sliderValueDiv.textContent = slider.value;
         }
       } else {
-        showMessage("Cannot delete row. Minimum number of rows (7) reached.");
+        alert("Cannot delete row. Minimum number of rows (7) reached.");
       }
     }
     const copyUpperBtn = document.getElementById('copy-upper-btn');
@@ -797,7 +793,7 @@
     // Function to save data to local storage
     function saveDataToLocalStorage() {
       localStorage.setItem('fixedDepositData', JSON.stringify(items));
-      showMessage('Data saved to local storage.');
+      alert('Data saved to local storage.');
     }
     // Function to load data from local storage
     function loadDataFromLocalStorage() {
@@ -872,7 +868,7 @@
           }
 
           const csvRows = parseCSV(text).filter(r => r.length > 0 && r.some(c => c.trim() !== ''));
-          if (csvRows.length === 0) { showMessage('CSV empty or not parseable'); return; }
+          if (csvRows.length === 0) { alert('CSV empty or not parseable'); return; }
 
           // Attempt to detect header row mapping to app headers (exclude 'Sr')
           function normalize(s){ return (s||'').toString().toLowerCase().replace(/[^a-z0-9]/g,''); }
@@ -919,7 +915,7 @@
             newRows.push(out);
           }
 
-          if (newRows.length === 0) { showMessage('No data rows found in CSV'); return; }
+          if (newRows.length === 0) { alert('No data rows found in CSV'); return; }
 
           // Replace items with loaded rows
           items.length = 0;
@@ -945,7 +941,7 @@
               if (firstEditableCell) firstEditableCell.focus();
             }
           }, 10);
-          showMessage(`Loaded ${newRows.length} rows from CSV`);
+          alert(`Loaded ${newRows.length} rows from CSV`);
         };
         reader.readAsText(file, 'utf-8');
       };
@@ -1061,7 +1057,7 @@
       html += `<h3>Total Accrued Interest for ${fyInput}: ₹ ${formatINR(Math.round(totalAccrued))}</h3></body></html>`;
 
       const win = window.open('', '_blank');
-      if (win) { win.document.write(html); win.document.close(); } else { showMessage('Allow pop-ups to view report.'); }
+      if (win) { win.document.write(html); win.document.close(); } else { alert('Allow pop-ups to view report.'); }
     });
     // When the user releases the mouse button after moving the slider, jump to the record number
     slider.addEventListener('change', function() {
@@ -1164,15 +1160,15 @@
       if (firstEditableCell) {
         firstEditableCell.focus();
       }
-      showMessage('Data sorted by Maturity Date in ascending order.');
+      alert('Data sorted by Maturity Date in ascending order.');
     });
     // ---------- Search functionality ----------
   function doSearch() {
     const qEl = document.getElementById('search-input');
     if (!qEl) return;
     const q = qEl.value.trim().toLowerCase();
-    if (!q) { showMessage('Enter search text'); return; }
-    if (!items || items.length === 0) { showMessage('No data to search'); return; }
+    if (!q) { alert('Enter search text'); return; }
+    if (!items || items.length === 0) { alert('No data to search'); return; }
 
     // Rebuild matches if query changed or items modified (simple version: compare length)
     if (q !== _searchLastQuery || _searchItemsVersion !== items.length) {
@@ -1190,7 +1186,7 @@
     }
 
     if (!_searchMatches || _searchMatches.length === 0) {
-      showMessage('No match found.');
+      alert('No match found.');
       return;
     }
 
@@ -1235,39 +1231,15 @@
     }
   });
 
-  // Replace all alert popups with inline notifications in the #user-alert div
-  function showMessage(msg) {
-    const el = document.getElementById('user-alert');
-    if (el) {
-      el.textContent = msg;
-      // small visual flash
-      el.style.opacity = '1';
-      el.style.transition = 'none';
-      setTimeout(() => { el.style.transition = 'opacity 0.6s'; el.style.opacity = '1'; }, 10);
-    } else {
-      // fallback to console if user-alert missing
-      console.log('MSG:', msg);
-    }
-  }
-
-  // Small helper to show temporary message (optional use)
-  function showTempMessage(msg, ms = 5000) {
-    showMessage(msg);
-    setTimeout(() => {
-      const el = document.getElementById('user-alert');
-      if (el) el.textContent = '';
-    }, ms);
-  }
-
-    // ---------- Update Totals (SUM) button handler ----------
+  // ---------- Update Totals (SUM) button handler ----------
   document.getElementById('update-totals-btn').addEventListener('click', function() {
-     const tableMtd = document.getElementById('table-maturity-total');
-     const tablePr  = document.getElementById('table-principal-total');
-     const footerMtd = document.getElementById('footer-maturity-total');
-     const footerPr  = document.getElementById('footer-principal-total');
-   
-     // If none of the target cells exist, nothing to do
-     if ((!tableMtd || !tablePr) && (!footerMtd || !footerPr)) return;
+    const tableMtd = document.getElementById('table-maturity-total');
+    const tablePr  = document.getElementById('table-principal-total');
+    const footerMtd = document.getElementById('footer-maturity-total');
+    const footerPr  = document.getElementById('footer-principal-total');
+  
+    // If none of the target cells exist, nothing to do
+    if ((!tableMtd || !tablePr) && (!footerMtd || !footerPr)) return;
 
     let totalMaturity = 0;
     let totalPrincipal = 0;
@@ -1294,7 +1266,6 @@
     if (tablePr)  tablePr.textContent  = pStr;
     if (footerMtd) footerMtd.textContent = mStr;
     if (footerPr)  footerPr.textContent  = pStr;
-    showMessage(`Totals updated: Maturity ${mStr}, Principal ${pStr}`);
   });
   </script>
 </body>
