@@ -726,22 +726,11 @@
     const saveDataBtn = document.getElementById('save-data-btn');
     saveDataBtn.addEventListener('click', saveDataAsHTML);
     function saveDataAsHTML() {
-      // Calculate sum of maturity amounts
-      let totalMaturity = 0;
-      items.forEach(row => {
-        const raw = String(row[1] || '');
-        const clean = raw.replace(/[^\d.\-]/g, '');
-        const amt = clean === '' ? 0 : parseFloat(clean);
-        if (!isNaN(amt)) totalMaturity += amt;
-      });
-      const sumInt = Math.round(Math.abs(totalMaturity));
-      const xxx = String(sumInt % 1000).padStart(3, '0');
-
       const now = new Date();
       const dd = String(now.getDate()).padStart(2, '0');
       const mm = String(now.getMonth() + 1).padStart(2, '0');
       const yy = String(now.getFullYear()).slice(-2);
-      const filename = `FD-List-${dd}-${mm}-${yy}-${xxx}.html`;
+      const filename = `FD-List-${dd}-${mm}-${yy}.html`;
 
       let htmlContent = `
       <!DOCTYPE html>
