@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Screen Vertical Slider App</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .left {
+            background-color: #e0f7fa;
+        }
+        .right {
+            background-color: #fff3e0;
+        }
+        .divider {
+            width: 10px;
+            background-color: #ccc;
+            cursor: ew-resize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .divider::before {
+            content: '⋮⋮';
+            color: #666;
+            font-size: 20px;
+            transform: rotate(90deg);
+        }
+        .value-display {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel left" id="left-panel">
+        <h2>Left View</h2>
+        <p>This is the left panel content.</p>
+    </div>
+    <div class="divider" id="divider"></div>
+    <div class="panel right" id="right-panel">
+        <h2>Right View</h2>
+        <p>This is the right panel content.</p>
+    </div>
+
+    <script>
+        const divider = document.getElementById('divider');
+        const leftPanel = document.getElementById('left-panel');
+        const rightPanel = document.getElementById('right-panel');
+
+        let isDragging = false;
+        let startX;
+        let startLeftWidth;
+
+        divider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startLeftWidth = leftPanel.offsetWidth;
+            document.body.style.cursor = 'ew-resize';
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const dx = e.clientX - startX;
+            const newLeftWidth = startLeftWidth + dx;
+
+            const containerWidth = document.body.offsetWidth;
+            const minWidth = 100;
+
+            if (newLeftWidth > minWidth && newLeftWidth < containerWidth - divider.offsetWidth - minWidth) {
+                leftPanel.style.flex = 'none';
+                leftPanel.style.width = newLeftWidth + 'px';
+                rightPanel.style.flex = '1';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
+    </script>
+</body>
+</html>
