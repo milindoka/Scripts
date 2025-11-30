@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Calendar App</title>
     <style>
-        #calendarTable {
+        #masterTable {
             border-collapse: collapse;
             width: 100%;
             margin: 20px 0;
         }
-        #calendarTable th, #calendarTable td {
+        #masterTable th, #masterTable td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
@@ -29,16 +29,16 @@
     </style>
 </head>
 <body>
-<h1>Simple Calendar</h1>
-<table id="calendarTable">
+<h1>Master Time Table </h1>
+<table id="masterTable">
     <thead>
         <tr>
+            <th>Time</th>
             <th>M</th>
             <th>T</th>
             <th>W</th>
             <th>T</th>
             <th>F</th>
-            <th>S</th>
             <th>S</th>
         </tr>
     </thead>
@@ -93,7 +93,7 @@
 </table>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const table = document.getElementById('calendarTable');
+    const table = document.getElementById('masterTable');
     const editableCells = Array.from(table.querySelectorAll('.editable-cell'));
     table.addEventListener('keydown', (event) => {
         const focusedCell = document.activeElement;
