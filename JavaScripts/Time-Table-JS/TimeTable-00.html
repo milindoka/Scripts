@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Time Table App</title>
+    <style>
+        #masterTable {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        #masterTable th, #masterTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        #masterTable thead {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+        }
+        .editable-cell {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            padding: 0;
+            margin: 0;
+            outline: none;
+        }
+        .editable-cell:focus {
+            border: 1px solid blue; /* Highlight focused cell */
+        }
+    </style>
+</head>
+<body>
+<h1>Master Time Table </h1>
+<div id="tableContainer" style="height: 400px; overflow-y: auto;">
+<table id="masterTable">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>M</th>
+            <th>T</th>
+            <th>W</th>
+            <th>T</th>
+            <th>F</th>
+            <th>S</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be generated dynamically -->
+    </tbody>
+</table>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const table = document.getElementById('masterTable');
+    const tbody = table.querySelector('tbody');
+    for (let i = 0; i < 100; i++) {
+        const tr = document.createElement('tr');
+        for (let j = 0; j < 7; j++) {
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'editable-cell';
+            input.value = (j === 0) ? (i + 1).toString() : '';
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    const editableCells = Array.from(table.querySelectorAll('.editable-cell'));
+    editableCells.forEach(cell => {
+        cell.addEventListener('input', () => {
+            cell.value = cell.value.toUpperCase();
+        });
+    });
+    table.addEventListener('keydown', (event) => {
+        const focusedCell = document.activeElement;
+        if (!focusedCell || !focusedCell.classList.contains('editable-cell')) {
+            return; // Not an editable cell, do nothing
+        }
+        const currentIndex = editableCells.indexOf(focusedCell);
+        let nextIndex = -1;
+        switch (event.key) {
+            case 'ArrowUp':
+                // Move up a row
+                nextIndex = currentIndex - 7; // There are 7 columns
+                break;
+            case 'ArrowDown':
+                // Move down a row
+                nextIndex = currentIndex + 7; // There are 7 columns
+                break;
+            case 'ArrowLeft':
+                // Move left
+                nextIndex = currentIndex - 1;
+                break;
+            case 'ArrowRight':
+                // Move right
+                nextIndex = currentIndex + 1;
+                break;
+            default:
+                return; // Not an arrow key, do nothing
+        }
+        if (nextIndex >= 0 && nextIndex < editableCells.length) {
+            editableCells[nextIndex].focus();
+            event.preventDefault(); // Prevent default arrow key behavior (e.g., scrolling)
+        }
+    });
+});
+</script>
+</body>
+</html>
