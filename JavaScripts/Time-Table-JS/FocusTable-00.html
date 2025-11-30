@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calendar App</title>
+    <title>School Time Table App</title>
     <style>
         #masterTable {
             border-collapse: collapse;
@@ -30,6 +30,7 @@
 </head>
 <body>
 <h1>Master Time Table </h1>
+<div id="tableContainer" style="height: 400px; overflow-y: auto;">
 <table id="masterTable">
     <thead>
         <tr>
@@ -43,57 +44,27 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Generate 5 rows of inputs for dates -->
-        <tr>
-            <td><input type="text" class="editable-cell" value="1"></td>
-            <td><input type="text" class="editable-cell" value="2"></td>
-            <td><input type="text" class="editable-cell" value="3"></td>
-            <td><input type="text" class="editable-cell" value="4"></td>
-            <td><input type="text" class="editable-cell" value="5"></td>
-            <td><input type="text" class="editable-cell" value="6"></td>
-            <td><input type="text" class="editable-cell" value="7"></td>
-        </tr>
-        <tr>
-            <td><input type="text" class="editable-cell" value="8"></td>
-            <td><input type="text" class="editable-cell" value="9"></td>
-            <td><input type="text" class="editable-cell" value="10"></td>
-            <td><input type="text" class="editable-cell" value="11"></td>
-            <td><input type="text" class="editable-cell" value="12"></td>
-            <td><input type="text" class="editable-cell" value="13"></td>
-            <td><input type="text" class="editable-cell" value="14"></td>
-        </tr>
-        <tr>
-            <td><input type="text" class="editable-cell" value="15"></td>
-            <td><input type="text" class="editable-cell" value="16"></td>
-            <td><input type="text" class="editable-cell" value="17"></td>
-            <td><input type="text" class="editable-cell" value="18"></td>
-            <td><input type="text" class="editable-cell" value="19"></td>
-            <td><input type="text" class="editable-cell" value="20"></td>
-            <td><input type="text" class="editable-cell" value="21"></td>
-        </tr>
-        <tr>
-            <td><input type="text" class="editable-cell" value="22"></td>
-            <td><input type="text" class="editable-cell" value="23"></td>
-            <td><input type="text" class="editable-cell" value="24"></td>
-            <td><input type="text" class="editable-cell" value="25"></td>
-            <td><input type="text" class="editable-cell" value="26"></td>
-            <td><input type="text" class="editable-cell" value="27"></td>
-            <td><input type="text" class="editable-cell" value="28"></td>
-        </tr>
-        <tr>
-            <td><input type="text" class="editable-cell" value="29"></td>
-            <td><input type="text" class="editable-cell" value="30"></td>
-            <td><input type="text" class="editable-cell" value="31"></td>
-            <td><input type="text" class="editable-cell" value=""></td>
-            <td><input type="text" class="editable-cell" value=""></td>
-            <td><input type="text" class="editable-cell" value=""></td>
-            <td><input type="text" class="editable-cell" value=""></td>
-        </tr>
+        <!-- Rows will be generated dynamically -->
     </tbody>
 </table>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('masterTable');
+    const tbody = table.querySelector('tbody');
+    for (let i = 0; i < 100; i++) {
+        const tr = document.createElement('tr');
+        for (let j = 0; j < 7; j++) {
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'editable-cell';
+            input.value = (j === 0) ? (i + 1).toString() : '';
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
     const editableCells = Array.from(table.querySelectorAll('.editable-cell'));
     table.addEventListener('keydown', (event) => {
         const focusedCell = document.activeElement;
