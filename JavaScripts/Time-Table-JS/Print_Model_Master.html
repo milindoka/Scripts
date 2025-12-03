@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Timetable</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .time-slot { background-color: #e6f7ff; font-weight: bold; }
+        .group { font-weight: bold; text-align: left; background-color: #f7f7f7; }
+        .class-data { font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1>Weekly Class Timetable</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Time Slot</th>
+                <th>Group</th>
+                <th>Day 1</th>
+                <th>Day 2</th>
+                <th>Day 3</th>
+                <th>Day 4</th>
+                <th>Day 5</th>
+                <th>Day 6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="4" class="time-slot">12:30-01:10</td>
+                <td class="group">FY-A</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+            </tr>
+            <tr>
+                <td class="group">FY-B</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ORC(GH)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-A</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ORC(GH)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-B</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ORC(GH)</td>
+            </tr>
+
+            <tr>
+                <td rowspan="4" class="time-slot">01:10-01:50</td>
+                <td class="group">FY-A</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ENG(MN)</td>
+            </tr>
+            <tr>
+                <td class="group">FY-B</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ACS(EF)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-A</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ORC(GH)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-B</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+            </tr>
+
+            <tr>
+                <td rowspan="4" class="time-slot">01:50-02:30</td>
+                <td class="group">FY-A</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+            </tr>
+            <tr>
+                <td class="group">FY-B</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">MAR(IJ)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-A</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ACS(EF)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-B</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ACS(EF)</td>
+            </tr>
+
+            <tr>
+                <td rowspan="4" class="time-slot">03:00-03:40</td>
+                <td class="group">FY-A</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ACS(EF)</td>
+            </tr>
+            <tr>
+                <td class="group">FY-B</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">MAR(IJ)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-A</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">SEP(AB)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-B</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ENG(MN)</td>
+            </tr>
+
+            <tr>
+                <td rowspan="4" class="time-slot">03:40-04:20</td>
+                <td class="group">FY-A</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ENG(MN)</td>
+            </tr>
+            <tr>
+                <td class="group">FY-B</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-A</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ENG(MN)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-B</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+            </tr>
+
+            <tr>
+                <td rowspan="4" class="time-slot">04:20-05:00</td>
+                <td class="group">FY-A</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">ACS(EF)</td>
+            </tr>
+            <tr>
+                <td class="group">FY-B</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ORC(GH)</td>
+                <td class="class-data">ORC(GH)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-A</td>
+                <td class="class-data">SEP(AB)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">MAR(IJ)</td>
+                <td class="class-data">HIN(KL)</td>
+                <td class="class-data">HIN(KL)</td>
+            </tr>
+            <tr>
+                <td class="group">SY-B</td>
+                <td class="class-data">ENG(MN)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ACS(EF)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+                <td class="class-data">ECO(CD)</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

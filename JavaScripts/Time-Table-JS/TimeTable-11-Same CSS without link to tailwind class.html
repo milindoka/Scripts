@@ -135,11 +135,10 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
         }
-        .input-row {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            justify-content: center;
+        .label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
         }
         .input {
             padding: 0.5rem;
@@ -150,15 +149,6 @@
             text-align: center;
             text-transform: uppercase;
             margin-bottom: 1rem;
-        }
-        .input-small {
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            width: 100%;
-            max-width: 7rem;
-            text-align: center;
-            text-transform: uppercase;
         }
         .input:focus {
             outline: 2px solid #f97316;
@@ -297,12 +287,11 @@
 
         <!-- Controls for generating teacher timetable -->
         <div class="controls">
-            <div class="input-row">
-                <input type="text" id="teacherCodeInput" maxlength="2" placeholder="Enter Teacher Code (e.g., MO)" class="input-small">
-                <button id="generateBtn" class="btn-primary">
-                    Generate Time Table
-                </button>
-            </div>
+            <label for="teacherCodeInput" class="label">Enter Teacher Code (e.g., MO):</label>
+            <input type="text" id="teacherCodeInput" maxlength="2" placeholder="e.g., MO" class="input">
+            <button id="generateBtn" class="btn-primary">
+                Generate Time Table
+            </button>
         </div>
 
         <div class="button-row">
