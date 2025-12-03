@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Time Table App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+        }
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .left {
+            background-color: #e0f7fa; /* Light Cyan */
+            border-right: 1px solid #ccc;
+        }
+        .right {
+            background-color: #fff3e0; /* Light Orange/Peach */
+        }
+        .divider {
+            width: 10px;
+            background-color: #ccc;
+            cursor: ew-resize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .divider::before {
+            content: '⋮⋮';
+            color: #666;
+            font-size: 20px;
+            transform: rotate(90deg);
+        }
+        .value-display {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #00796b;
+        }
+        #masterTable {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #masterTable th, #masterTable td {
+            border: 1px solid #b2dfdb; /* Cyan border */
+            padding: 4px;
+            text-align: center;
+        }
+        #masterTable th {
+            background-color: #00bcd4; /* Cyan header */
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        .editable-cell {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            text-align: center;
+            padding: 8px 4px;
+            background-color: transparent;
+            font-size: 14px;
+        }
+        .editable-cell:focus {
+            outline: 2px solid #ff9800; /* Orange focus */
+            background-color: #ffe0b2; /* Light orange background on focus */
+        }
+        
+        /* Teacher Timetable Styling */
+        #timetableDisplay table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #timetableDisplay th, #timetableDisplay td {
+            border: 1px solid #ffcc80; /* Light orange border */
+            padding: 10px;
+            text-align: center;
+        }
+        #timetableDisplay th {
+            background-color: #ff9800; /* Orange header */
+            color: white;
+            font-size: 16px;
+        }
+        #timetableDisplay .class-cell {
+            background-color: #fff8e1; /* Very light orange for class cells */
+            font-weight: 600;
+            color: #d84315; /* Dark orange text */
+        }
+        #timetableDisplay .free-cell {
+            background-color: #e0e0e0; /* Light gray for free periods */
+            color: #616161;
+            font-style: italic;
+        }
+        #timetableDisplay .time-cell {
+            font-weight: bold;
+            background-color: #ffebcc;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="panel left">
+        <h2 class="text-xl font-bold mb-4 text-center text-[#00796b]">Master Time Table Editor</h2>
+        
+        <!-- Controls for generating teacher timetable -->
+        <div class="w-full flex flex-col items-center p-4 bg-white rounded-lg shadow-md mb-6">
+            <label for="teacherCodeInput" class="mb-2 font-medium text-gray-700">Enter Teacher Code (e.g., MO):</label>
+            <input type="text" id="teacherCodeInput" maxlength="2" placeholder="e.g., MO" class="p-2 border border-gray-300 rounded-md w-full max-w-xs text-center uppercase focus:ring-2 focus:ring-orange-500 mb-4">
+            <button id="generateBtn" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-200">
+                Generate Time Table
+            </button>
+        </div>
+
+        <div class="flex justify-between w-full mb-4">
+            <button onclick="loadDefaultData()" class="bg-green-500 hover:bg-green-600 text-white text-sm py-1 px-3 rounded transition duration-200">Load Sample Data</button>
+            <button onclick="saveToFile()" class="bg-blue-500 hover:bg-blue-600 text-white text-sm py-1 px-3 rounded transition duration-200">Save Table</button>
+            <input type="file" id="fileInput" accept=".html" style="display: none;">
+            <button onclick="loadFromFile()" class="bg-purple-500 hover:bg-purple-600 text-white text-sm py-1 px-3 rounded transition duration-200">Load Table</button>
+        </div>
+
+        <div class="flex justify-center w-full mb-4 space-x-4">
+            <button onclick="addRow()" class="bg-gray-700 hover:bg-gray-900 text-white text-sm py-1 px-3 rounded transition duration-200">Add Time Slot</button>
+            <button onclick="deleteRow()" class="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-3 rounded transition duration-200">Delete Last Slot</button>
+        </div>
+
+        <table id="masterTable">
+            <thead>
+                <tr>
+                    <th>Time/Section</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be generated dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="panel right">
+        <h2 class="text-xl font-bold mb-4 text-center text-[#d84315]">Class/Teacher Time Table</h2>
+        <div id="timetableDisplay" class="w-full">
+            <p class="text-center text-gray-600 mt-10">
+                Enter a teacher code and click 'Generate Time Table' to see their personalized schedule here.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDefaultData(); // Load sample data on startup
+            document.getElementById('generateBtn').addEventListener('click', generateTeacherTimetable);
+        });
+
+        const COLUMNS = ['Time', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        // --- Core Time Table Generation Logic ---
+
+        /**
+         * Parses the master table, extracts the schedule for a specific teacher, and displays it.
+         */
+        function generateTeacherTimetable() {
+            const teacherCode = document.getElementById('teacherCodeInput').value.trim().toUpperCase();
+            const displayDiv = document.getElementById('timetableDisplay');
+            
+            if (teacherCode.length !== 2) {
+                displayDiv.innerHTML = `<p class="text-center text-red-500 mt-10 font-medium">
+                    Please enter a valid two-character teacher code (e.g., MO, CN).
+                </p>`;
+                return;
+            }
+
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const rows = Array.from(masterTableBody.querySelectorAll('tr'));
+            
+            if (rows.length === 0) {
+                displayDiv.innerHTML = `<p class="text-center text-gray-600 mt-10">
+                    Master Time Table is empty. Please load or input data first.
+                </p>`;
+                return;
+            }
+
+            // 1. Extract and Structure Master Data
+            const timeSlots = [];
+            let currentSlot = null;
+
+            // Iterate over every two rows (Time Row and Section/Class Rows)
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = Array.from(row.querySelectorAll('.editable-cell'));
+                
+                // First cell contains either Time (10:00-11:00) or Section (FY-A)
+                const firstCell = cells[0].value.trim();
+
+                // Check if this is a new Time Slot Row (e.g., 10:00-11:00)
+                if (firstCell.includes('-') && firstCell.includes(':')) {
+                    if (currentSlot) {
+                        timeSlots.push(currentSlot);
+                    }
+                    currentSlot = {
+                        time: firstCell,
+                        sections: []
+                    };
+                } 
+                // Check if this is a Section Row (e.g., FY-A)
+                else if (currentSlot && firstCell !== '') {
+                    const sectionSchedule = {
+                        section: firstCell,
+                        schedule: {}
+                    };
+                    
+                    // Iterate through Mon to Sat (indices 1 to 6)
+                    for (let j = 1; j < COLUMNS.length; j++) {
+                        sectionSchedule.schedule[COLUMNS[j]] = cells[j].value.trim();
+                    }
+                    currentSlot.sections.push(sectionSchedule);
+                }
+            }
+            // Push the last slot
+            if (currentSlot) {
+                timeSlots.push(currentSlot);
+            }
+
+            // 2. Build the Teacher's Personal Schedule
+            const teacherSchedule = {};
+            
+            timeSlots.forEach(slot => {
+                const time = slot.time;
+                teacherSchedule[time] = {};
+                
+                COLUMNS.slice(1).forEach(day => { // Iterate Mon through Sat
+                    let assignment = 'Free';
+                    let sectionInfo = '';
+                    
+                    slot.sections.forEach(sectionData => {
+                        const classValue = sectionData.schedule[day]; // e.g., 'MAT(MO)'
+                        
+                        // Regex to find the teacher code in the class string
+                        const regex = new RegExp(`\\(${teacherCode}\\)$`);
+                        
+                        if (regex.test(classValue)) {
+                            // Match found! Extract the subject code (e.g., MAT)
+                            const subject = classValue.split('(')[0];
+                            sectionInfo = `${subject} (${sectionData.section})`;
+                            assignment = 'Class';
+                        }
+                    });
+                    
+                    // Store the result for this Time/Day
+                    teacherSchedule[time][day] = sectionInfo || 'Free';
+                });
+            });
+
+            // 3. Render the Output Table
+            let html = `
+                <h3 class="text-2xl font-extrabold text-center text-[#d84315] mb-4 p-2 bg-white rounded-lg shadow-inner">
+                    Time Table for Teacher: ${teacherCode}
+                </h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time Slot</th>
+                            ${COLUMNS.slice(1).map(day => `<th>${day}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            const timeSlotsKeys = Object.keys(teacherSchedule);
+            if (timeSlotsKeys.length === 0) {
+                html = `<p class="text-center text-red-500 mt-10 font-medium">
+                    No time slots defined in the Master Table.
+                </p>`;
+            } else {
+                timeSlotsKeys.forEach(time => {
+                    html += `<tr><td class="time-cell">${time}</td>`;
+                    COLUMNS.slice(1).forEach(day => {
+                        const content = teacherSchedule[time][day];
+                        const cellClass = content === 'Free' ? 'free-cell' : 'class-cell';
+                        html += `<td class="${cellClass}">${content}</td>`;
+                    });
+                    html += `</tr>`;
+                });
+            }
+
+            html += `</tbody></table>`;
+            displayDiv.innerHTML = html;
+        }
+
+
+        // --- Auxiliary Functions (Kept from original file) ---
+
+        function loadDefaultData() {
+            const defaultData = [
+                // Time Slot Row, Section Row 1 (FY-A), Section Row 2 (FY-B)
+                ['10:00-11:00', 'FY-A', 'MAT(MO)', 'CHE(CN)', 'MAT(MO)', 'MAT(MO)', 'CHE(CN)', 'MAT(MO)'],
+                ['10:00-11:00', 'FY-B', 'PHY(TM)', 'MAT(MO)', 'PHY(TM)', 'CHE(CN)', 'MAT(MO)', 'PHY(TM)'],
+
+                ['11:00-12:00', 'FY-A', 'MAT(MO)', 'PHY(TM)', 'TM', 'CHE(CN)', 'CHE(CN)', 'PHY(TM)'],
+                ['11:00-12:00', 'FY-B', 'MAT(MO)', 'MAT(MO)', 'TM', 'MAT(MO)', 'MAT(MO)', 'MAT(MO)'],
+
+                ['12:00-01:00', 'FY-A', 'CHE(CN)', 'TM', 'MAT(MO)', 'MAT(MO)', 'PHY(TM)', 'CN'],
+                ['12:00-01:00', 'FY-B', 'MAT(MO)', 'MAT(MO)', 'CHE(CN)', 'PHY(TM)', 'MAT(MO)', 'TM'],
+                
+                // Lunch Break Row (just for separation, not counted as classes)
+                ['01:00-02:00', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH'],
+
+                ['02:00-03:00', 'FY-A', 'PHY(TM)', 'MAT(MO)', 'CHE(CN)', 'TM', 'MAT(MO)', 'MAT(MO)'],
+                ['02:00-03:00', 'FY-B', 'CHE(CN)', 'PHY(TM)', 'MAT(MO)', 'TM', 'PHY(TM)', 'CHE(CN)'],
+            ];
+
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            masterTableBody.innerHTML = ''; // Clear existing rows
+            
+            defaultData.forEach((rowData, index) => {
+                if (rowData[1] === 'LUNCH' && index > 0 && defaultData[index-1][0] === rowData[0]) {
+                    // This is a section row for a new time slot
+                    addRow(rowData, true);
+                } else if (rowData.length === COLUMNS.length) {
+                     // This is a time slot row
+                    addRow(rowData, false);
+                }
+            });
+        }
+
+        function addRow(data = [], isSectionRow = false) {
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const newRow = masterTableBody.insertRow();
+            
+            // Determine if the row should be skipped (e.g., if it's the second row of a time slot but data[0] is not a section)
+            if (isSectionRow) {
+                // If it's explicitly a section row, we still treat the first cell as editable for section name
+            } else {
+                // If it's a new time slot row, the first cell is the time, subsequent cells are sections
+                
+            }
+            
+            for (let i = 0; i < COLUMNS.length; i++) {
+                const newCell = newRow.insertCell();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'editable-cell';
+                input.value = data[i] !== undefined ? data[i] : (i === 0 && !isSectionRow ? 'XX:XX-XX:XX' : '');
+                
+                // Special handling for the first cell (Time/Section)
+                if (i === 0) {
+                    input.placeholder = isSectionRow ? 'Section' : 'Time Slot';
+                } else {
+                    input.placeholder = 'SUB(TR)';
+                }
+                
+                newCell.appendChild(input);
+            }
+        }
+        
+        // Simplified row handling for this specific master table format (Time Row followed by one or more Section Rows)
+        function addRow() {
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const newRowTime = masterTableBody.insertRow();
+            const newRowSection = masterTableBody.insertRow();
+
+            // Row 1: Time Slot Header (e.g., 03:00-04:00)
+            for (let i = 0; i < COLUMNS.length; i++) {
+                const newCell = newRowTime.insertCell();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'editable-cell';
+                input.value = i === 0 ? 'XX:XX-XX:XX' : '';
+                input.placeholder = i === 0 ? 'Time Slot' : 'SUB(TR)';
+                newCell.appendChild(input);
+            }
+            
+            // Row 2: First Section (e.g., FY-A)
+            for (let i = 0; i < COLUMNS.length; i++) {
+                const newCell = newRowSection.insertCell();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'editable-cell';
+                input.value = i === 0 ? 'FY-C' : '';
+                input.placeholder = i === 0 ? 'Section Name' : 'SUB(TR)';
+                newCell.appendChild(input);
+            }
+        }
+        
+        function deleteRow() {
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const rows = masterTableBody.querySelectorAll('tr');
+            if (rows.length > 0) {
+                // Determine if the last row is a time slot or a section row
+                // This is a simplification; ideally, you'd delete a whole time slot block (Time row + all Section rows)
+                masterTableBody.deleteRow(rows.length - 1);
+            }
+        }
+
+
+        // --- File I/O Functions (Simplified for Canvas) ---
+
+        function saveToFile() {
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const rows = masterTableBody.querySelectorAll('tr');
+            const data = [];
+            
+            rows.forEach(row => {
+                const rowData = Array.from(row.querySelectorAll('.editable-cell')).map(input => input.value);
+                data.push(rowData);
+            });
+
+            // Create a temporary HTML document structure to encapsulate the table data
+            const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Master Time Table Data</title>
+</head>
+<body>
+    <table id="masterTableData">
+        ${data.map(rowData => 
+            `<tr>${rowData.map(cell => `<td>${cell.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}</td>`).join('')}</tr>`
+        ).join('')}
+    </table>
+</body>
+</html>
+            `.trim();
+
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'master_timetable.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function loadFromFile() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.html';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const htmlString = event.target.result;
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(htmlString, 'text/html');
+                        const dataTable = doc.getElementById('masterTableData');
+                        
+                        if (dataTable) {
+                            const masterTableBody = document.querySelector('#masterTable tbody');
+                            masterTableBody.innerHTML = ''; // Clear existing rows
+                            
+                            Array.from(dataTable.querySelectorAll('tr')).forEach(dataRow => {
+                                const rowCells = Array.from(dataRow.querySelectorAll('td'));
+                                if (rowCells.length === COLUMNS.length) {
+                                    const rowValues = rowCells.map(cell => cell.textContent);
+                                    
+                                    const newRow = masterTableBody.insertRow();
+                                    for (let i = 0; i < COLUMNS.length; i++) {
+                                        const newCell = newRow.insertCell();
+                                        const input = document.createElement('input');
+                                        input.type = 'text';
+                                        input.className = 'editable-cell';
+                                        input.value = rowValues[i];
+                                        input.placeholder = i === 0 ? (rowValues[0].includes('-') ? 'Time Slot' : 'Section Name') : 'SUB(TR)';
+                                        newCell.appendChild(input);
+                                    }
+                                } else {
+                                    console.error("Skipping malformed row during load: expected " + COLUMNS.length + " cells, got " + rowCells.length);
+                                }
+                            });
+                        } else {
+                            alert("Error: The loaded file does not contain a recognizable timetable data table.");
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+    </script>
+</body>
+</html>
