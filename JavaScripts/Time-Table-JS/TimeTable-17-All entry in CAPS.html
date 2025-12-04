@@ -315,7 +315,6 @@
 
         <div class="center-buttons">
             <button onclick="addRow()" class="btn-gray">Add Time Slot</button>
-            <button onclick="addClassRow()" class="btn-blue">Add Class Row</button>
             <button onclick="deleteRow()" class="btn-red">Delete Last Slot</button>
         </div>
 
@@ -745,24 +744,6 @@
                 input.type = 'text';
                 input.className = 'editable-cell';
                 input.value = i === 0 ? 'FY-C' : '';
-                input.placeholder = i === 0 ? 'Section Name' : 'SUB(TR)';
-                newCell.appendChild(input);
-                input.addEventListener('keydown', handleKey);
-                input.addEventListener('focus', handleFocus);
-            }
-        }
-
-        function addClassRow() {
-            const masterTableBody = document.querySelector('#masterTable tbody');
-            const newRow = masterTableBody.insertRow();
-
-            // Add a single section row
-            for (let i = 0; i < COLUMNS.length; i++) {
-                const newCell = newRow.insertCell();
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'editable-cell';
-                input.value = '';
                 input.placeholder = i === 0 ? 'Section Name' : 'SUB(TR)';
                 newCell.appendChild(input);
                 input.addEventListener('keydown', handleKey);
