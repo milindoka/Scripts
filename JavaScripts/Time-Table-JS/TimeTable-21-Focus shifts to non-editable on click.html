@@ -633,18 +633,7 @@
                 }
             }
 
-            // Skip readonly cells for vertical movement
-            let targetIndex = newIndex;
-            if ((key === 'ArrowUp' || key === 'ArrowDown') && inputs[targetIndex] && inputs[targetIndex].readOnly) {
-                let step = key === 'ArrowUp' ? -rowLength : rowLength;
-                do {
-                    targetIndex += step;
-                    if (targetIndex < 0) targetIndex += totalInputs;
-                    if (targetIndex >= totalInputs) targetIndex -= totalInputs;
-                } while (inputs[targetIndex].readOnly && targetIndex !== newIndex); // Prevent infinite loop
-            }
-
-            inputs[targetIndex].focus();
+            inputs[newIndex].focus();
         }
 
         // Function to handle focus on editable cells
