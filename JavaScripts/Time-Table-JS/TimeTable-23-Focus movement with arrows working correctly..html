@@ -667,27 +667,6 @@
         // Function to handle focus on editable cells
         function handleFocus(event) {
             const input = event.target;
-
-            // If the cell is non-editable (readonly), move focus to the next row's cell in the same column
-            if (input.readOnly) {
-                const cell = input.closest('td');
-                const row = cell.closest('tr');
-                const tableBody = row.closest('tbody');
-                const rows = Array.from(tableBody.querySelectorAll('tr'));
-                const currentRowIndex = rows.indexOf(row);
-                if (currentRowIndex < rows.length - 1) {
-                    const nextRow = rows[currentRowIndex + 1];
-                    const nextCell = nextRow.cells[cell.cellIndex];
-                    if (nextCell) {
-                        const nextInput = nextCell.querySelector('.editable-cell');
-                        if (nextInput) {
-                            nextInput.focus();
-                            return; // Prevent further processing
-                        }
-                    }
-                }
-            }
-
             const value = input.value.trim();
             const cell = input.closest('td');
             const colIndex = cell.cellIndex;
@@ -712,7 +691,7 @@
                         generateTeacherTimetable();
                     }
                 }
-            }
+            } 
             // Logic for First column (Time/Section, colIndex == 0)
             else if (colIndex === 0) {
                 // Check if the value is NOT a time slot (e.g., '10:00-11:00') - meaning it's a section name
@@ -765,7 +744,7 @@
                     input.className = 'editable-cell';
                     input.value = rowData[i] !== undefined ? rowData[i] : '';
                     if (isTimeSlotRow && i > 0) {
-                        input.readOnly = true; // Make day cells non-editable for time slot rows
+                        input.readOnly = true;
                         input.placeholder = '';
                     } else {
                         input.placeholder = i === 0 ? (isTimeSlotRow ? 'Time Slot' : 'Section Name') : 'SUB(TR)';
