@@ -427,18 +427,19 @@
 
             // 2. Build the Teacher's Personal Schedule
             const teacherSchedule = {};
-            
+            const counts = {}; // For subcounts
+
             timeSlots.forEach(slot => {
                 const time = slot.time;
                 teacherSchedule[time] = {};
-                
+
                 COLUMNS.slice(1).forEach(day => { // Iterate Mon through Sat
                     let assignment = 'Free';
                     let sectionInfo = '';
-                    
+
                     slot.sections.forEach(sectionData => {
                         const classValue = sectionData.schedule[day]; // e.g., 'MAT(MO)'
-                        
+
                         // Regex to find the teacher code in the class string
                         const regex = new RegExp(`\\(${teacherCode}\\)$`, 'i');
 
@@ -449,13 +450,34 @@
                             assignment = 'Class';
                         }
                     });
-                    
+
                     // Store the result for this Time/Day
                     teacherSchedule[time][day] = sectionInfo || 'Free';
+
+                    // Collect counts
+                    if (sectionInfo) {
+                        const parts = sectionInfo.split(' (');
+                        const subject = parts[0];
+                        const section = parts[1].slice(0, -1);
+                        if (!counts[section]) counts[section] = {};
+                        counts[section][subject] = (counts[section][subject] || 0) + 1;
+                    }
                 });
             });
 
             // 3. Render the Output Table
+            const timeSlotsKeys = Object.keys(teacherSchedule);
+
+            // Calculate period count
+            let periodCount = 0;
+            timeSlotsKeys.forEach(time => {
+                COLUMNS.slice(1).forEach(day => {
+                    if (teacherSchedule[time][day] !== 'Free') {
+                        periodCount++;
+                    }
+                });
+            });
+
             html += `
                 <h3 class="header-teacher">
                     Time Table for Teacher: ${teacherCode}
@@ -463,14 +485,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Time Slot</th>
+                            <th>${teacherCode}-${periodCount}</th>
                             ${COLUMNS.slice(1).map(day => `<th>${day}</th>`).join('')}
                         </tr>
                     </thead>
                     <tbody>
             `;
 
-            const timeSlotsKeys = Object.keys(teacherSchedule);
             if (timeSlotsKeys.length === 0) {
                 html = `<p class="error-text">
                     No time slots defined in the Master Table.
@@ -488,6 +509,17 @@
             }
 
             html += `</tbody></table>`;
+
+            // Add summary table
+            let summaryHTML = '<table style="margin-top: 20px;"><thead><tr><th>Section</th><th>Subject</th><th>Periods</th></tr></thead><tbody>';
+            for (let section in counts) {
+                for (let subject in counts[section]) {
+                    summaryHTML += `<tr><td>${section}</td><td>${subject}</td><td>${counts[section][subject]}</td></tr>`;
+                }
+            }
+            summaryHTML += '</tbody></table>';
+            html += summaryHTML;
+
             return html;
         }
 
@@ -524,6 +556,7 @@
             }
 
             const classSchedule = {};
+            const counts = {}; // For subcounts
             let currentTimeSlot = null;
 
             rows.forEach(row => {
@@ -534,7 +567,7 @@
                 if (firstCell.includes('-') && firstCell.includes(':')) {
                     currentTimeSlot = firstCell; // Update the current time slot
                     classSchedule[currentTimeSlot] = null; // Initialize slot
-                } 
+                }
                 // Check for Section Row (e.g., FY-A) and if it matches the target section
                 else if (currentTimeSlot && firstCell.toUpperCase() === sectionName.toUpperCase()) {
                     const dailySchedule = {};
@@ -543,6 +576,11 @@
                         const classValue = cells[j].value.trim();
                         // Store the result for this Time/Day
                         dailySchedule[COLUMNS[j]] = classValue || 'Free';
+                        // Collect counts
+                        if (classValue && classValue !== 'Free') {
+                            const subject = classValue.split('(')[0];
+                            counts[subject] = (counts[subject] || 0) + 1;
+                        }
                     }
                     classSchedule[currentTimeSlot] = dailySchedule;
                     currentTimeSlot = null; // Reset current time slot to avoid mis-association with following rows
@@ -587,6 +625,15 @@
             }
 
             html += `</tbody></table>`;
+
+            // Add summary table
+            let summaryHTML = '<table style="margin-top: 20px;"><thead><tr><th>Section</th><th>Subject</th><th>Periods</th></tr></thead><tbody>';
+            for (let subject in counts) {
+                summaryHTML += `<tr><td>${sectionName.toUpperCase()}</td><td>${subject}</td><td>${counts[subject]}</td></tr>`;
+            }
+            summaryHTML += '</tbody></table>';
+            html += summaryHTML;
+
             displayDiv.innerHTML = html;
         }
 

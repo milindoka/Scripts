@@ -456,6 +456,18 @@
             });
 
             // 3. Render the Output Table
+            const timeSlotsKeys = Object.keys(teacherSchedule);
+
+            // Calculate period count
+            let periodCount = 0;
+            timeSlotsKeys.forEach(time => {
+                COLUMNS.slice(1).forEach(day => {
+                    if (teacherSchedule[time][day] !== 'Free') {
+                        periodCount++;
+                    }
+                });
+            });
+
             html += `
                 <h3 class="header-teacher">
                     Time Table for Teacher: ${teacherCode}
@@ -463,14 +475,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Time Slot</th>
+                            <th>${teacherCode}-${periodCount}</th>
                             ${COLUMNS.slice(1).map(day => `<th>${day}</th>`).join('')}
                         </tr>
                     </thead>
                     <tbody>
             `;
 
-            const timeSlotsKeys = Object.keys(teacherSchedule);
             if (timeSlotsKeys.length === 0) {
                 html = `<p class="error-text">
                     No time slots defined in the Master Table.
@@ -640,12 +651,54 @@
                 }
             }
 
-            inputs[newIndex].focus();
+            // Skip readonly cells for all arrow key movements
+            let targetIndex = newIndex;
+            const isVertical = key === 'ArrowUp' || key === 'ArrowDown';
+            const step = isVertical ? (key === 'ArrowUp' ? -rowLength : rowLength) : (key === 'ArrowLeft' ? -1 : 1);
+            if (inputs[targetIndex] && inputs[targetIndex].readOnly) {
+                let originalIndex = currentIndex;
+                do {
+                    targetIndex += step;
+                    if (isVertical) {
+                        if (targetIndex < 0) targetIndex += totalInputs;
+                        if (targetIndex >= totalInputs) targetIndex -= totalInputs;
+                    } else {
+                        // For horizontal, wrap within row
+                        const rowStart = Math.floor(currentIndex / rowLength) * rowLength;
+                        const rowEnd = rowStart + rowLength - 1;
+                        if (targetIndex < rowStart) targetIndex = rowEnd;
+                        if (targetIndex > rowEnd) targetIndex = rowStart;
+                    }
+                } while (inputs[targetIndex].readOnly && targetIndex !== originalIndex); // Prevent infinite loop
+            }
+
+            inputs[targetIndex].focus();
         }
 
         // Function to handle focus on editable cells
         function handleFocus(event) {
             const input = event.target;
+
+            // If the cell is non-editable (readonly), move focus to the next row's cell in the same column
+            if (input.readOnly) {
+                const cell = input.closest('td');
+                const row = cell.closest('tr');
+                const tableBody = row.closest('tbody');
+                const rows = Array.from(tableBody.querySelectorAll('tr'));
+                const currentRowIndex = rows.indexOf(row);
+                if (currentRowIndex < rows.length - 1) {
+                    const nextRow = rows[currentRowIndex + 1];
+                    const nextCell = nextRow.cells[cell.cellIndex];
+                    if (nextCell) {
+                        const nextInput = nextCell.querySelector('.editable-cell');
+                        if (nextInput) {
+                            nextInput.focus();
+                            return; // Prevent further processing
+                        }
+                    }
+                }
+            }
+
             const value = input.value.trim();
             const cell = input.closest('td');
             const colIndex = cell.cellIndex;
@@ -670,7 +723,7 @@
                         generateTeacherTimetable();
                     }
                 }
-            } 
+            }
             // Logic for First column (Time/Section, colIndex == 0)
             else if (colIndex === 0) {
                 // Check if the value is NOT a time slot (e.g., '10:00-11:00') - meaning it's a section name
@@ -723,7 +776,7 @@
                     input.className = 'editable-cell';
                     input.value = rowData[i] !== undefined ? rowData[i] : '';
                     if (isTimeSlotRow && i > 0) {
-                        input.readOnly = true;
+                        input.readOnly = true; // Make day cells non-editable for time slot rows
                         input.placeholder = '';
                     } else {
                         input.placeholder = i === 0 ? (isTimeSlotRow ? 'Time Slot' : 'Section Name') : 'SUB(TR)';
