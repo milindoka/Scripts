@@ -434,33 +434,33 @@
                 teacherSchedule[time] = {};
 
                 COLUMNS.slice(1).forEach(day => { // Iterate Mon through Sat
-                    let assignments = [];
+                    let assignment = 'Free';
+                    let sectionInfo = '';
 
                     slot.sections.forEach(sectionData => {
-                        const classValue = sectionData.schedule[day]; // e.g., 'MAT(MO),ECO(ZP)'
+                        const classValue = sectionData.schedule[day]; // e.g., 'MAT(MO)'
 
-                        const parts = classValue.split(',');
-                        parts.forEach(part => {
-                            const trimmed = part.trim();
-                            if (trimmed.match(new RegExp(`\\(${teacherCode}\\)$`, 'i'))) {
-                                const subject = trimmed.split('(')[0];
-                                assignments.push(`${subject} (${sectionData.section})`);
-                            }
-                        });
+                        // Regex to find the teacher code in the class string
+                        const regex = new RegExp(`\\(${teacherCode}\\)$`, 'i');
+
+                        if (regex.test(classValue)) {
+                            // Match found! Extract the subject code (e.g., MAT)
+                            const subject = classValue.split('(')[0];
+                            sectionInfo = `${subject} (${sectionData.section})`;
+                            assignment = 'Class';
+                        }
                     });
 
-                    const sectionInfo = assignments.length > 0 ? assignments.join('<br>') : 'Free';
-                    teacherSchedule[time][day] = sectionInfo;
+                    // Store the result for this Time/Day
+                    teacherSchedule[time][day] = sectionInfo || 'Free';
 
                     // Collect counts
-                    if (assignments.length > 0) {
-                        assignments.forEach(ass => {
-                            const parts = ass.split(' (');
-                            const subject = parts[0];
-                            const section = parts[1].slice(0, -1);
-                            if (!counts[section]) counts[section] = {};
-                            counts[section][subject] = (counts[section][subject] || 0) + 1;
-                        });
+                    if (sectionInfo) {
+                        const parts = sectionInfo.split(' (');
+                        const subject = parts[0];
+                        const section = parts[1].slice(0, -1);
+                        if (!counts[section]) counts[section] = {};
+                        counts[section][subject] = (counts[section][subject] || 0) + 1;
                     }
                 });
             });
