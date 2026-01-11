@@ -314,7 +314,6 @@
             <button onclick="saveToFile()" class="btn-blue">Save Table</button>
             <input type="file" id="fileInput" accept=".html" style="display: none;">
             <button onclick="loadFromFile()" class="btn-purple">Load Table</button>
-            <button onclick="printCurrent()" class="btn-gray">Print Current</button>
         </div>
 
         <div class="center-buttons">
@@ -979,7 +978,7 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(htmlString, 'text/html');
                         const dataTable = doc.getElementById('masterTableData');
-
+                        
                         if (dataTable) {
                             const masterTableBody = document.querySelector('#masterTable tbody');
                             masterTableBody.innerHTML = ''; // Clear existing rows
@@ -1031,30 +1030,6 @@
                 }
             };
             input.click();
-        }
-
-        function printCurrent() {
-            const content = document.getElementById('timetableDisplay').innerHTML;
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Print Timetable</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        table { border-collapse: collapse; width: 100%; margin: 0 auto; }
-                        th, td { border: 1px solid black; padding: 8px; text-align: center; }
-                        th { background-color: #f0f0f0; font-weight: bold; }
-                    </style>
-                </head>
-                <body>
-                    ${content}
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
         }
     </script>
 </body>
