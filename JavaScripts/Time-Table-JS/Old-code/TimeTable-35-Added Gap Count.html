@@ -521,30 +521,7 @@
                 }
             });
 
-            // Calculate doubles count (sections assigned multiple times on the same day)
-            let doublesCount = 0;
-            COLUMNS.slice(1).forEach(day => {
-                const dayAssignments = {};
-                timeSlotsKeys.forEach(time => {
-                    const content = teacherSchedule[time][day];
-                    if (content !== 'Free') {
-                        const lines = content.split('<br>');
-                        lines.forEach(line => {
-                            const parts = line.split(' (');
-                            if (parts.length > 1) {
-                                const section = parts[1].slice(0, -1);
-                                if (!dayAssignments[section]) dayAssignments[section] = 0;
-                                dayAssignments[section]++;
-                            }
-                        });
-                    }
-                });
-                Object.values(dayAssignments).forEach(count => {
-                    if (count > 1) doublesCount++;
-                });
-            });
-
-            html += `<p class="clash-info">Clashes : ${clashCount} Gaps : ${gapCount} Doubles : ${doublesCount}</p>`;
+            html += `<p class="clash-info">Clashes : ${clashCount} Gaps : ${gapCount}</p>`;
 
             html += `
                 <table>
