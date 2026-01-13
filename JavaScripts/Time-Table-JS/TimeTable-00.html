@@ -497,7 +497,31 @@
                 });
             });
 
-            html += `<p class="clash-info">Clashes : ${clashCount}</p>`;
+            // Calculate gap count (free periods excluding beginning and end)
+            let gapCount = 0;
+            COLUMNS.slice(1).forEach(day => {
+                const dayPeriods = [];
+                timeSlotsKeys.forEach(time => {
+                    dayPeriods.push(teacherSchedule[time][day] === 'Free' ? 'Free' : 'Busy');
+                });
+
+                let firstBusy = -1;
+                let lastBusy = -1;
+                for (let i = 0; i < dayPeriods.length; i++) {
+                    if (dayPeriods[i] === 'Busy') {
+                        if (firstBusy === -1) firstBusy = i;
+                        lastBusy = i;
+                    }
+                }
+
+                if (firstBusy !== -1 && lastBusy !== -1) {
+                    for (let i = firstBusy + 1; i < lastBusy; i++) {
+                        if (dayPeriods[i] === 'Free') gapCount++;
+                    }
+                }
+            });
+
+            html += `<p class="clash-info">Clashes : ${clashCount} Gaps : ${gapCount}</p>`;
 
             html += `
                 <table>
