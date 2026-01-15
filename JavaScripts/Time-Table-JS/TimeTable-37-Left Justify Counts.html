@@ -308,6 +308,7 @@
 <body>
 
     <div class="panel left">
+        <h2 class="header-left">Master Time Table Editor</h2>
 
         <div class="controls">
             <div class="input-row">
@@ -338,7 +339,7 @@
         <table id="masterTable">
             <thead>
                 <tr>
-                    <th>Master</th>
+                    <th>Time/Section</th>
                     <th>Mon</th>
                     <th>Tue</th>
                     <th>Wed</th>
@@ -367,7 +368,6 @@
             loadDefaultData(); // Load sample data on startup
             document.getElementById('generateBtn').addEventListener('click', generateTeacherTimetable);
             addKeyboardNavigation(); // Add keyboard navigation to inputs
-            addDividerDrag(); // Add divider drag functionality
         });
 
         const COLUMNS = ['Time', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -1359,43 +1359,6 @@
             `);
             printWindow.document.close();
             printWindow.print();
-        }
-
-        // --- Divider Drag Functionality ---
-
-        function addDividerDrag() {
-            const divider = document.querySelector('.divider');
-            const leftPanel = document.querySelector('.left');
-            const rightPanel = document.querySelector('.right');
-            let isDragging = false;
-
-            divider.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                document.body.style.cursor = 'ew-resize';
-                document.body.style.userSelect = 'none'; // Prevent text selection
-                e.preventDefault();
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-
-                const totalWidth = window.innerWidth;
-                const dividerWidth = divider.offsetWidth;
-                const leftWidth = e.clientX - dividerWidth / 2;
-
-                if (leftWidth > 200 && leftWidth < totalWidth - 200) { // Min widths
-                    leftPanel.style.flex = `0 0 ${leftWidth}px`;
-                    rightPanel.style.flex = '1 1 auto';
-                }
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (isDragging) {
-                    isDragging = false;
-                    document.body.style.cursor = '';
-                    document.body.style.userSelect = '';
-                }
-            });
         }
     </script>
 </body>
