@@ -497,15 +497,12 @@
                 });
             });
 
-            // Filter out time slots where all days are 'Free'
+            // 3. Render the Output Table
             const timeSlotsKeys = Object.keys(teacherSchedule);
-            const filteredTimes = timeSlotsKeys.filter(time => {
-                return COLUMNS.slice(1).some(day => teacherSchedule[time][day] !== 'Free');
-            });
 
             // Calculate period count
             let periodCount = 0;
-            filteredTimes.forEach(time => {
+            timeSlotsKeys.forEach(time => {
                 COLUMNS.slice(1).forEach(day => {
                     if (teacherSchedule[time][day] !== 'Free') {
                         periodCount++;
@@ -517,7 +514,7 @@
             let gapCount = 0;
             COLUMNS.slice(1).forEach(day => {
                 const dayPeriods = [];
-                filteredTimes.forEach(time => {
+                timeSlotsKeys.forEach(time => {
                     dayPeriods.push(teacherSchedule[time][day] === 'Free' ? 'Free' : 'Busy');
                 });
 
@@ -541,7 +538,7 @@
             let doublesCount = 0;
             COLUMNS.slice(1).forEach(day => {
                 const dayAssignments = {};
-                filteredTimes.forEach(time => {
+                timeSlotsKeys.forEach(time => {
                     const content = teacherSchedule[time][day];
                     if (content !== 'Free') {
                         const lines = content.split('<br>');
@@ -573,12 +570,12 @@
                     <tbody>
             `;
 
-            if (filteredTimes.length === 0) {
+            if (timeSlotsKeys.length === 0) {
                 html = `<p class="error-text">
                     No time slots defined in the Master Table.
                 </p>`;
             } else {
-                filteredTimes.forEach(time => {
+                timeSlotsKeys.forEach(time => {
                     html += `<tr><td class="time-cell">${time}</td>`;
                     COLUMNS.slice(1).forEach(day => {
                         const content = teacherSchedule[time][day];
@@ -687,16 +684,12 @@
             `;
 
             const timeSlotsKeys = Object.keys(classSchedule);
-            const filteredTimes = timeSlotsKeys.filter(time => {
-                const schedule = classSchedule[time];
-                return schedule && COLUMNS.slice(1).some(day => schedule[day] !== 'Free');
-            });
-            if (filteredTimes.length === 0) {
+            if (timeSlotsKeys.length === 0) {
                 html = `<p class="error-text">
                     Section **${sectionName.toUpperCase()}** not found in the Master Table.
                 </p>`;
             } else {
-                filteredTimes.forEach(time => {
+                timeSlotsKeys.forEach(time => {
                     const schedule = classSchedule[time];
                     if (schedule) {
                         html += `<tr><td class="time-cell">${time}</td>`;
