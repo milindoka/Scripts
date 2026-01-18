@@ -860,11 +860,6 @@
                     }
                 }
             }
-
-            // Track the last focused editable cell
-            if (input.classList.contains('editable-cell')) {
-                lastFocusedEditableCell = input;
-            }
         }
 
 
@@ -1431,9 +1426,6 @@
 
         let isRemovingClashes = false;
         let stopRemoval = false;
-        let focusedCell = null;
-        let lastFocusedEditableCell = null;
-        let originalMessage = '';
 
         function removeClashes() {
             const btn = document.getElementById('removeClashesBtn');
@@ -1444,8 +1436,6 @@
             isRemovingClashes = true;
             stopRemoval = false;
             btn.textContent = 'Stop Removal';
-            originalMessage = document.getElementById('messageDiv').textContent;
-            focusedCell = lastFocusedEditableCell;
             const clashes = findAllClashes();
             const totalClashes = clashes.length;
             resolveClashes(clashes, 0, totalClashes, 0);
@@ -1504,12 +1494,6 @@
                 isRemovingClashes = false;
                 document.getElementById('removeClashesBtn').textContent = 'Remove Clashes';
                 document.getElementById('messageDiv').textContent = 'Removed ' + removed + ' of ' + totalClashes + ' Clashes';
-                setTimeout(() => {
-                    document.getElementById('messageDiv').textContent = originalMessage;
-                }, 5000);
-                if (focusedCell) {
-                    focusedCell.focus();
-                }
                 return;
             }
             const clash = clashes[index];
@@ -1548,11 +1532,48 @@
 
             if (clashingCells.length <= 1) return true; // no clash
 
-            // Remove extra clashing assignments
+            // For each extra clashing cell, swap its teacher with another teacher in the section
             for (let i = 1; i < clashingCells.length; i++) {
                 const cell = clashingCells[i];
-                cell.parts.splice(cell.partIndex, 1);
-                rows[cell.rowIndex].querySelectorAll('.editable-cell')[cell.cellIndex].value = cell.parts.join(',');
+                const section = cell.section;
+                const sectionCells = [];
+                for (let k = 0; k < rows.length; k++) {
+                    const row = rows[k];
+                    const cells = Array.from(row.querySelectorAll('.editable-cell'));
+                    const firstCell = cells[0].value.trim();
+                    if (firstCell === section) {
+                        for (let j = 1; j < COLUMNS.length; j++) {
+                            const cellValue = cells[j].value.trim();
+                            const parts = cellValue.split(',');
+                            parts.forEach((part, pIndex) => {
+                                const match = part.trim().match(/^(.+)\((..)\)$/);
+                                if (match) {
+                                    sectionCells.push({rowIndex: k, cellIndex: j, partIndex: pIndex, subject: match[1], teacher: match[2], fullPart: part.trim()});
+                                }
+                            });
+                        }
+                    }
+                }
+
+                // Find the first other teacher in the section
+                for (let other of sectionCells) {
+                    if (other.teacher !== teacher) {
+                        const oldClash = cell.parts[cell.partIndex];
+                        const oldOther = other.fullPart;
+                        const newClash = oldClash.replace(new RegExp(`\\(${teacher}\\)`, 'i'), `(${other.teacher})`);
+                        const newOther = oldOther.replace(new RegExp(`\\(${other.teacher}\\)`, 'i'), `(${teacher})`);
+
+                        cell.parts[cell.partIndex] = newClash;
+                        rows[cell.rowIndex].querySelectorAll('.editable-cell')[cell.cellIndex].value = cell.parts.join(',');
+
+                        const otherParts = rows[other.rowIndex].querySelectorAll('.editable-cell')[other.cellIndex].value.split(',');
+                        otherParts[other.partIndex] = newOther;
+                        rows[other.rowIndex].querySelectorAll('.editable-cell')[other.cellIndex].value = otherParts.join(',');
+
+                        // Swap done, break
+                        break;
+                    }
+                }
             }
             return !hasClash(clash); // return true if clash is resolved
         }

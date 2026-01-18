@@ -1433,7 +1433,6 @@
         let stopRemoval = false;
         let focusedCell = null;
         let lastFocusedEditableCell = null;
-        let originalMessage = '';
 
         function removeClashes() {
             const btn = document.getElementById('removeClashesBtn');
@@ -1444,7 +1443,6 @@
             isRemovingClashes = true;
             stopRemoval = false;
             btn.textContent = 'Stop Removal';
-            originalMessage = document.getElementById('messageDiv').textContent;
             focusedCell = lastFocusedEditableCell;
             const clashes = findAllClashes();
             const totalClashes = clashes.length;
@@ -1504,9 +1502,6 @@
                 isRemovingClashes = false;
                 document.getElementById('removeClashesBtn').textContent = 'Remove Clashes';
                 document.getElementById('messageDiv').textContent = 'Removed ' + removed + ' of ' + totalClashes + ' Clashes';
-                setTimeout(() => {
-                    document.getElementById('messageDiv').textContent = originalMessage;
-                }, 5000);
                 if (focusedCell) {
                     focusedCell.focus();
                 }
