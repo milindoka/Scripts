@@ -921,7 +921,7 @@
             });
             addKeyboardNavigation(); // Re-add listeners after loading
             const counts = getGlobalCounts();
-            document.getElementById('messageDiv').textContent = 'File : Demo Time Table [Clashes : ' + counts.clashes + '  Doubles : ' + counts.doubles + '  Gaps : ' + counts.gaps + ' ]';
+            document.getElementById('messageDiv').textContent = 'File : Demo Time Table  C : ' + counts.clashes + '  D: ' + counts.doubles + '  G : ' + counts.gaps;
             currentFileName = 'Demo Time Table';
         }
 
@@ -933,7 +933,7 @@
                 Enter a teacher code and click 'Generate Time Table' to see their personalized schedule here.
             </p>`;
             document.getElementById('teacherCodeInput').value = ''; // Clear input field
-            document.getElementById('messageDiv').textContent = 'File : New Time Table [Clashes : 0  Doubles : 0  Gaps : 0 ]';
+            document.getElementById('messageDiv').textContent = 'File : New Time Table  C : 0  D: 0  G : 0';
             currentFileName = 'New Time Table';
         }
 
@@ -1125,7 +1125,7 @@
                             });
                             addKeyboardNavigation(); // Add listeners after loading from file
                             const counts = getGlobalCounts();
-                            document.getElementById('messageDiv').textContent = 'File : ' + file.name + ' [Clashes : ' + counts.clashes + '  Doubles : ' + counts.doubles + '  Gaps : ' + counts.gaps + ' ]';
+                            document.getElementById('messageDiv').textContent = 'File : ' + file.name + '  C : ' + counts.clashes + '  D: ' + counts.doubles + '  G : ' + counts.gaps;
                             currentFileName = file.name;
                         } else {
                             alert("Error: The loaded file does not contain a recognizable timetable data table.");
@@ -1620,7 +1620,7 @@
                 document.getElementById('messageDiv').textContent = 'Removed ' + removed + ' of ' + totalClashes + ' Clashes';
                 setTimeout(() => {
                     const counts = getGlobalCounts();
-                    document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + ' [Clashes : ' + counts.clashes + '  Doubles : ' + counts.doubles + '  Gaps : ' + counts.gaps + ' ]';
+                    document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + '  C : ' + counts.clashes + '  D: ' + counts.doubles + '  G : ' + counts.gaps;
                 }, 5000);
                 if (focusedCell) {
                     focusedCell.focus();
