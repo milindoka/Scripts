@@ -339,7 +339,6 @@
             <button onclick="printAllTeachers()" class="btn-gray">Print All Teachers</button>
             <button onclick="printAllClasses()" class="btn-gray">Print All Classes</button>
             <button id="removeClashesBtn" onclick="removeClashes()" class="btn-red">Remove Clashes</button>
-            <button id="optimizeBtn" onclick="optimize()" class="btn-purple">Optimize</button>
         </div>
 
         <div class="center-buttons">
@@ -388,9 +387,6 @@
         const COLUMNS = ['Time', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
         let currentFileName = '';
-
-        let copiedContent = null;
-        let copiedColumnType = null;
 
         // --- Core Time Table Generation Logic ---
 
@@ -567,7 +563,7 @@
                 });
             });
 
-            html += `<p class="clash-info">Clashes : ${clashCount} &nbsp;&nbsp;&nbsp; Gaps : ${gapCount} &nbsp;&nbsp;&nbsp; Doubles : ${doublesCount}</p>`;
+            html += `<p class="clash-info">Clashes : ${clashCount} &nbsp;&nbsp;&nbsp; Doubles : ${doublesCount} &nbsp;&nbsp;&nbsp; Gaps : ${gapCount}</p>`;
 
             html += `
                 <table>
@@ -746,32 +742,13 @@
 
         function handleKey(event) {
             const key = event.key;
-            const inputs = Array.from(document.querySelectorAll('.editable-cell'));
-            const currentIndex = inputs.indexOf(event.target);
-            const rowLength = COLUMNS.length;
-            const colIndex = currentIndex % rowLength;
-
-            if (event.ctrlKey) {
-                if (key === 'c') {
-                    event.preventDefault();
-                    copiedContent = event.target.value;
-                    copiedColumnType = colIndex === 0 ? 0 : 1;
-                    return;
-                } else if (key === 'v') {
-                    event.preventDefault();
-                    if (copiedContent !== null) {
-                        if ((copiedColumnType === 0 && colIndex === 0) || (copiedColumnType === 1 && colIndex >= 1 && colIndex <= 6)) {
-                            event.target.value = copiedContent;
-                        }
-                    }
-                    return;
-                }
-            }
-
             if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) return;
 
             event.preventDefault();
 
+            const inputs = Array.from(document.querySelectorAll('.editable-cell'));
+            const currentIndex = inputs.indexOf(event.target);
+            const rowLength = COLUMNS.length; // 7
             const totalInputs = inputs.length;
             let newIndex;
 
@@ -943,8 +920,10 @@
                 }
             });
             addKeyboardNavigation(); // Re-add listeners after loading
-            const counts = getGlobalCounts();
-            document.getElementById('messageDiv').textContent = 'File : Demo Time Table [Clashes : ' + counts.clashes + '  Doubles : ' + counts.doubles + '  Gaps : ' + counts.gaps + ' ]';
+            const clashes = findAllClashes();
+            const doubles = findAllDoubles();
+            const gaps = findAllGaps();
+            document.getElementById('messageDiv').textContent = 'File : Demo Time Table [ Clashes ' + clashes.length + ' | Doubles ' + doubles + ' | Gaps ' + gaps + ' ]';
             currentFileName = 'Demo Time Table';
         }
 
@@ -956,7 +935,7 @@
                 Enter a teacher code and click 'Generate Time Table' to see their personalized schedule here.
             </p>`;
             document.getElementById('teacherCodeInput').value = ''; // Clear input field
-            document.getElementById('messageDiv').textContent = 'File : New Time Table [Clashes : 0  Doubles : 0  Gaps : 0 ]';
+            document.getElementById('messageDiv').textContent = 'File : New Time Table [ Clashes 0 | Doubles 0 | Gaps 0 ]';
             currentFileName = 'New Time Table';
         }
 
@@ -1147,8 +1126,10 @@
                                 }
                             });
                             addKeyboardNavigation(); // Add listeners after loading from file
-                            const counts = getGlobalCounts();
-                            document.getElementById('messageDiv').textContent = 'File : ' + file.name + ' [Clashes : ' + counts.clashes + '  Doubles : ' + counts.doubles + '  Gaps : ' + counts.gaps + ' ]';
+                            const clashes = findAllClashes();
+                            const doubles = findAllDoubles();
+                            const gaps = findAllGaps();
+                            document.getElementById('messageDiv').textContent = 'File : ' + file.name + ' [ Clashes ' + clashes.length + ' | Doubles ' + doubles + ' | Gaps ' + gaps + ' ]';
                             currentFileName = file.name;
                         } else {
                             alert("Error: The loaded file does not contain a recognizable timetable data table.");
@@ -1465,9 +1446,6 @@
         let lastFocusedEditableCell = null;
         let originalMessage = '';
 
-        let isOptimizing = false;
-        let stopOptimize = false;
-
         function removeClashes() {
             const btn = document.getElementById('removeClashesBtn');
             if (isRemovingClashes) {
@@ -1532,72 +1510,98 @@
             return clashes;
         }
 
-        function getGlobalCounts() {
-            const clashes = findAllClashes().length;
-            let globalDoubles = 0;
-            let globalGaps = 0;
-            const teachers = getAllTeacherCodes();
-            teachers.forEach(teacherCode => {
-                const masterTableBody = document.querySelector('#masterTable tbody');
-                const rows = Array.from(masterTableBody.querySelectorAll('tr'));
-                const timeSlots = [];
-                let currentSlot = null;
-                for (let i = 0; i < rows.length; i++) {
-                    const row = rows[i];
-                    const cells = Array.from(row.querySelectorAll('.editable-cell'));
-                    const firstCell = cells[0].value.trim();
-                    if (firstCell.includes('-') && firstCell.includes(':')) {
-                        if (currentSlot) {
-                            timeSlots.push(currentSlot);
-                        }
-                        currentSlot = {
-                            time: firstCell,
-                            sections: []
-                        };
-                    } else if (currentSlot && firstCell !== '' && firstCell.toUpperCase() !== 'LUNCH') {
-                        const sectionSchedule = {
-                            section: firstCell,
-                            schedule: {}
-                        };
-                        for (let j = 1; j < COLUMNS.length; j++) {
-                            sectionSchedule.schedule[COLUMNS[j]] = cells[j].value.trim();
-                        }
-                        currentSlot.sections.push(sectionSchedule);
+        function findAllDoubles() {
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const rows = Array.from(masterTableBody.querySelectorAll('tr'));
+            const timeSlots = [];
+            let currentSlot = null;
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = Array.from(row.querySelectorAll('.editable-cell'));
+                const firstCell = cells[0].value.trim();
+
+                if (firstCell.includes('-') && firstCell.includes(':')) {
+                    if (currentSlot) timeSlots.push(currentSlot);
+                    currentSlot = {time: firstCell, sections: []};
+                } else if (currentSlot && firstCell !== '' && firstCell.toUpperCase() !== 'LUNCH') {
+                    const section = {section: firstCell, days: {}};
+                    for (let j = 1; j < COLUMNS.length; j++) {
+                        section.days[COLUMNS[j]] = cells[j].value.trim();
                     }
+                    currentSlot.sections.push(section);
                 }
-                if (currentSlot) {
-                    timeSlots.push(currentSlot);
-                }
-                const teacherSchedule = {};
-                timeSlots.forEach(slot => {
-                    const time = slot.time;
-                    teacherSchedule[time] = {};
-                    COLUMNS.slice(1).forEach(day => {
-                        let assignments = [];
-                        slot.sections.forEach(sectionData => {
-                            const classValue = sectionData.schedule[day];
-                            const parts = classValue.split(',');
+            }
+            if (currentSlot) timeSlots.push(currentSlot);
+
+            let doublesCount = 0;
+            const allTeachers = getAllTeacherCodes();
+            allTeachers.forEach(teacher => {
+                COLUMNS.slice(1).forEach(day => {
+                    const dayAssignments = {};
+                    timeSlots.forEach(slot => {
+                        slot.sections.forEach(section => {
+                            const cellValue = section.days[day];
+                            const parts = cellValue.split(',');
                             parts.forEach(part => {
-                                const trimmed = part.trim();
-                                if (trimmed.match(new RegExp(`\\(${teacherCode}\\)$`, 'i'))) {
-                                    assignments.push(trimmed);
+                                if (part.trim().match(new RegExp(`\\(${teacher}\\)`, 'i'))) {
+                                    if (!dayAssignments[section.section]) dayAssignments[section.section] = 0;
+                                    dayAssignments[section.section]++;
                                 }
                             });
                         });
-                        const sectionInfo = assignments.length > 0 ? assignments.join('<br>') : 'Free';
-                        teacherSchedule[time][day] = sectionInfo;
+                    });
+                    Object.values(dayAssignments).forEach(count => {
+                        if (count > 1) doublesCount++;
                     });
                 });
-                const timeSlotsKeys = Object.keys(teacherSchedule);
-                const filteredTimes = timeSlotsKeys.filter(time => {
-                    return COLUMNS.slice(1).some(day => teacherSchedule[time][day] !== 'Free');
-                });
-                let gapCount = 0;
+            });
+            return doublesCount;
+        }
+
+        function findAllGaps() {
+            const masterTableBody = document.querySelector('#masterTable tbody');
+            const rows = Array.from(masterTableBody.querySelectorAll('tr'));
+            const timeSlots = [];
+            let currentSlot = null;
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = Array.from(row.querySelectorAll('.editable-cell'));
+                const firstCell = cells[0].value.trim();
+
+                if (firstCell.includes('-') && firstCell.includes(':')) {
+                    if (currentSlot) timeSlots.push(currentSlot);
+                    currentSlot = {time: firstCell, sections: []};
+                } else if (currentSlot && firstCell !== '' && firstCell.toUpperCase() !== 'LUNCH') {
+                    const section = {section: firstCell, days: {}};
+                    for (let j = 1; j < COLUMNS.length; j++) {
+                        section.days[COLUMNS[j]] = cells[j].value.trim();
+                    }
+                    currentSlot.sections.push(section);
+                }
+            }
+            if (currentSlot) timeSlots.push(currentSlot);
+
+            let gapCount = 0;
+            const allTeachers = getAllTeacherCodes();
+            allTeachers.forEach(teacher => {
                 COLUMNS.slice(1).forEach(day => {
                     const dayPeriods = [];
-                    filteredTimes.forEach(time => {
-                        dayPeriods.push(teacherSchedule[time][day] === 'Free' ? 'Free' : 'Busy');
+                    timeSlots.forEach(slot => {
+                        let isFree = true;
+                        slot.sections.forEach(section => {
+                            const cellValue = section.days[day];
+                            const parts = cellValue.split(',');
+                            parts.forEach(part => {
+                                if (part.trim().match(new RegExp(`\\(${teacher}\\)`, 'i'))) {
+                                    isFree = false;
+                                }
+                            });
+                        });
+                        dayPeriods.push(isFree ? 'Free' : 'Busy');
                     });
+
                     let firstBusy = -1;
                     let lastBusy = -1;
                     for (let i = 0; i < dayPeriods.length; i++) {
@@ -1606,37 +1610,15 @@
                             lastBusy = i;
                         }
                     }
+
                     if (firstBusy !== -1 && lastBusy !== -1) {
                         for (let i = firstBusy + 1; i < lastBusy; i++) {
                             if (dayPeriods[i] === 'Free') gapCount++;
                         }
                     }
                 });
-                let doublesCount = 0;
-                COLUMNS.slice(1).forEach(day => {
-                    const dayAssignments = {};
-                    filteredTimes.forEach(time => {
-                        const content = teacherSchedule[time][day];
-                        if (content !== 'Free') {
-                            const lines = content.split('<br>');
-                            lines.forEach(line => {
-                                const parts = line.split(' (');
-                                if (parts.length > 1) {
-                                    const section = parts[1].slice(0, -1);
-                                    if (!dayAssignments[section]) dayAssignments[section] = 0;
-                                    dayAssignments[section]++;
-                                }
-                            });
-                        }
-                    });
-                    Object.values(dayAssignments).forEach(count => {
-                        if (count > 1) doublesCount++;
-                    });
-                });
-                globalGaps += gapCount;
-                globalDoubles += doublesCount;
             });
-            return {clashes, doubles: globalDoubles, gaps: globalGaps};
+            return gapCount;
         }
 
         function resolveClashes(clashes, index, totalClashes, removed) {
@@ -1645,8 +1627,10 @@
                 document.getElementById('removeClashesBtn').textContent = 'Remove Clashes';
                 document.getElementById('messageDiv').textContent = 'Removed ' + removed + ' of ' + totalClashes + ' Clashes';
                 setTimeout(() => {
-                    const counts = getGlobalCounts();
-                    document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + ' [Clashes : ' + counts.clashes + '  Doubles : ' + counts.doubles + '  Gaps : ' + counts.gaps + ' ]';
+                    const clashes = findAllClashes();
+                    const doubles = findAllDoubles();
+                    const gaps = findAllGaps();
+                    document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + ' [ Clashes ' + clashes.length + ' | Doubles ' + doubles + ' | Gaps ' + gaps + ' ]';
                 }, 5000);
                 if (focusedCell) {
                     focusedCell.focus();
@@ -1722,88 +1706,6 @@
                 }
             }
             return count > 1;
-        }
-
-        function optimize() {
-            const btn = document.getElementById('optimizeBtn');
-            if (isOptimizing) {
-                stopOptimize = true;
-                return;
-            }
-            isOptimizing = true;
-            stopOptimize = false;
-            btn.textContent = 'Stop Optimize';
-            startOptimization();
-        }
-
-        function startOptimization() {
-            // Get all swappable cells: editable cells in columns 1-6 (Mon-Sat), not readonly
-            const allCells = Array.from(document.querySelectorAll('.editable-cell'));
-            const swappableCells = allCells.filter(cell => {
-                const colIndex = allCells.indexOf(cell) % COLUMNS.length;
-                return !cell.readOnly && colIndex >= 1 && colIndex <= 6;
-            });
-
-            if (swappableCells.length < 2) {
-                // Not enough cells to swap
-                stopOptimization();
-                return;
-            }
-
-            // Get initial counts
-            let oldCounts = getGlobalCounts();
-
-            // Perform one swap attempt
-            const idx1 = Math.floor(Math.random() * swappableCells.length);
-            let idx2 = Math.floor(Math.random() * swappableCells.length);
-            while (idx2 === idx1) {
-                idx2 = Math.floor(Math.random() * swappableCells.length);
-            }
-
-            const cell1 = swappableCells[idx1];
-            const cell2 = swappableCells[idx2];
-
-            const val1 = cell1.value;
-            const val2 = cell2.value;
-
-            cell1.value = val2;
-            cell2.value = val1;
-
-            // Get new counts
-            const newCounts = getGlobalCounts();
-
-            // Check if keep
-            let keep = false;
-            if (newCounts.clashes < oldCounts.clashes) {
-                keep = true;
-            } else if (newCounts.clashes === oldCounts.clashes && newCounts.doubles < oldCounts.doubles) {
-                keep = true;
-            } else if (newCounts.clashes === oldCounts.clashes && newCounts.doubles === oldCounts.doubles && newCounts.gaps < oldCounts.gaps) {
-                keep = true;
-            }
-
-            if (!keep) {
-                // Revert
-                cell1.value = val1;
-                cell2.value = val2;
-            }
-
-            // Update message
-            document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + ' [Clashes : ' + newCounts.clashes + '  Doubles : ' + newCounts.doubles + '  Gaps : ' + newCounts.gaps + ' ]';
-
-            // Check if stop
-            if (stopOptimize || (newCounts.clashes === 0 && newCounts.doubles === 0 && newCounts.gaps === 0)) {
-                stopOptimization();
-                return;
-            }
-
-            // Continue
-            setTimeout(startOptimization, 0);
-        }
-
-        function stopOptimization() {
-            isOptimizing = false;
-            document.getElementById('optimizeBtn').textContent = 'Optimize';
         }
     </script>
 </body>
