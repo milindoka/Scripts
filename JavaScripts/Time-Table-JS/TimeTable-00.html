@@ -1800,11 +1800,33 @@
             return gapCount;
         }
 
-        function resolveClashes(clashes, index, totalClashes, removed) {
-            if (index >= clashes.length || stopRemoval) {
+        function resolveClashes(clashes, index, totalClashes, removed, attempt = 0) {
+            if (attempt > 5) { // Limit attempts to avoid infinite loop
                 isRemovingClashes = false;
                 document.getElementById('removeClashesBtn').textContent = 'Remove Clashes';
-                document.getElementById('messageDiv').textContent = 'Removed ' + removed + ' of ' + totalClashes + ' Clashes';
+                document.getElementById('messageDiv').textContent = 'Attempted clash removal (' + attempt + ' attempts)';
+                setTimeout(() => {
+                    const clashes = findAllClashes();
+                    const doubles = findAllDoubles();
+                    const gaps = findAllGaps();
+                    document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + ' [ Clashes ' + clashes.length + ' | Doubles ' + doubles + ' | Gaps ' + gaps + ' ]';
+                }, 5000);
+                if (focusedCell) {
+                    focusedCell.focus();
+                }
+                return;
+            }
+            if (index >= clashes.length || stopRemoval) {
+                const currentClashes = findAllClashes();
+                if (currentClashes.length > 0) {
+                    // Try again with new clashes
+                    resolveClashes(currentClashes, 0, totalClashes, removed, attempt + 1);
+                    return;
+                }
+                // No more clashes
+                isRemovingClashes = false;
+                document.getElementById('removeClashesBtn').textContent = 'Remove Clashes';
+                document.getElementById('messageDiv').textContent = 'Removed ' + removed + ' clashes';
                 setTimeout(() => {
                     const clashes = findAllClashes();
                     const doubles = findAllDoubles();
@@ -1821,16 +1843,18 @@
             if (resolved) {
                 removed++;
             }
-            setTimeout(() => resolveClashes(clashes, index + 1, totalClashes, removed), 0);
+            setTimeout(() => resolveClashes(clashes, index + 1, totalClashes, removed, attempt), 0);
         }
 
         function tryResolveClash(clash) {
             const {teacher, time, day} = clash;
             const masterTableBody = document.querySelector('#masterTable tbody');
             const rows = Array.from(masterTableBody.querySelectorAll('tr'));
-            const clashingCells = [];
-
+            
+            // 1. Find all cells involved in this specific clash
+            const clashingCellLocations = [];
             let currentTime = null;
+            
             for (let i = 0; i < rows.length; i++) {
                 const row = rows[i];
                 const cells = Array.from(row.querySelectorAll('.editable-cell'));
@@ -1839,26 +1863,85 @@
                 if (firstCell.includes('-') && firstCell.includes(':')) {
                     currentTime = firstCell;
                 } else if (currentTime === time && firstCell !== '' && firstCell.toUpperCase() !== 'LUNCH') {
-                    const section = firstCell;
-                    const cellValue = cells[COLUMNS.indexOf(day)].value.trim();
-                    const parts = cellValue.split(',');
-                    parts.forEach((part, pIndex) => {
-                        if (part.trim().match(new RegExp(`\\(${teacher}\\)`, 'i'))) {
-                            clashingCells.push({rowIndex: i, cellIndex: COLUMNS.indexOf(day), partIndex: pIndex, section, parts});
-                        }
-                    });
+                    const dayIndex = COLUMNS.indexOf(day);
+                    const cell = cells[dayIndex];
+                    if (cell.value.match(new RegExp(`\\(${teacher}\\)`, 'i'))) {
+                        clashingCellLocations.push({
+                            cell: cell,
+                            rowIndex: i,
+                            cellIndex: dayIndex,
+                            section: firstCell
+                        });
+                    }
                 }
             }
 
-            if (clashingCells.length <= 1) return true; // no clash
+            if (clashingCellLocations.length < 2) return true; // Clash already resolved
 
-            // Remove extra clashing assignments
-            for (let i = 1; i < clashingCells.length; i++) {
-                const cell = clashingCells[i];
-                cell.parts.splice(cell.partIndex, 1);
-                rows[cell.rowIndex].querySelectorAll('.editable-cell')[cell.cellIndex].value = cell.parts.join(',');
+            // 2. Try to swap one of the clashing cells with another cell in the same section
+            for (const location of clashingCellLocations) {
+                const { cell, rowIndex, cellIndex, section } = location;
+                const originalValue = cell.value;
+
+                // Find all other cells for this section
+                const sameSectionCells = [];
+                let iterTime = null;
+                for (let r = 0; r < rows.length; r++) {
+                    const rRow = rows[r];
+                    const rCells = Array.from(rRow.querySelectorAll('.editable-cell'));
+                    const rFirst = rCells[0].value.trim();
+
+                    if (rFirst.includes('-') && rFirst.includes(':')) {
+                        iterTime = rFirst;
+                    } else if (rFirst === section) {
+                        for (let c = 1; c < COLUMNS.length; c++) {
+                            if (r === rowIndex && c === cellIndex) continue; // Skip self
+                            sameSectionCells.push({
+                                cell: rCells[c],
+                                time: iterTime,
+                                day: COLUMNS[c]
+                            });
+                        }
+                }
             }
-            return !hasClash(clash); // return true if clash is resolved
+
+                // Try swapping
+                for (const candidate of sameSectionCells) {
+                    const candidateValue = candidate.cell.value;
+
+                    // Swap
+                    cell.value = candidateValue;
+                    candidate.cell.value = originalValue;
+
+                    // Check if original clash is resolved
+                    if (!hasClash(clash)) {
+                        // Check if we created a NEW clash for the SAME teacher at the candidate position
+                        const candidateClash = { teacher, time: candidate.time, day: candidate.day };
+                        if (!hasClash(candidateClash)) {
+                            return true; // Success
+                        }
+                    }
+
+                    // Revert
+                    cell.value = originalValue;
+                    candidate.cell.value = candidateValue;
+                }
+            }
+
+            // 3. If couldn't resolve by swapping, try removing one assignment
+            if (clashingCellLocations.length >= 2) {
+                const location = clashingCellLocations[0];
+                const { cell } = location;
+                const originalValue = cell.value;
+                cell.value = cell.value.split(',').filter(part => !part.trim().match(new RegExp(`\\(${teacher}\\)`, 'i'))).join(',');
+                if (!hasClash(clash)) {
+                    return true; // Success by removing
+                }
+                // Revert
+                cell.value = originalValue;
+            }
+
+            return false; // Could not resolve
         }
 
         function hasClash(clash) {
