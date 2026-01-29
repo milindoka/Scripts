@@ -1197,7 +1197,7 @@
         }
 
         /**
-         * Prints all teacher timetables serially in a single document
+         * Displays all teacher timetables serially in a single document
          */
         function printAllTeachers() {
             const teachers = getAllTeacherCodes();
@@ -1240,11 +1240,10 @@
                 </html>
             `);
             printWindow.document.close();
-            printWindow.print();
         }
 
         /**
-         * Prints all class timetables serially in a single document
+         * Displays all class timetables serially in a single document
          */
         function printAllClasses() {
             const sections = getAllSections();
@@ -1287,7 +1286,6 @@
                 </html>
             `);
             printWindow.document.close();
-            printWindow.print();
         }
 
         /**
@@ -1662,18 +1660,21 @@
             allTeachers.forEach(teacher => {
                 timeSlots.forEach(slot => {
                     COLUMNS.slice(1).forEach(day => {
-                        let count = 0;
+                        let assignments = [];
                         slot.sections.forEach(section => {
                             const cellValue = section.days[day];
-                            const parts = cellValue.split(',');
+                            // Handle both comma-separated and <br>-separated entries
+                            const parts = cellValue.split(/[,\n]/); // Split by comma or newline
                             parts.forEach(part => {
-                                if (part.trim().match(new RegExp(`\\(${teacher}\\)`, 'i'))) {
-                                    count++;
+                                const trimmed = part.trim();
+                                if (trimmed && trimmed.match(new RegExp(`\\(${teacher}\\)$`, 'i'))) {
+                                    assignments.push(trimmed);
                                 }
                             });
                         });
-                        if (count > 1) {
-                            clashes.push({teacher, time: slot.time, day, count});
+                        // Count as a clash if the teacher has more than one assignment in this time slot and day
+                        if (assignments.length > 1) {
+                            clashes.push({teacher, time: slot.time, day, count: assignments.length});
                         }
                     });
                 });
