@@ -1,0 +1,55 @@
+I want an html table with  fixed 8 columns in addition to first 'Sr' column for serial number. Column titles are taken from an array of 8 strings.
+
+The same code should work when column titles in array and  array size are modified.
+
+Initially the table should have 10 rows. The table should be editable with cell focused arrow movement . Sr no column is non editable with Sr numbers filled up by the code itself. Horizontal and vertical Scroll bars should appear whenever needed.
+
+There should be menu bar on top. The bar contains file and edit menus.
+edit menu has submenus 'Add row and 'Delete row'.
+
+ File menu has submenus 'new',   'load' and 'save'
+
+Saving should save the table in html format so that it can be viewed seperately in any browser. The same html file will be used for loading.
+
+====================Summery given by agent after code is generated======
+
+- A table with 8 data columns (configurable via the `columnTitles` array) plus a non-editable 'Sr' column for serial numbers
+- Initially 10 rows, with editable cells
+- Arrow key navigation between cells (up/down/left/right)
+- Horizontal and vertical scrollbars that appear when needed
+- Menu bar with File (New, Load, Save) and Edit (Add Row, Delete Row) menus
+- Save functionality that exports the table data to a standalone HTML file viewable in any browser
+- Load functionality that imports table data from previously saved HTML files
+
+The column titles are defined in the `columnTitles` array at the top of the JavaScript code, making it easy to modify the number of columns and their names. The application is self-contained in a single HTML file and should work in any modern web browser.
+
+To use it, simply open the `editable_table.html` file in your web browser.
+====
+claude-sonnet-4.5anthropic
+
+BEST
+
+gemini-3-flash-previewgoogle
+
+NEW
+
+claude-opus-4.5anthropic
+
+HOT
+
+gpt-5.2-codexopenai
+
+NEW
+
+gemini-3-pro-previewgoogle
+
+1M CTX
+
+kat-coder-prokwaipilot
+
+FREE
+
+grok-code-fast-1x-ai
+
+FREE
+

@@ -371,7 +371,7 @@
 
         <div id="messageDiv" class="message-display">File : Demo Time Table</div>
         
-        <div id="progressContainer" class="progress-container" style="display: none;">
+        <div class="progress-container" style="display: none;">
             <div id="progressBar" class="progress-bar"></div>
         </div>
         <div id="progressText" class="progress-text" style="display: none;">Removing clashes...</div>
@@ -1656,15 +1656,15 @@
             // Show progress bar
             const progressBar = document.getElementById('progressBar');
             const progressText = document.getElementById('progressText');
-            const progressContainer = document.getElementById('progressContainer');
+            const progressContainer = progressBar.parentElement;
             
-            if (progressContainer) progressContainer.style.display = 'block';
-            if (progressText) progressText.style.display = 'block';
-            if (progressBar) progressBar.style.width = '0%';
+            progressContainer.style.display = 'block';
+            progressText.style.display = 'block';
+            progressBar.style.width = '0%';
             
             const clashes = findAllClashes();
             const totalClashes = clashes.length;
-            resolveClashes(clashes, 0, totalClashes, 0, 0);
+            resolveClashes(clashes, 0, totalClashes, 0, 0, progressBar, progressText, progressContainer);
         }
 
         function findAllClashes() {
@@ -1842,26 +1842,19 @@
             return gapCount;
         }
 
-        function resolveClashes(clashes, index, totalClashes, removed, attempt = 0) {
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            const progressContainer = document.getElementById('progressContainer');
-
+        function resolveClashes(clashes, index, totalClashes, removed, attempt = 0, progressBar, progressText, progressContainer) {
             // Update progress bar
-            let progress = 0;
-            if (totalClashes > 0) {
-                progress = ((attempt * totalClashes + index) / (10 * totalClashes)) * 100;
-            }
-            if (progressBar) progressBar.style.width = Math.min(progress, 100) + '%';
-            if (progressText) progressText.textContent = `Removing clashes... (Attempt ${attempt + 1}/10)`;
+            const progress = ((attempt * totalClashes + index) / (10 * totalClashes)) * 100;
+            progressBar.style.width = Math.min(progress, 100) + '%';
+            progressText.textContent = `Removing clashes... (Attempt ${attempt + 1}/10)`;
 
             if (attempt > 9) { // Maximum 10 attempts
                 isRemovingClashes = false;
                 document.getElementById('removeClashesBtn').textContent = 'Remove Clashes';
                 document.getElementById('messageDiv').textContent = 'Attempted clash removal (10 attempts)';
                 // Hide progress bar
-                if (progressContainer) progressContainer.style.display = 'none';
-                if (progressText) progressText.style.display = 'none';
+                progressContainer.style.display = 'none';
+                progressText.style.display = 'none';
                 setTimeout(() => {
                     const clashes = findAllClashes();
                     const doubles = findAllDoubles();
@@ -1878,7 +1871,7 @@
                 if (currentClashes.length > 0 && attempt < 9) {
                     // Try again with new clashes found
                     console.log(`Attempt ${attempt + 1}: Found ${currentClashes.length} clashes, retrying...`);
-                    resolveClashes(currentClashes, 0, currentClashes.length, removed, attempt + 1);
+                    resolveClashes(currentClashes, 0, currentClashes.length, removed, attempt + 1, progressBar, progressText, progressContainer);
                     return;
                 }
                 // No more clashes or max attempts reached
@@ -1891,8 +1884,8 @@
                     document.getElementById('messageDiv').textContent = 'Completed with ' + finalClashes.length + ' remaining clashes after ' + (attempt + 1) + ' attempt(s)';
                 }
                 // Hide progress bar
-                if (progressContainer) progressContainer.style.display = 'none';
-                if (progressText) progressText.style.display = 'none';
+                progressContainer.style.display = 'none';
+                progressText.style.display = 'none';
                 setTimeout(() => {
                     const clashes = findAllClashes();
                     const doubles = findAllDoubles();
@@ -1908,13 +1901,8 @@
             const resolved = tryResolveClash(clash);
             if (resolved) {
                 removed++;
-                // Update counts in MessageDiv when a clash is removed
-                const currentClashes = findAllClashes();
-                const doubles = findAllDoubles();
-                const gaps = findAllGaps();
-                document.getElementById('messageDiv').textContent = 'File : ' + currentFileName + ' [ Clashes ' + currentClashes.length + ' | Doubles ' + doubles + ' | Gaps ' + gaps + ' ]';
             }
-            setTimeout(() => resolveClashes(clashes, index + 1, totalClashes, removed, attempt), 0);
+            setTimeout(() => resolveClashes(clashes, index + 1, totalClashes, removed, attempt, progressBar, progressText, progressContainer), 0);
         }
 
         // Improved exchange cells logic - simple and safe version
