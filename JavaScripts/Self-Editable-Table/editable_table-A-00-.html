@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Table</title>
+    <title>Species Overview</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -92,6 +92,8 @@
                 <button id="new-file">New</button>
                 <button id="load-file">Load</button>
                 <button id="save-file">Save</button>
+                <button id="export-csv">Export CSV</button>
+                <button id="import-csv">Import CSV</button>
             </div>
         </div>
         <div class="menu">
@@ -115,10 +117,11 @@
     </div>
 
     <input type="file" id="file-input" style="display: none;" accept=".html">
+    <input type="file" id="csv-input" style="display: none;" accept=".csv">
 
     <script>
         // Configuration
-       let columnTitles = ["Marathi","Latin", "English", "Fencing-Ornamental", "Propagation","Sunlight","Life"];
+       let columnTitles = ["Marathi","Latin", "English", "Use", "Propagation","Sunlight","Life"];
         
         const initialRowCount = 10;
 
@@ -140,9 +143,142 @@
         const newFileBtn = document.getElementById('new-file');
         const loadFileBtn = document.getElementById('load-file');
         const saveFileBtn = document.getElementById('save-file');
+        const exportCsvBtn = document.getElementById('export-csv');
+        const importCsvBtn = document.getElementById('import-csv');
         const saveIconBtn = document.getElementById('save-icon-btn');
         const addRowBtn = document.getElementById('add-row');
         const deleteRowBtn = document.getElementById('delete-row');
+        const csvInput = document.getElementById('csv-input');
+        // CSV Export
+        function exportToCSV() {
+            let csv = [];
+            // Header row
+            let header = ['Sr', ...columnTitles];
+            csv.push(header.join(','));
+            // Data rows
+            const rows = tableBody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let rowData = [];
+                cells.forEach(cell => {
+                    // Escape quotes and commas
+                    let text = cell.textContent.replace(/"/g, '""');
+                    if (text.includes(',') || text.includes('"') || text.includes('\n')) {
+                        text = '"' + text + '"';
+                    }
+                    rowData.push(text);
+                });
+                csv.push(rowData.join(','));
+            });
+            const csvContent = csv.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'table_data.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // CSV Import
+        function importFromCSV() {
+            csvInput.click();
+        }
+
+        function handleCSVLoad(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    const lines = content.split(/\r?\n/).filter(line => line.trim() !== '');
+                    if (lines.length < 2) return;
+                    // Parse header
+                    const header = parseCSVLine(lines[0]);
+                    // Remove 'Sr' if present
+                    let startIdx = 0;
+                    if (header[0] === 'Sr') startIdx = 1;
+                    columnTitles = header.slice(startIdx);
+                    generateHeaders();
+                    // Parse rows
+                    tableBody.innerHTML = '';
+                    let count = 0;
+                    for (let i = 1; i < lines.length; i++) {
+                        const row = parseCSVLine(lines[i]);
+                        if (row.length === 0) continue;
+                        // Data row
+                        if (row[0] !== 'Rem') {
+                            const tr = document.createElement('tr');
+                            const srCell = document.createElement('td');
+                            srCell.className = 'sr-column';
+                            srCell.textContent = row[0];
+                            tr.appendChild(srCell);
+                            for (let j = 1; j < row.length; j++) {
+                                const cell = document.createElement('td');
+                                cell.className = 'editable-cell';
+                                cell.contentEditable = 'true';
+                                cell.textContent = row[j];
+                                tr.appendChild(cell);
+                            }
+                            tableBody.appendChild(tr);
+                            count++;
+                        } else {
+                            // Remarks row
+                            const tr = document.createElement('tr');
+                            const srCell = document.createElement('td');
+                            srCell.className = 'sr-column';
+                            srCell.textContent = 'Rem';
+                            tr.appendChild(srCell);
+                            const remCell = document.createElement('td');
+                            remCell.className = 'editable-cell';
+                            remCell.contentEditable = 'true';
+                            remCell.colSpan = columnTitles.length;
+                            remCell.textContent = row[1] || '';
+                            tr.appendChild(remCell);
+                            tableBody.appendChild(tr);
+                        }
+                    }
+                    currentRowCount = count;
+                    updateSerialNumbers();
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // Helper to parse a CSV line (handles quoted fields)
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (inQuotes) {
+                    if (char === '"') {
+                        if (i + 1 < line.length && line[i + 1] === '"') {
+                            current += '"';
+                            i++;
+                        } else {
+                            inQuotes = false;
+                        }
+                    } else {
+                        current += char;
+                    }
+                } else {
+                    if (char === ',') {
+                        result.push(current);
+                        current = '';
+                    } else if (char === '"') {
+                        inQuotes = true;
+                    } else {
+                        current += char;
+                    }
+                }
+            }
+            result.push(current);
+            return result;
+        }
 
         // Initialize table
         function initializeTable() {
@@ -471,11 +607,15 @@
         newFileBtn.addEventListener('click', newFile);
         loadFileBtn.addEventListener('click', loadFile);
         saveFileBtn.addEventListener('click', saveFile);
+
         addRowBtn.addEventListener('click', addRow);
         deleteRowBtn.addEventListener('click', deleteRow);
         saveIconBtn.addEventListener('click', saveFile);
+        exportCsvBtn.addEventListener('click', exportToCSV);
+        importCsvBtn.addEventListener('click', importFromCSV);
 
         fileInput.addEventListener('change', handleFileLoad);
+        csvInput.addEventListener('change', handleCSVLoad);
 
         // Close submenus when clicking outside
         document.addEventListener('click', (event) => {
