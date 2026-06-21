@@ -132,7 +132,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             padding: 1rem;
             background-color: white;
             border-radius: 0.5rem;
@@ -143,8 +143,7 @@
             display: flex;
             gap: 1rem;
             align-items: center;
-            justify-content: flex-start;
-            width: 100%;
+            justify-content: center;
         }
         .input {
             padding: 0.5rem;
@@ -326,19 +325,6 @@
         .btn-red:hover {
             background-color: #dc2626;
         }
-        .btn-help {
-            background-color: #6b7280;
-            color: white;
-            font-size: 0.875rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.25rem;
-            transition: background-color 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-help:hover {
-            background-color: #4b5563;
-        }
         .header-right {
             font-size: 1.25rem;
             font-weight: bold;
@@ -382,34 +368,6 @@
             border-radius: 0.5rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .help-overlay {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(17, 24, 39, 0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .help-dialog {
-            background: white;
-            width: min(90vw, 42rem);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        .help-dialog h3 {
-            margin-top: 0;
-            color: #0f766e;
-        }
-        .help-dialog ul {
-            padding-left: 1.25rem;
-            line-height: 1.6;
-        }
-        .help-close {
-            margin-top: 0.75rem;
-            float: right;
-        }
 
     </style>
 </head>
@@ -419,7 +377,6 @@
 
         <div class="controls">
             <div class="input-row">
-                <button onclick="showHelp()" class="btn-help">Help</button>
                 <input type="text" id="teacherCodeInput" maxlength="2" placeholder="Enter Teacher Code (e.g., MO)" class="input-small">
                 <button id="generateBtn" class="btn-primary">
                     Generate Time Table
@@ -483,20 +440,6 @@
             <p class="center-text">
                 Enter a teacher code and click 'Generate Time Table' to see their personalized schedule here.
             </p>
-        </div>
-    </div>
-
-    <div id="helpOverlay" class="help-overlay" onclick="hideHelp(event)">
-        <div class="help-dialog" onclick="event.stopPropagation()">
-            <h3>How to use the Time Table App</h3>
-            <ul>
-                <li>Use the Master table to enter time slots, section names, and subject entries.</li>
-                <li>Click Generate Time Table after entering a teacher code to view that teacher's schedule.</li>
-                <li>Use Find and Replace to quickly update repeated text in the Master table.</li>
-                <li>Use Ctrl+Alt+F and Ctrl+Alt+R as keyboard shortcuts for Find and Replace.</li>
-                <li>Use Save Table and Load Table to keep your timetable data between sessions.</li>
-            </ul>
-            <button onclick="hideHelp()" class="btn-blue help-close">Close</button>
         </div>
     </div>
 
@@ -1128,16 +1071,6 @@
                 // Determine if the last row is a time slot or a section row
                 // This is a simplification; ideally, you'd delete a whole time slot block (Time row + all Section rows)
                 masterTableBody.deleteRow(rows.length - 1);
-            }
-        }
-
-        function showHelp() {
-            document.getElementById('helpOverlay').style.display = 'flex';
-        }
-
-        function hideHelp(event) {
-            if (!event || event.target.id === 'helpOverlay') {
-                document.getElementById('helpOverlay').style.display = 'none';
             }
         }
 
