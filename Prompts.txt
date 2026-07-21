@@ -1,3 +1,14 @@
+Blood pressure emulator :
+
+
+
+1.
+
+I am writing Blood Pressure Emulator in Javascript.
+I want a blood pressure dial and buttons to emulate inflating cuff. If the heart bits can be amplified similar to stethoscope , the app can be used as a tool for learning traditional BP measurement skill
+
+
+=========================OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO=======
 Add button 'Remove Clashes'. This button will start clash removal process as follows. It examines each teacher for a clash. If a clash is found, then there are two sections alloted to the teacher in the same time slot. The process will exchange either of the clash causing entry with another teacher of the same section one by one covering the whole master time table. Note that exchange is done with entries in the same section so that period allotment will not be afffected. If an exchange removes the clash, the process will go to the next clash. During this process the 'Remove Clash' button will change button-text to 'Stop Removal'. The user can press this button to stop the process by pressing this button. Once the process stops either after removing all clashes or by user intervention, the button regains the original text.
 ======================
 When 'Remove Clashes' process stops after removing all clashes, or by user intervention, dispay text 'Removed x of y Clashes' in the messageDiv, where y is the total clashes before clash removal and x is the number of clashes removed in the process.
