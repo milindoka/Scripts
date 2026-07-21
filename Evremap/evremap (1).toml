@@ -1,0 +1,10 @@
+device_name = "AT Translated Set 2 keyboard"
+
+[[remap]]
+input = ["KEY_CAPSLOCK"]
+output = ["KEY_BACKSPACE"]
+
+[[dual_role]]
+input = "KEY_LEFTSHIFT"
+hold = ["KEY_LEFTSHIFT"]
+tap = ["KEY_CAPSLOCK"]

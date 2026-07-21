@@ -1,0 +1,17 @@
+device_name = "AT Translated Set 2 keyboard"
+
+[[dual_role]]
+input = ["KEY_CAPSLOCK"]
+hold = ["KEY_FN"]
+tap = ["KEY_DELETE"]
+
+[[dual_role]]
+input = ["KEY_LEFTSHIFT"]
+hold = ["KEY_LEFTSHIFT"]
+tap = ["KEY_CAPSLOCK"]
+
+[[dual_role]]
+input = "KEY_RIGHTSHIFT"
+hold = ["KEY_RIGHTSHIFT"]
+tap = ["KEY_RIGHT"]
+
